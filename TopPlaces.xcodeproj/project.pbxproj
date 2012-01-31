@@ -1,0 +1,296 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		51E44DB314D82DA700811C9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51E44DB214D82DA700811C9F /* UIKit.framework */; };
+		51E44DB514D82DA700811C9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51E44DB414D82DA700811C9F /* Foundation.framework */; };
+		51E44DB714D82DA700811C9F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51E44DB614D82DA700811C9F /* CoreGraphics.framework */; };
+		51E44DBD14D82DA700811C9F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 51E44DBB14D82DA700811C9F /* InfoPlist.strings */; };
+		51E44DBF14D82DA700811C9F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 51E44DBE14D82DA700811C9F /* main.m */; };
+		51E44DC314D82DA700811C9F /* TopPlacesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51E44DC214D82DA700811C9F /* TopPlacesAppDelegate.m */; };
+		51E44DC614D82DA700811C9F /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51E44DC414D82DA700811C9F /* MainStoryboard_iPhone.storyboard */; };
+		51E44DC914D82DA700811C9F /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51E44DC714D82DA700811C9F /* MainStoryboard_iPad.storyboard */; };
+		51E44DCC14D82DA700811C9F /* TopPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51E44DCB14D82DA700811C9F /* TopPlacesViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		51E44DAE14D82DA700811C9F /* TopPlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopPlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		51E44DB214D82DA700811C9F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		51E44DB414D82DA700811C9F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		51E44DB614D82DA700811C9F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		51E44DBA14D82DA700811C9F /* TopPlaces-Info.plist */ = {isa = PBXFileReference; path = "TopPlaces-Info.plist"; sourceTree = "<group>"; };
+		51E44DBC14D82DA700811C9F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		51E44DBE14D82DA700811C9F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		51E44DC014D82DA700811C9F /* TopPlaces-Prefix.pch */ = {isa = PBXFileReference; path = "TopPlaces-Prefix.pch"; sourceTree = "<group>"; };
+		51E44DC114D82DA700811C9F /* TopPlacesAppDelegate.h */ = {isa = PBXFileReference; path = TopPlacesAppDelegate.h; sourceTree = "<group>"; };
+		51E44DC214D82DA700811C9F /* TopPlacesAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopPlacesAppDelegate.m; sourceTree = "<group>"; };
+		51E44DC514D82DA700811C9F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		51E44DC814D82DA700811C9F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		51E44DCA14D82DA700811C9F /* TopPlacesViewController.h */ = {isa = PBXFileReference; path = TopPlacesViewController.h; sourceTree = "<group>"; };
+		51E44DCB14D82DA700811C9F /* TopPlacesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopPlacesViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		51E44DAB14D82DA700811C9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51E44DB314D82DA700811C9F /* UIKit.framework in Frameworks */,
+				51E44DB514D82DA700811C9F /* Foundation.framework in Frameworks */,
+				51E44DB714D82DA700811C9F /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		51E44DA314D82DA700811C9F = {
+			isa = PBXGroup;
+			children = (
+				51E44DB814D82DA700811C9F /* TopPlaces */,
+				51E44DB114D82DA700811C9F /* Frameworks */,
+				51E44DAF14D82DA700811C9F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		51E44DAF14D82DA700811C9F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				51E44DAE14D82DA700811C9F /* TopPlaces.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		51E44DB114D82DA700811C9F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				51E44DB214D82DA700811C9F /* UIKit.framework */,
+				51E44DB414D82DA700811C9F /* Foundation.framework */,
+				51E44DB614D82DA700811C9F /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		51E44DB814D82DA700811C9F /* TopPlaces */ = {
+			isa = PBXGroup;
+			children = (
+				51E44DC114D82DA700811C9F /* TopPlacesAppDelegate.h */,
+				51E44DC214D82DA700811C9F /* TopPlacesAppDelegate.m */,
+				51E44DC414D82DA700811C9F /* MainStoryboard_iPhone.storyboard */,
+				51E44DC714D82DA700811C9F /* MainStoryboard_iPad.storyboard */,
+				51E44DCA14D82DA700811C9F /* TopPlacesViewController.h */,
+				51E44DCB14D82DA700811C9F /* TopPlacesViewController.m */,
+				51E44DB914D82DA700811C9F /* Supporting Files */,
+			);
+			path = TopPlaces;
+			sourceTree = "<group>";
+		};
+		51E44DB914D82DA700811C9F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				51E44DBA14D82DA700811C9F /* TopPlaces-Info.plist */,
+				51E44DBB14D82DA700811C9F /* InfoPlist.strings */,
+				51E44DBE14D82DA700811C9F /* main.m */,
+				51E44DC014D82DA700811C9F /* TopPlaces-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		51E44DAD14D82DA700811C9F /* TopPlaces */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51E44DCF14D82DA700811C9F /* Build configuration list for PBXNativeTarget "TopPlaces" */;
+			buildPhases = (
+				51E44DAA14D82DA700811C9F /* Sources */,
+				51E44DAB14D82DA700811C9F /* Frameworks */,
+				51E44DAC14D82DA700811C9F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TopPlaces;
+			productName = TopPlaces;
+			productReference = 51E44DAE14D82DA700811C9F /* TopPlaces.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		51E44DA514D82DA700811C9F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "MicroContent Musings - Hovering Above";
+			};
+			buildConfigurationList = 51E44DA814D82DA700811C9F /* Build configuration list for PBXProject "TopPlaces" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 51E44DA314D82DA700811C9F;
+			productRefGroup = 51E44DAF14D82DA700811C9F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				51E44DAD14D82DA700811C9F /* TopPlaces */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		51E44DAC14D82DA700811C9F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51E44DBD14D82DA700811C9F /* InfoPlist.strings in Resources */,
+				51E44DC614D82DA700811C9F /* MainStoryboard_iPhone.storyboard in Resources */,
+				51E44DC914D82DA700811C9F /* MainStoryboard_iPad.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		51E44DAA14D82DA700811C9F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51E44DBF14D82DA700811C9F /* main.m in Sources */,
+				51E44DC314D82DA700811C9F /* TopPlacesAppDelegate.m in Sources */,
+				51E44DCC14D82DA700811C9F /* TopPlacesViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		51E44DBB14D82DA700811C9F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51E44DBC14D82DA700811C9F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		51E44DC414D82DA700811C9F /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51E44DC514D82DA700811C9F /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		51E44DC714D82DA700811C9F /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51E44DC814D82DA700811C9F /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		51E44DCD14D82DA700811C9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		51E44DCE14D82DA700811C9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		51E44DD014D82DA700811C9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TopPlaces/TopPlaces-Prefix.pch";
+				INFOPLIST_FILE = "TopPlaces/TopPlaces-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		51E44DD114D82DA700811C9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TopPlaces/TopPlaces-Prefix.pch";
+				INFOPLIST_FILE = "TopPlaces/TopPlaces-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		51E44DA814D82DA700811C9F /* Build configuration list for PBXProject "TopPlaces" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51E44DCD14D82DA700811C9F /* Debug */,
+				51E44DCE14D82DA700811C9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51E44DCF14D82DA700811C9F /* Build configuration list for PBXNativeTarget "TopPlaces" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51E44DD014D82DA700811C9F /* Debug */,
+				51E44DD114D82DA700811C9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 51E44DA514D82DA700811C9F /* Project object */;
+}
