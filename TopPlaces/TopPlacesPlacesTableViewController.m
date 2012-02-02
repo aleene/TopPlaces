@@ -8,29 +8,59 @@
 
 #import "TopPlacesPlacesTableViewController.h"
 #import "FlickrFetcher.h"
+#import "TopPlacesPhotosForPlaceTableViewController.h"
+
+@interface TopPlacesPlacesTableViewController()
+
+@property (nonatomic, strong) NSDictionary *selectedFlickrPlace;
+
+@end
 
 @implementation TopPlacesPlacesTableViewController
 
 @synthesize places = _places;
+@synthesize selectedFlickrPlace = _selectedFlickrPlace;
 
-- (IBAction)refresh:(id)sender {
+- (void)refresh
+{
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
+    UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     NSArray *places = [FlickrFetcher topPlaces];
     if (!places) {
         UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" message:@"Trouble getting images from Flickr" delegate:nil cancelButtonTitle:@"To bad" otherButtonTitles:nil];
         [noImagesAlertView show];
     }
-    self.navigationItem.rightBarButtonItem = sender;
+    self.navigationItem.rightBarButtonItem = currentButton;
     self.places = places;
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self refresh];
+    
+}
+
+- (IBAction)refresh:(id)sender
+{
+    [self refresh];
+}
+
 
 - (void) setPlaces:(NSArray *)places
 {
     if (places != _places) {
         _places = places;
         if (self.tableView.window)[self.tableView reloadData]; 
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show Photos For Place"]) {
+        [segue.destinationViewController setPlace:self.selectedFlickrPlace];
     }
 }
 
@@ -55,28 +85,24 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) { 
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     NSDictionary *place = [self.places objectAtIndex:indexPath.row];
-    cell.textLabel.text = [place objectForKey:FLICKR_PLACE_NAME];
-    NSString *numberOfPhotosAtPlace = [place objectForKey:FLICKR_PLACE_COUNT];
-    cell.detailTextLabel.text = [numberOfPhotosAtPlace stringByAppendingString:@" photos available"];
+    NSString *fullPlaceName = [place objectForKey:FLICKR_PLACE_NAME];
+    NSRange positionOfFirstComma = [fullPlaceName rangeOfString:@","];
+    cell.textLabel.text = [fullPlaceName substringToIndex:positionOfFirstComma.location];
+//    NSString *numberOfPhotosAtPlace = [place objectForKey:FLICKR_PLACE_COUNT];
+    cell.detailTextLabel.text = [fullPlaceName substringFromIndex:positionOfFirstComma.location + 2];;
     return cell;
 }
-
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    self.selectedFlickrPlace = [self.places objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"Show Photos For Place" sender:self];
 }
 
 @end

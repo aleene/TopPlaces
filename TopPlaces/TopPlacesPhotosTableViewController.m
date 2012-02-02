@@ -47,11 +47,11 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     NSDictionary *photo = [self.flickrPhotos objectAtIndex:indexPath.row];
     cell.textLabel.text = [photo valueForKey:FLICKR_PHOTO_TITLE];
-    cell.detailTextLabel.text = [photo valueForKey:FLICKR_PHOTO_OWNER];
+    cell.detailTextLabel.text = [photo valueForKey:FLICKR_PLACE_NAME];
     
     return cell;
 }
