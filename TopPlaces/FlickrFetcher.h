@@ -10,6 +10,7 @@
 #define FLICKR_PHOTO_TITLE @"title"
 #define FLICKR_PHOTO_DESCRIPTION @"description._content"
 #define FLICKR_PLACE_NAME @"_content"
+#define FLICKR_PLACE_COUNT @"photo_count"
 #define FLICKR_PHOTO_ID @"id"
 #define FLICKR_PHOTO_OWNER @"ownername"
 #define FLICKR_LATITUDE @"latitude"
@@ -26,5 +27,6 @@ typedef enum {
 + (NSArray *)topPlaces;
 + (NSArray *)photosInPlace:(NSDictionary *)place maxResults:(int)maxResults;
 + (NSURL *)urlForPhoto:(NSDictionary *)photo format:(FlickrPhotoFormat)format;
++ (NSArray *)recentGeoreferencedPhotos;
 
 @end
