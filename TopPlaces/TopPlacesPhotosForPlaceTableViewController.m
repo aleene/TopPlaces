@@ -8,10 +8,12 @@
 
 #import "TopPlacesPhotosForPlaceTableViewController.h"
 #import "FlickrFetcher.h"
+#import "TopPlacesPhotoViewController.h"
 
 @interface TopPlacesPhotosForPlaceTableViewController()
 
 @property (nonatomic, strong) NSArray *flickrPhotos;
+@property (nonatomic, strong) NSDictionary *SelectedFlickrPhoto;
 
 @end
 
@@ -19,6 +21,15 @@
 
 @synthesize place = _place;
 @synthesize flickrPhotos = _flickrPhotos;
+@synthesize SelectedFlickrPhoto = _SelectedFlickrPhoto;
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
+        [segue.destinationViewController setPhoto:self.SelectedFlickrPhoto];
+    }
+}
+
 
 - (void)refresh 
 {
@@ -97,13 +108,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    self.SelectedFlickrPhoto = [self.flickrPhotos objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
+
 }
 
 @end

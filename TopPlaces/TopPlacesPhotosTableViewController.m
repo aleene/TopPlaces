@@ -8,10 +8,18 @@
 
 #import "TopPlacesPhotosTableViewController.h"
 #import "FlickrFetcher.h"
+#import "TopPlacesPhotoViewController.h"
 
+@interface TopPlacesPhotosTableViewController()
+
+@property (nonatomic, strong) NSDictionary *selectedFlickrPhoto;
+
+
+@end
 @implementation TopPlacesPhotosTableViewController
 
 @synthesize flickrPhotos = _flickrPhotos;
+@synthesize selectedFlickrPhoto = _selectedFlickrPhoto;
 
 - (IBAction)refresh:(id)sender {
     
@@ -24,6 +32,13 @@
     if (flickrPhotos != _flickrPhotos) {
         _flickrPhotos = flickrPhotos;
         [self.tableView reloadData];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Photo from TopPhotos Segue"]) {
+        [segue.destinationViewController setPhoto:self.selectedFlickrPhoto];
     }
 }
 
@@ -43,7 +58,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Photo Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -60,13 +75,9 @@
             
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    self.SelectedFlickrPhoto = [self.flickrPhotos objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"Photo from TopPhotos Segue" sender:self];
+    
 }
 
 @end

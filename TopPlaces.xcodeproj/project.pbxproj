@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		512F5CA514DBD26F00D8A5B4 /* TopPlacesPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 512F5CA414DBD26E00D8A5B4 /* TopPlacesPhotoViewController.m */; };
 		516EF07914DA843600C1B239 /* TopPlacesPlacesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EF07814DA843600C1B239 /* TopPlacesPlacesTableViewController.m */; };
 		516EF07C14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EF07B14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.m */; };
 		516EF07E14DAA7EF00C1B239 /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 516EF07D14DAA7EF00C1B239 /* 07-map-marker.png */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		512F5CA314DBD26E00D8A5B4 /* TopPlacesPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotoViewController.h; sourceTree = "<group>"; };
+		512F5CA414DBD26E00D8A5B4 /* TopPlacesPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotoViewController.m; sourceTree = "<group>"; };
 		516EF07714DA843600C1B239 /* TopPlacesPlacesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPlacesTableViewController.h; sourceTree = "<group>"; };
 		516EF07814DA843600C1B239 /* TopPlacesPlacesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPlacesTableViewController.m; sourceTree = "<group>"; };
 		516EF07A14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotosTableViewController.h; sourceTree = "<group>"; };
@@ -93,6 +96,8 @@
 		51E44DB814D82DA700811C9F /* TopPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				512F5CA314DBD26E00D8A5B4 /* TopPlacesPhotoViewController.h */,
+				512F5CA414DBD26E00D8A5B4 /* TopPlacesPhotoViewController.m */,
 				516EF08414DAC4E900C1B239 /* TopPlacesPhotosForPlaceTableViewController.h */,
 				516EF08514DAC4E900C1B239 /* TopPlacesPhotosForPlaceTableViewController.m */,
 				516EF07A14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.h */,
@@ -196,6 +201,7 @@
 				516EF07914DA843600C1B239 /* TopPlacesPlacesTableViewController.m in Sources */,
 				516EF07C14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.m in Sources */,
 				516EF08614DAC4E900C1B239 /* TopPlacesPhotosForPlaceTableViewController.m in Sources */,
+				512F5CA514DBD26F00D8A5B4 /* TopPlacesPhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

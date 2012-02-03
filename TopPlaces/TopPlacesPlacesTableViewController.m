@@ -36,7 +36,7 @@
     self.places = places;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self refresh];
