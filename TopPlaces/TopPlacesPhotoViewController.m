@@ -39,19 +39,28 @@
     [self.photoImageView setImage:image];
 //    NSLog(@"%f %f", image.size.width, image.size.height);
     
-    // instructions from lecture 8
-    self.photoScrollView.contentSize = self.photoImageView.image.size;
-    self.photoImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
 }
 
+#define MAX_TITLE_LENGTH 10
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // instruction from lecture 8
     self.photoScrollView.delegate = self;
-    
+    self.photoImageView.contentMode = UIViewContentModeScaleToFill;
+
     // get the actual photo now that the view is loading
     [self retrievePhoto];
+    
+    //  Set the title of the viewcontroller
+    // Assignment 4 - task 7
+    NSString *photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
+    // the maximum length of this title depends on the view orientation
+    self.title = [[photoTitle substringToIndex:MAX_TITLE_LENGTH] stringByAppendingString:@"..."]; 
+    
+    // instructions from lecture 8
+    self.photoScrollView.contentSize = self.photoImageView.image.size;
+    self.photoImageView.frame = CGRectMake(0, 0, self.photoImageView.image.size.width, self.photoImageView.image.size.height);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

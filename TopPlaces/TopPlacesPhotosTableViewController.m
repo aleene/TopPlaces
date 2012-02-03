@@ -13,7 +13,7 @@
 @interface TopPlacesPhotosTableViewController()
 
 @property (nonatomic, strong) NSDictionary *selectedFlickrPhoto;
-
+@property (nonatomic, strong) NSArray *flickrPhotos;
 
 @end
 @implementation TopPlacesPhotosTableViewController
@@ -21,10 +21,31 @@
 @synthesize flickrPhotos = _flickrPhotos;
 @synthesize selectedFlickrPhoto = _selectedFlickrPhoto;
 
+- (void)refresh
+{
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    NSArray *photosFound = [FlickrFetcher recentGeoreferencedPhotos];
+    if (!photosFound) {
+        UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" message:@"Trouble getting images from Flickr" delegate:nil cancelButtonTitle:@"To bad" otherButtonTitles:nil];
+        [noImagesAlertView show];
+    }
+    self.navigationItem.rightBarButtonItem = currentButton;
+    self.flickrPhotos = photosFound;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self refresh];
+    
+}
+
 - (IBAction)refresh:(id)sender {
     
-    NSArray *photosFound = [FlickrFetcher recentGeoreferencedPhotos];
-    self.flickrPhotos = photosFound;
+    [self refresh];
 }
 
 - (void)setFlickrPhotos:(NSArray *)flickrPhotos
@@ -65,8 +86,21 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     NSDictionary *photo = [self.flickrPhotos objectAtIndex:indexPath.row];
-    cell.textLabel.text = [photo valueForKey:FLICKR_PHOTO_TITLE];
-    cell.detailTextLabel.text = [photo valueForKey:FLICKR_PLACE_NAME];
+    NSDictionary *descriptionObject = [photo valueForKey:@"description"];
+    NSString *descriptionContent = [descriptionObject valueForKey:@"_content"];
+    //    NSLog(@"%@ <> %@", [photo valueForKey:FLICKR_PHOTO_TITLE], descriptionContent);
+    // do not know why this does not work
+    //    NSLog(@"%@",[photo valueForKey:@"description._content"]);
+    if ([[photo valueForKey:FLICKR_PHOTO_TITLE] isEqualToString:@""]) {
+        cell.textLabel.text = @"no title available";
+    } else {
+        cell.textLabel.text = [photo valueForKey:FLICKR_PHOTO_TITLE];
+    }
+    if ([descriptionContent isEqualToString:@""]) {
+        cell.detailTextLabel.text = @"no description available";
+    } else {
+        cell.detailTextLabel.text = descriptionContent;
+    }
     
     return cell;
 }

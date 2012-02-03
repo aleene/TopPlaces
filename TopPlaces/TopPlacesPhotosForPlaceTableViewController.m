@@ -33,9 +33,14 @@
 
 - (void)refresh 
 {
-    
+   // solve the double call here 
     NSArray *photosFound = [FlickrFetcher photosInPlace:self.place maxResults:10];
     self.flickrPhotos = photosFound;
+
+    //  Set the title of the viewcontroller
+    // Assignment 4 - task 7
+    NSString *placeName = [self.place valueForKey:FLICKR_PLACE_NAME];
+    self.title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
 }
 
 - (IBAction)refresh:(id)sender 

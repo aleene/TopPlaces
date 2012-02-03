@@ -10,6 +10,5 @@
 
 @interface TopPlacesPhotosTableViewController : UITableViewController
 
-@property (nonatomic, strong) NSArray *flickrPhotos;
 
 @end
