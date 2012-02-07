@@ -194,7 +194,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Photo from TopPhotos Segue" id="Rxl-YB-SO8"/>
+                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo Segue" id="Rxl-YB-SO8"/>
                     </connections>
                 </tableViewController>
             </objects>
@@ -264,9 +264,10 @@
             <relationships>
                 <relationship kind="outlet" name="photoImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="photoScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
             </relationships>
         </class>
-        <class className="TopPlacesPhotosForPlaceTableViewController" superclassName="UITableViewController">
+        <class className="TopPlacesPhotosForPlaceTableViewController" superclassName="TopPlacesPhotosTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosForPlaceTableViewController.h"/>
         </class>
         <class className="TopPlacesPhotosTableViewController" superclassName="UITableViewController">
@@ -282,6 +283,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Rxl-YB-SO8"/>
+        <segue reference="s2n-E7-E3s"/>
     </inferredMetricsTieBreakers>
 </document>

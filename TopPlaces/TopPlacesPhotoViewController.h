@@ -5,6 +5,7 @@
 //  Created by Arnaud Leene on 3/2/12.
 //  Copyright (c) 2012 MicroContent Musings - Hovering Above. All rights reserved.
 //
+//  This class shows a single Flickr Photo in a scrollview
 
 #import <UIKit/UIKit.h>
 #import "SplitViewBarButtonItemPresenter.h"

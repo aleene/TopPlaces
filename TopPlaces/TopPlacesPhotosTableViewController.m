@@ -13,7 +13,6 @@
 @interface TopPlacesPhotosTableViewController()
 
 @property (nonatomic, strong) NSDictionary *selectedFlickrPhoto;
-@property (nonatomic, strong) NSArray *flickrPhotos;
 
 @end
 @implementation TopPlacesPhotosTableViewController
@@ -31,15 +30,25 @@
     return gvc; 
 }
 
+- (NSArray *)getPhotoList
+{
+    NSArray *photosFound = [FlickrFetcher recentGeoreferencedPhotos];
+    return [photosFound copy];
+}
+
 - (void)refresh
 {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
-    NSArray *photosFound = [FlickrFetcher recentGeoreferencedPhotos];
+    NSArray *photosFound = [self getPhotoList];
     if (!photosFound) {
-        UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" message:@"Trouble getting images from Flickr" delegate:nil cancelButtonTitle:@"To bad" otherButtonTitles:nil];
+        UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
+                                                                    message:@"Trouble getting images from Flickr" 
+                                                                   delegate:nil 
+                                                          cancelButtonTitle:@"To bad" 
+                                                          otherButtonTitles:nil];
         [noImagesAlertView show];
     }
     self.navigationItem.rightBarButtonItem = currentButton;
@@ -68,7 +77,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"Photo from TopPhotos Segue"]) {
+    if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
         [segue.destinationViewController setPhoto:self.selectedFlickrPhoto];
     }
 }
@@ -126,9 +135,8 @@
     if ([self splitViewTopPlacesPhotoViewController]) {
         [[self splitViewTopPlacesPhotoViewController] setPhoto:self.selectedFlickrPhoto];
     } else {
-        [self performSegueWithIdentifier:@"Photo from TopPhotos Segue" sender:self];
+        [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
     }
-    
 }
 
 @end

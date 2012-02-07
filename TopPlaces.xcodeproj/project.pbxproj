@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		512F5CA514DBD26F00D8A5B4 /* TopPlacesPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 512F5CA414DBD26E00D8A5B4 /* TopPlacesPhotoViewController.m */; };
+		5142ED6C14E12E43003597B1 /* apollo17_earth.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5142ED6B14E12E43003597B1 /* apollo17_earth.tiff */; };
 		516EF07914DA843600C1B239 /* TopPlacesPlacesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EF07814DA843600C1B239 /* TopPlacesPlacesTableViewController.m */; };
 		516EF07C14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EF07B14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.m */; };
 		516EF07E14DAA7EF00C1B239 /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 516EF07D14DAA7EF00C1B239 /* 07-map-marker.png */; };
@@ -29,6 +30,7 @@
 		512F5CA314DBD26E00D8A5B4 /* TopPlacesPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotoViewController.h; sourceTree = "<group>"; };
 		512F5CA414DBD26E00D8A5B4 /* TopPlacesPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotoViewController.m; sourceTree = "<group>"; };
 		512F5CBD14DC2BF900D8A5B4 /* SplitViewBarButtonItemPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewBarButtonItemPresenter.h; sourceTree = "<group>"; };
+		5142ED6B14E12E43003597B1 /* apollo17_earth.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = apollo17_earth.tiff; sourceTree = "<group>"; };
 		516EF07714DA843600C1B239 /* TopPlacesPlacesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPlacesTableViewController.h; sourceTree = "<group>"; };
 		516EF07814DA843600C1B239 /* TopPlacesPlacesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPlacesTableViewController.m; sourceTree = "<group>"; };
 		516EF07A14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotosTableViewController.h; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		51E44DB914D82DA700811C9F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5142ED6B14E12E43003597B1 /* apollo17_earth.tiff */,
 				516EF07D14DAA7EF00C1B239 /* 07-map-marker.png */,
 				516EF07F14DAA80C00C1B239 /* 42-photos.png */,
 				51E44DD214D82DD000811C9F /* FlickrAPIKey.h */,
@@ -192,6 +195,7 @@
 				51E44DC914D82DA700811C9F /* MainStoryboard_iPad.storyboard in Resources */,
 				516EF07E14DAA7EF00C1B239 /* 07-map-marker.png in Resources */,
 				516EF08014DAA80C00C1B239 /* 42-photos.png in Resources */,
+				5142ED6C14E12E43003597B1 /* apollo17_earth.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

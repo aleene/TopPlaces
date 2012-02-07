@@ -9,45 +9,24 @@
 #import "TopPlacesPhotosForPlaceTableViewController.h"
 #import "FlickrFetcher.h"
 #import "TopPlacesPhotoViewController.h"
-
-@interface TopPlacesPhotosForPlaceTableViewController()
-
-@property (nonatomic, strong) NSArray *flickrPhotos;
-@property (nonatomic, strong) NSDictionary *SelectedFlickrPhoto;
-
-@end
+#import "TopPlacesPhotosTableViewController.h"
 
 @implementation TopPlacesPhotosForPlaceTableViewController
 
 @synthesize place = _place;
-@synthesize flickrPhotos = _flickrPhotos;
-@synthesize SelectedFlickrPhoto = _SelectedFlickrPhoto;
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (NSArray *)getPhotoList
 {
-    if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
-        [segue.destinationViewController setPhoto:self.SelectedFlickrPhoto];
-    }
-}
-
-//  is a detail view controller available?
-//  and is it a detail view controller that can present a photo?
-- (TopPlacesPhotoViewController *)splitViewTopPlacesPhotoViewController {
-    id gvc = [self.splitViewController.viewControllers lastObject];
-    if (![gvc isKindOfClass:[TopPlacesPhotoViewController class]]) {
-        gvc = nil;
-    }
-    return gvc; 
+    NSArray *photosFound = [FlickrFetcher photosInPlace:self.place maxResults:10];
+    return [photosFound copy];
 }
 
 - (void)refresh 
 {
-   // solve the double call here 
-    NSArray *photosFound = [FlickrFetcher photosInPlace:self.place maxResults:10];
+    NSArray *photosFound = [self getPhotoList];
     self.flickrPhotos = photosFound;
 
-    //  Set the title of the viewcontroller
-    // Assignment 4 - task 7
+    // Set the title of this viewcontroller
     NSString *placeName = [self.place valueForKey:FLICKR_PLACE_NAME];
     self.title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
 }
@@ -60,79 +39,12 @@
 }
 
 
-- (void)setFlickrPhotos:(NSArray *)flickrPhotos
-{
-    if (flickrPhotos != _flickrPhotos) {
-        _flickrPhotos = flickrPhotos;
-        [self.tableView reloadData];
-    }
-}
-
 - (void)setPlace:(NSDictionary *)place
 {
     if (place != _place) {
         _place = place;
         [self refresh];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self refresh];
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return [self.flickrPhotos count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"PhotosForPlaceCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
-    
-    NSDictionary *photo = [self.flickrPhotos objectAtIndex:indexPath.row];
-    NSDictionary *descriptionObject = [photo valueForKey:@"description"];
-    NSString *descriptionContent = [descriptionObject valueForKey:@"_content"];
-//    NSLog(@"%@ <> %@", [photo valueForKey:FLICKR_PHOTO_TITLE], descriptionContent);
-    // do not know why this does not work
-//    NSLog(@"%@",[photo valueForKey:@"description._content"]);
-    if ([[photo valueForKey:FLICKR_PHOTO_TITLE] isEqualToString:@""]) {
-        cell.textLabel.text = @"no title available";
-    } else {
-        cell.textLabel.text = [photo valueForKey:FLICKR_PHOTO_TITLE];
-    }
-    if ([descriptionContent isEqualToString:@""]) {
-        cell.detailTextLabel.text = @"no description available";
-    } else {
-        cell.detailTextLabel.text = descriptionContent;
-    }
-    return cell;
-}
-
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.SelectedFlickrPhoto = [self.flickrPhotos objectAtIndex:indexPath.row];
-    
-    //  check to see whether we are on the iPad or not
-    //  and if we can go to the right controller right away (as it is on screen) 
-    if ([self splitViewTopPlacesPhotoViewController]) {
-        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.SelectedFlickrPhoto];
-    } else {
-        [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
-    }
-
-
 }
 
 @end

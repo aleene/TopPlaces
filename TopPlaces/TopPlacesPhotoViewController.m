@@ -46,7 +46,7 @@
     
     // title for the iPad
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
-    NSLog(@"%i", [toolbarItems count]);
+//    NSLog(@"%i", [toolbarItems count]);
     // assume we use the button before the last
     UIBarButtonItem *titleButton = [toolbarItems objectAtIndex:[toolbarItems count]-2];
     titleButton.title = _photoTitle;
@@ -70,7 +70,6 @@
         } else {
             self.photoTitle = @"no photo retrieved";
         }
-
     } else {
         self.photoTitle = @"no photo selected";
     }
@@ -82,8 +81,6 @@
     if (photo != _photo) {
         _photo = photo;
         [self retrievePhoto];
-        // do I have a mixup with vieeDidLoad here?
-     //   [self.photoImageView setNeedsDisplay];
     }
 }
 
@@ -92,8 +89,9 @@
     [super viewDidLoad];
     // instruction from lecture 8
     self.photoScrollView.delegate = self;
-    self.photoImageView.contentMode = UIViewContentModeScaleToFill;
-
+    self.photoScrollView.contentMode = UIViewContentModeScaleToFill;
+    self.photoScrollView.contentSize = self.photoImageView.image.size;
+    
     // get the actual photo now that the view is loading
     [self retrievePhoto];
     

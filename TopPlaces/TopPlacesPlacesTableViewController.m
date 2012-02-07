@@ -31,11 +31,14 @@
     UIBarButtonItem *testButton = [[UIBarButtonItem alloc] init];
     testButton.title = @"test";
 //    self.navigationItem.rightBarButtonItem = ;
-    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = testButton;
     // probleem is dat er niets aan de presentatie veranderd
     // kan de button zelfs niet verwijderen
     // de inhoud van de buttons klopt
-    NSLog(@"stop even om naar de button te kijken");
+    // aan het eind van deze method is inderdaad wel de button verwijderd
+    // de vraag wordt dus waar ik dit moet aanpassen 
+    
+    
     NSArray *places = [FlickrFetcher topPlaces];
     if (!places) {
         UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
