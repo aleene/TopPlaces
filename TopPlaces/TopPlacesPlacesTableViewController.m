@@ -7,6 +7,8 @@
 //
 
 #import "TopPlacesPlacesTableViewController.h"
+
+
 #import "FlickrFetcher.h"
 #import "TopPlacesPhotosForPlaceTableViewController.h"
 
@@ -26,10 +28,20 @@
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    UIBarButtonItem *testButton = [[UIBarButtonItem alloc] init];
+    testButton.title = @"test";
+//    self.navigationItem.rightBarButtonItem = ;
+    self.navigationItem.rightBarButtonItem = nil;
+    // probleem is dat er niets aan de presentatie veranderd
+    // kan de button zelfs niet verwijderen
+    // de inhoud van de buttons klopt
+    NSLog(@"stop even om naar de button te kijken");
     NSArray *places = [FlickrFetcher topPlaces];
     if (!places) {
-        UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" message:@"Trouble getting images from Flickr" delegate:nil cancelButtonTitle:@"To bad" otherButtonTitles:nil];
+        UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
+                                                                    message:@"Trouble getting images from Flickr" 
+                                                                   delegate:nil cancelButtonTitle:@"To bad" 
+                                                          otherButtonTitles:nil];
         [noImagesAlertView show];
     }
     self.navigationItem.rightBarButtonItem = currentButton;
@@ -38,7 +50,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
+    [super viewDidAppear:YES];
     [self refresh];
     
 }

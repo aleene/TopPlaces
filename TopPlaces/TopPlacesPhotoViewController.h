@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SplitViewBarButtonItemPresenter.h"
 
-@interface TopPlacesPhotoViewController : UIViewController
+//  this class implements the required SpltViewBarButtonItemPresenter methods
+
+@interface TopPlacesPhotoViewController : UIViewController <SplitViewBarButtonItemPresenter>
 
 @property (nonatomic, strong) NSDictionary *photo;
+
 
 
 @end

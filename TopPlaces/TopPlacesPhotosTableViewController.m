@@ -21,6 +21,16 @@
 @synthesize flickrPhotos = _flickrPhotos;
 @synthesize selectedFlickrPhoto = _selectedFlickrPhoto;
 
+//  is a detail view controller available?
+//  and is it a detail view controller that can present a photo?
+- (TopPlacesPhotoViewController *)splitViewTopPlacesPhotoViewController {
+    id gvc = [self.splitViewController.viewControllers lastObject];
+    if (![gvc isKindOfClass:[TopPlacesPhotoViewController class]]) {
+        gvc = nil;
+    }
+    return gvc; 
+}
+
 - (void)refresh
 {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -62,6 +72,7 @@
         [segue.destinationViewController setPhoto:self.selectedFlickrPhoto];
     }
 }
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -110,7 +121,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.SelectedFlickrPhoto = [self.flickrPhotos objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"Photo from TopPhotos Segue" sender:self];
+    //  check to see whether we are on the iPad or not
+    //  and if we can go to the right controller right away (as it is on screen) 
+    if ([self splitViewTopPlacesPhotoViewController]) {
+        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.selectedFlickrPhoto];
+    } else {
+        [self performSegueWithIdentifier:@"Photo from TopPhotos Segue" sender:self];
+    }
     
 }
 

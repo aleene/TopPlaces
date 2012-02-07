@@ -8,39 +8,69 @@
         <scene sceneID="THw-cr-OK0">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m6I-Kh-l76" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="g77-XO-4Jc" sceneMemberID="viewController">
+                <viewController id="g77-XO-4Jc" customClass="TopPlacesPhotoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZMI-QW-9Sb">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                        <rect key="frame" x="0.0" y="20" width="703" height="748"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ug9-vn-vpm">
+                                <rect key="frame" x="0.0" y="44" width="703" height="704"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="nXC-zt-I5v">
+                                        <rect key="frame" x="0.0" y="0.0" width="703" height="704"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                </subviews>
+                            </scrollView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="qy7-bV-AfV">
+                                <rect key="frame" x="0.0" y="0.0" width="703" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="nQi-y1-72c"/>
+                                    <barButtonItem title="photo title" style="plain" id="SyW-c5-7zf"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="bkh-NB-8fM"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="xOJ-SK-dE0"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="photoImageView" destination="nXC-zt-I5v" id="MaR-mU-BlO"/>
+                        <outlet property="photoScrollView" destination="ug9-vn-vpm" id="Um2-1o-L0N"/>
+                        <outlet property="toolbar" destination="qy7-bV-AfV" id="zT7-64-wfC"/>
+                    </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="4096" y="1017"/>
+            <point key="canvasLocation" x="2140" y="1889"/>
         </scene>
         <scene sceneID="7uM-U1-VCR">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rb0-HP-bEU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <splitViewController id="29R-KK-9oe" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <segue destination="g77-XO-4Jc" kind="relationship" relationship="detailViewController" id="aRj-8H-XzV"/>
-                        <segue destination="1Fu-hA-LHD" kind="relationship" relationship="masterViewController" id="QAz-ud-wXa"/>
+                        <segue destination="dcP-ml-Dde" kind="relationship" relationship="masterViewController" id="r59-Nq-ei7"/>
                     </connections>
                 </splitViewController>
             </objects>
-            <point key="canvasLocation" x="-118" y="1027"/>
+            <point key="canvasLocation" x="534" y="1079"/>
         </scene>
         <scene sceneID="D5w-1e-rmz">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zTJ-HM-ynz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="kyB-96-o6J" customClass="TopPlacesPlacesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Rkb-gG-OXe">
-                        <rect key="frame" x="0.0" y="64" width="320" height="739"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="655"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Places Cell" textLabel="KMV-Oi-aIi" detailTextLabel="dOn-hN-dw5" style="IBUITableViewCellStyleSubtitle" id="olb-Bb-la2">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
@@ -74,7 +104,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Top Places" id="9I9-wn-F1n">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="a4v-Yq-Pht">
+                        <barButtonItem key="rightBarButtonItem" title="refresh" id="a4v-Yq-Pht">
                             <connections>
                                 <action selector="refresh:" destination="kyB-96-o6J" id="aMk-Bk-gAh"/>
                             </connections>
@@ -82,17 +112,17 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     <connections>
-                        <segue destination="Lsm-RY-Ckk" kind="push" identifier="Show Places Segue" id="CAv-iH-JdZ"/>
+                        <segue destination="Lsm-RY-Ckk" kind="push" identifier="Show Photos For Place" id="CAv-iH-JdZ"/>
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="2818" y="-968"/>
+            <point key="canvasLocation" x="4048" y="-968"/>
         </scene>
         <scene sceneID="T1P-lx-74x">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wsq-OO-kHg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="l6h-Jy-YJZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="07-map-marker.png" id="qT8-5d-YpL"/>
+                    <tabBarItem key="tabBarItem" title="Top Places" image="07-map-marker.png" id="qT8-5d-YpL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="XCT-ZY-EsW">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -104,34 +134,17 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="2334" y="-968"/>
-        </scene>
-        <scene sceneID="Mj5-PF-cLl">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8az-2a-vhD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tabBarController id="1Fu-hA-LHD" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="sGT-TB-Pzx"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="69J-6W-Yi6">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="l6h-Jy-YJZ" kind="relationship" relationship="viewControllers" id="Lme-DW-038"/>
-                        <segue destination="nf0-9h-CLQ" kind="relationship" relationship="viewControllers" id="qoL-b4-Mow"/>
-                    </connections>
-                </tabBarController>
-            </objects>
-            <point key="canvasLocation" x="1458" y="-224"/>
+            <point key="canvasLocation" x="3564" y="-968"/>
         </scene>
         <scene sceneID="TW1-HW-UKN">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VjY-7v-NnS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="Lsm-RY-Ckk" customClass="TopPlacesPhotosForPlaceTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="csJ-WP-GXD">
-                        <rect key="frame" x="0.0" y="64" width="320" height="739"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="655"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PhotosForPlaceCell" textLabel="F98-N4-UuS" detailTextLabel="vhw-Rn-RBo" style="IBUITableViewCellStyleSubtitle" id="ejG-Ea-heh">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
@@ -164,7 +177,7 @@
                             <outlet property="delegate" destination="Lsm-RY-Ckk" id="kIO-9M-til"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Place Photos" id="fSE-Lv-yjO">
+                    <navigationItem key="navigationItem" title="Top Photos for Place" id="fSE-Lv-yjO">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="hwM-Kg-zMz">
                             <connections>
                                 <action selector="refresh:" destination="Lsm-RY-Ckk" id="E1Z-sx-X7Z"/>
@@ -172,37 +185,53 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
-                    <connections>
-                        <segue destination="g77-XO-4Jc" kind="push" id="BOx-Ik-DlF"/>
-                    </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="3362" y="-968"/>
+            <point key="canvasLocation" x="4592" y="-968"/>
         </scene>
-        <scene sceneID="kHe-3E-cHP">
+        <scene sceneID="ItE-CK-db2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gAG-M0-e2r" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="nf0-9h-CLQ" customClass="TopPlacesPhotosTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lED-Xt-ChP">
-                        <rect key="frame" x="0.0" y="20" width="320" height="783"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5eI-x6-sN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBarController title="Top Photos" id="dcP-ml-Dde" customClass="TopPlacesPhotoGenericTabBarController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="fHx-0p-0Pc">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="l6h-Jy-YJZ" kind="relationship" relationship="viewControllers" id="tEq-Zr-14F"/>
+                        <segue destination="F3c-SD-sfr" kind="relationship" relationship="viewControllers" id="IgA-16-1V4"/>
+                    </connections>
+                </tabBarController>
+            </objects>
+            <point key="canvasLocation" x="2306" y="-384"/>
+        </scene>
+        <scene sceneID="Dgw-Ad-HHo">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hFc-KZ-TLH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="m6h-nJ-jsP" customClass="TopPlacesPhotosTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="NP9-jp-5ft">
+                        <rect key="frame" x="0.0" y="64" width="320" height="655"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Photo Cell" textLabel="dog-e0-0oL" detailTextLabel="sZg-A3-Pv1" style="IBUITableViewCellStyleSubtitle" id="fae-6c-uIg">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Photo Cell" textLabel="Jyx-8X-CvV" detailTextLabel="whd-hH-rnn" style="IBUITableViewCellStyleSubtitle" id="LNt-NL-UK1">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dog-e0-0oL">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jyx-8X-CvV">
                                             <rect key="frame" x="10" y="2" width="38" height="22"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sZg-A3-Pv1">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="whd-hH-rnn">
                                             <rect key="frame" x="10" y="24" width="47" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -215,25 +244,39 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="nf0-9h-CLQ" id="jNK-Iy-HZm"/>
-                            <outlet property="delegate" destination="nf0-9h-CLQ" id="ICA-Bi-IUS"/>
+                            <outlet property="dataSource" destination="m6h-nJ-jsP" id="20h-Cl-Tej"/>
+                            <outlet property="delegate" destination="m6h-nJ-jsP" id="odI-pl-IQC"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Item" image="42-photos.png" id="mDI-Tk-Szv"/>
-                    <navigationItem key="navigationItem" title="Recent Photos" id="UMP-fa-afy">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="uqB-MG-qWU">
+                    <navigationItem key="navigationItem" title="All Top Photos" id="uok-Ml-PLo">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="WZW-Bj-hOO">
                             <connections>
-                                <action selector="refresh:" destination="nf0-9h-CLQ" id="MSg-Nm-HEn"/>
+                                <action selector="refresh:" destination="m6h-nJ-jsP" id="1Kq-KK-8T8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
-                    <connections>
-                        <segue destination="g77-XO-4Jc" kind="push" id="9bB-YE-gcd"/>
-                    </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="2334" y="178"/>
+            <point key="canvasLocation" x="4083" y="346"/>
+        </scene>
+        <scene sceneID="24b-Pk-IXv">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HKI-BO-Hjn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="F3c-SD-sfr" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="All Top Photos" image="42-photos.png" id="ICl-pI-e4l"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="fqI-2p-P7s">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="m6h-nJ-jsP" kind="relationship" relationship="rootViewController" id="pbv-kA-KCe"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="3557" y="346"/>
         </scene>
     </scenes>
     <resources>
@@ -241,6 +284,17 @@
         <image name="42-photos.png" width="22" height="24"/>
     </resources>
     <classes>
+        <class className="TopPlacesPhotoGenericTabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoGenericTabBarController.h"/>
+        </class>
+        <class className="TopPlacesPhotoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="photoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="photoScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
         <class className="TopPlacesPhotosForPlaceTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosForPlaceTableViewController.h"/>
         </class>
@@ -256,7 +310,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="aRj-8H-XzV"/>
-    </inferredMetricsTieBreakers>
 </document>
