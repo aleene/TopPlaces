@@ -95,13 +95,17 @@
             // add this array to the country dictionary
             [countriesDict setValue:placesInCountry forKey:[placeName lastObject]];
         }
-    }    ;    // now convert from the dictionary of countries to an array countries
-    NSEnumerator *enumerator = [countriesDict keyEnumerator];    
-    id key;
-    while(key = [enumerator nextObject]) {
+    }    ;    
+    
+    // now convert from the dictionary of countries to a sorted array of countries
+    NSArray *sortedKeys = [[NSArray alloc] initWithArray:[countriesDict allKeys]];  // get the countries
+    sortedKeys = [sortedKeys sortedArrayUsingSelector:@selector(compare:)];         // sort the countries
+
+    for(NSString *key in sortedKeys) {                                              // loop over all countries
         NSArray *placesInCountry = [countriesDict valueForKey:key];
-        [self.countries addObject:placesInCountry];
+        [self.countries addObject:placesInCountry];                                 // create the places in the array
     }
+    
     self.navigationItem.rightBarButtonItem = currentButton;
     self.places = places;
 }
