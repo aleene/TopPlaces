@@ -64,9 +64,6 @@
             
             // Assignment 4 - task 7
             self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
-            // instructions from lecture 8
-            self.photoScrollView.contentSize = self.photoImageView.image.size;
-            self.photoImageView.frame = CGRectMake(0, 0, self.photoImageView.image.size.width, self.photoImageView.image.size.height);
         } else {
             self.photoTitle = @"no photo retrieved";
         }
@@ -89,9 +86,6 @@
     [super viewDidLoad];
     // instruction from lecture 8
     self.photoScrollView.delegate = self;
-    self.photoScrollView.contentMode = UIViewContentModeScaleToFill;
-    self.photoScrollView.contentSize = self.photoImageView.image.size;
-    
     // get the actual photo now that the view is loading
     [self retrievePhoto];
     
