@@ -105,6 +105,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
+    // I do not really want this data here
     NSDictionary *photo = [self.flickrPhotos objectAtIndex:indexPath.row];
     
     NSString *title = [photo valueForKey:FLICKR_PHOTO_TITLE];

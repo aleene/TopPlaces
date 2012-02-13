@@ -60,55 +60,63 @@
     // get rid of the previous country list
     [self.countries removeAllObjects];
     // get the top places from flickr
-    NSArray *places = [FlickrFetcher topPlaces];
-    // did we get something back from Flickr?
-    if (!places) {
-        UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
-                                                                    message:@"Trouble getting images from Flickr" 
-                                                                   delegate:nil 
-                                                          cancelButtonTitle:@"To bad" 
-                                                          otherButtonTitles:nil];
-        [noImagesAlertView show];
-    }
+    dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
+    dispatch_async(downloadQueue, ^{
+        NSArray *places = [FlickrFetcher topPlaces];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // did we get something back from Flickr?
+            if (!places) {
+                UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
+                                                                            message:@"Trouble getting images from Flickr" 
+                                                                           delegate:nil 
+                                                                  cancelButtonTitle:@"To bad" 
+                                                                  otherButtonTitles:nil];
+                [noImagesAlertView show];
+            }
+            
+            // I have to calculate the number of sections in this places array
+            // And assign each place to a section
+            // each ection will be a country
+            // create a multable dictionary to store countries.
+            NSMutableDictionary *countriesDict = [[NSMutableDictionary alloc] init];
+            // each country will contain a dictionary with an array with places
+            // loop over all places in the array
+            for (NSDictionary *place in places) {
+                // cut the place name in its parts
+                NSArray *placeName = [self placeNameParts:[place objectForKey:FLICKR_PLACE_NAME]];
+                
+                // is this country already in the Array?
+                if ([countriesDict objectForKey:[placeName lastObject]]) {
+                    // get the array with places for this country
+                    NSMutableArray *placesInCountry = [countriesDict valueForKey:[placeName lastObject]];
+                    // add the current place to the placesInCountry array
+                    [placesInCountry addObject:place];
+                }
+                // this country is not yet in the dictionary
+                else {
+                    // create a new array for this country with this place as a start
+                    NSMutableArray *placesInCountry = [[NSMutableArray alloc] initWithObjects:place, nil];
+                    // add this array to the country dictionary
+                    [countriesDict setValue:placesInCountry forKey:[placeName lastObject]];
+                }
+            }    ;    
+            
+            // now convert from the dictionary of countries to a sorted array of countries
+            NSArray *sortedKeys = [[NSArray alloc] initWithArray:[countriesDict allKeys]];  // get the countries
+            sortedKeys = [sortedKeys sortedArrayUsingSelector:@selector(compare:)];         // sort the countries
+            
+            for(NSString *key in sortedKeys) {                                              // loop over all countries
+                NSArray *placesInCountry = [countriesDict valueForKey:key];
+                [self.countries addObject:placesInCountry];                                 // create the places in the array
+            }
+            
+            self.navigationItem.rightBarButtonItem = currentButton;
+            self.places = places;
 
-    // I have to calculate the number of sections in this places array
-    // And assign each place to a section
-    // each ection will be a country
-    // create a multable dictionary to store countries.
-    NSMutableDictionary *countriesDict = [[NSMutableDictionary alloc] init];
-    // each country will contain a dictionary with an array with places
-    // loop over all places in the array
-    for (NSDictionary *place in places) {
-        // cut the place name in its parts
-        NSArray *placeName = [self placeNameParts:[place objectForKey:FLICKR_PLACE_NAME]];
-        
-        // is this country already in the Array?
-        if ([countriesDict objectForKey:[placeName lastObject]]) {
-            // get the array with places for this country
-            NSMutableArray *placesInCountry = [countriesDict valueForKey:[placeName lastObject]];
-            // add the current place to the placesInCountry array
-            [placesInCountry addObject:place];
-        }
-        // this country is not yet in the dictionary
-        else {
-            // create a new array for this country with this place as a start
-            NSMutableArray *placesInCountry = [[NSMutableArray alloc] initWithObjects:place, nil];
-            // add this array to the country dictionary
-            [countriesDict setValue:placesInCountry forKey:[placeName lastObject]];
-        }
-    }    ;    
-    
-    // now convert from the dictionary of countries to a sorted array of countries
-    NSArray *sortedKeys = [[NSArray alloc] initWithArray:[countriesDict allKeys]];  // get the countries
-    sortedKeys = [sortedKeys sortedArrayUsingSelector:@selector(compare:)];         // sort the countries
+        });
+    });
+    dispatch_release(downloadQueue);
 
-    for(NSString *key in sortedKeys) {                                              // loop over all countries
-        NSArray *placesInCountry = [countriesDict valueForKey:key];
-        [self.countries addObject:placesInCountry];                                 // create the places in the array
-    }
-    
-    self.navigationItem.rightBarButtonItem = currentButton;
-    self.places = places;
 }
 
 - (void)viewDidAppear:(BOOL)animated

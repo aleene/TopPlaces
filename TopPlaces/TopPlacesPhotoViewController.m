@@ -55,24 +55,29 @@
    
 - (void)retrievePhoto {
     if (self.photo) {
-        NSURL *photoURL = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
-        NSData *photoData = [[NSData alloc] initWithContentsOfURL:photoURL];
-        if (photoData) {
-            UIImage *image = [[UIImage alloc] initWithData:photoData];
-            [self.photoImageView setImage:image];
-            // reset zoom and contentMode when loading a new photo
-            self.photoScrollView.zoomScale = 1.0;
-            self.photoImageView.contentMode = UIViewContentModeScaleAspectFit;
-            self.photoScrollView.contentMode = UIViewContentModeScaleAspectFit;
-            
-            // Assignment 4 - task 7
-            self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
-        } else {
-            self.photoTitle = @"no photo retrieved";
-        }
-    } else {
-        self.photoTitle = @"no photo selected";
-    }
+        dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
+        dispatch_async(downloadQueue, ^{
+            NSURL *photoURL = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSData *photoData = [[NSData alloc] initWithContentsOfURL:photoURL];    
+                if (photoData) {
+                    UIImage *image = [[UIImage alloc] initWithData:photoData];
+                    [self.photoImageView setImage:image];
+                    // reset zoom and contentMode when loading a new photo
+                    self.photoScrollView.zoomScale = 1.0;
+                    self.photoImageView.contentMode = UIViewContentModeScaleAspectFit;
+                    self.photoScrollView.contentMode = UIViewContentModeScaleAspectFit;
+                    
+                    // Assignment 4 - task 7
+                    self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
+                } 
+                else self.photoTitle = @"no photo retrieved";
+            });
+        });
+        dispatch_release(downloadQueue);
+    } 
+    else self.photoTitle = @"no photo selected";
+
 }
 
 //  This one was added for the iPad splitview
