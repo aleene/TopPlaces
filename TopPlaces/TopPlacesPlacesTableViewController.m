@@ -65,7 +65,8 @@
     if (!places) {
         UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
                                                                     message:@"Trouble getting images from Flickr" 
-                                                                   delegate:nil cancelButtonTitle:@"To bad" 
+                                                                   delegate:nil 
+                                                          cancelButtonTitle:@"To bad" 
                                                           otherButtonTitles:nil];
         [noImagesAlertView show];
     }

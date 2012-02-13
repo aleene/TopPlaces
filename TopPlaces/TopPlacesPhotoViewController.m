@@ -46,7 +46,6 @@
     
     // title for the iPad
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
-//    NSLog(@"%i", [toolbarItems count]);
     // assume we use the button before the last
     UIBarButtonItem *titleButton = [toolbarItems objectAtIndex:[toolbarItems count]-2];
     titleButton.title = _photoTitle;
@@ -61,6 +60,10 @@
         if (photoData) {
             UIImage *image = [[UIImage alloc] initWithData:photoData];
             [self.photoImageView setImage:image];
+            // reset zoom and contentMode when loading a new photo
+            self.photoScrollView.zoomScale = 1.0;
+            self.photoImageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.photoScrollView.contentMode = UIViewContentModeScaleAspectFit;
             
             // Assignment 4 - task 7
             self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
