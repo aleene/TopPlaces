@@ -15,17 +15,23 @@
 
 @synthesize place = _place;
 
-- (NSArray *)getPhotoList
-{
-    NSArray *photosFound = [FlickrFetcher photosInPlace:self.place maxResults:10];
-    return [photosFound copy];
-}
-
 - (void)refresh 
-{
-    NSArray *photosFound = [self getPhotoList];
-    self.flickrPhotos = photosFound;
+{    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 
+    dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
+    dispatch_async(downloadQueue, ^{
+        NSArray *photosFound = [FlickrFetcher photosInPlace:self.place maxResults:10];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.flickrPhotos = photosFound;
+        });
+    });
+    dispatch_release(downloadQueue);
+    
+    self.navigationItem.rightBarButtonItem = currentButton;
     // Set the title of this viewcontroller
     NSString *placeName = [self.place valueForKey:FLICKR_PLACE_NAME];
     self.title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
