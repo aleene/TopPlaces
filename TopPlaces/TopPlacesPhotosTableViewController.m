@@ -30,32 +30,37 @@
     return gvc; 
 }
 
-- (NSArray *)getPhotoList
-{
-    NSArray *photosFound = [FlickrFetcher recentGeoreferencedPhotos];
-    return [photosFound copy];
-}
-
 - (void)refresh
 {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
-    NSArray *photosFound = [self getPhotoList];
-    if (!photosFound) {
-        UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
-                                                                    message:@"Trouble getting images from Flickr" 
-                                                                   delegate:nil 
-                                                          cancelButtonTitle:@"To bad" 
-                                                          otherButtonTitles:nil];
-        [noImagesAlertView show];
-    }
-    self.navigationItem.rightBarButtonItem = currentButton;
-    self.flickrPhotos = photosFound;
+    UIBarButtonItem *testButton = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    self.navigationItem.rightBarButtonItem = testButton;
+    
+    dispatch_queue_t topPhotosQueue = dispatch_queue_create("top photos queue", NULL);
+    dispatch_async(topPhotosQueue, ^{
+        
+        NSArray *photosFound = [FlickrFetcher recentGeoreferencedPhotos];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (!photosFound) {
+                UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
+                                                                            message:@"Trouble getting images from Flickr" 
+                                                                           delegate:nil 
+                                                                  cancelButtonTitle:@"To bad" 
+                                                                  otherButtonTitles:nil];
+                [noImagesAlertView show];
+            }
+            self.flickrPhotos = photosFound;
+            self.navigationItem.rightBarButtonItem = currentButton;
+        });
+    });
+    dispatch_release(topPhotosQueue);
+    
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self refresh];

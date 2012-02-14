@@ -19,19 +19,27 @@
 {    
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
-    UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    UIBarButtonItem *spinnerButton = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 
-    dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
-    dispatch_async(downloadQueue, ^{
-        NSArray *photosFound = [FlickrFetcher photosInPlace:self.place maxResults:10];
+    UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = spinnerButton;
+
+    dispatch_queue_t placePhotosQueue = dispatch_queue_create("place photos queue", NULL);
+    dispatch_async(placePhotosQueue, ^{
+        NSMutableArray *photosFound = [NSMutableArray alloc];
+        if (self.place) {
+            photosFound = [photosFound initWithArray:[FlickrFetcher photosInPlace:self.place maxResults:20]];
+        } else
+        {
+            photosFound = nil;
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.rightBarButtonItem = currentButton;
             self.flickrPhotos = photosFound;
         });
     });
-    dispatch_release(downloadQueue);
+    dispatch_release(placePhotosQueue);
     
-    self.navigationItem.rightBarButtonItem = currentButton;
     // Set the title of this viewcontroller
     NSString *placeName = [self.place valueForKey:FLICKR_PLACE_NAME];
     self.title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
@@ -41,15 +49,14 @@
 {
     if (self.place) {
         [self refresh];
+        NSLog(@"via Refresh:");
     }
 }
-
 
 - (void)setPlace:(NSDictionary *)place
 {
     if (place != _place) {
         _place = place;
-        [self refresh];
     }
 }
 

@@ -55,26 +55,44 @@
    
 - (void)retrievePhoto {
     if (self.photo) {
-        dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
-        dispatch_async(downloadQueue, ^{
-            NSURL *photoURL = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
-            dispatch_async(dispatch_get_main_queue(), ^{
+        // get the current toolbar items
+        NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+        UIBarButtonItem *lastButton = [toolbarItems lastObject];
+        
+        // only retrieve another photo when the first is done
+        // not sure whether this is the right choice
+        if (!([lastButton.customView isKindOfClass:[UIActivityIndicatorView class]])) {
+            NSLog(@"#items %i", [toolbarItems count]);
+            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            [spinner startAnimating];
+            UIBarButtonItem *spinnerButton = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+            
+            [toolbarItems addObject:spinnerButton];
+            self.toolbar.items = toolbarItems;
+            //  I could prohibit loading mu
+            dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
+            dispatch_async(downloadQueue, ^{
+                NSURL *photoURL = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
                 NSData *photoData = [[NSData alloc] initWithContentsOfURL:photoURL];    
-                if (photoData) {
-                    UIImage *image = [[UIImage alloc] initWithData:photoData];
-                    [self.photoImageView setImage:image];
-                    // reset zoom and contentMode when loading a new photo
-                    self.photoScrollView.zoomScale = 1.0;
-                    self.photoImageView.contentMode = UIViewContentModeScaleAspectFit;
-                    self.photoScrollView.contentMode = UIViewContentModeScaleAspectFit;
-                    
-                    // Assignment 4 - task 7
-                    self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
-                } 
-                else self.photoTitle = @"no photo retrieved";
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (photoData) {
+                        UIImage *image = [[UIImage alloc] initWithData:photoData];
+                        [self.photoImageView setImage:image];
+                        // reset zoom and contentMode when loading a new photo
+                        self.photoScrollView.zoomScale = 1.0;
+                        self.photoImageView.contentMode = UIViewContentModeScaleAspectFit;
+                        self.photoScrollView.contentMode = UIViewContentModeScaleAspectFit;
+                        
+                        // Assignment 4 - task 7
+                        self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
+                    } 
+                    else self.photoTitle = @"no photo retrieved";
+                    [toolbarItems removeLastObject];
+                    self.toolbar.items = toolbarItems;
+                });
             });
-        });
-        dispatch_release(downloadQueue);
+            dispatch_release(downloadQueue);
+        }
     } 
     else self.photoTitle = @"no photo selected";
 

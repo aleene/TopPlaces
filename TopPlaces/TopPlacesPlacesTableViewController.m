@@ -26,12 +26,14 @@
 @synthesize selectedFlickrPlace = _selectedFlickrPlace;
 @synthesize countries = _countries;
 
-- (NSMutableArray *)countries {
+- (NSMutableArray *)countries
+{
     if (!_countries) {
         _countries = [[NSMutableArray alloc] init];
     }
     return _countries;
 }
+
 - (NSArray *)placeNameParts:(NSString *)place
 {
     // extract the place name parts
@@ -47,21 +49,15 @@
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
-    UIBarButtonItem *testButton = [[UIBarButtonItem alloc] init];
-    testButton.title = @"test";
-//    self.navigationItem.rightBarButtonItem = ;
+    UIBarButtonItem *testButton = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     self.navigationItem.rightBarButtonItem = testButton;
-    // probleem is dat er niets aan de presentatie veranderd
-    // kan de button zelfs niet verwijderen
-    // de inhoud van de buttons klopt
-    // aan het eind van deze method is inderdaad wel de button verwijderd
-    // de vraag wordt dus waar ik dit moet aanpassen
-    
+
     // get rid of the previous country list
     [self.countries removeAllObjects];
+    
     // get the top places from flickr
-    dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
-    dispatch_async(downloadQueue, ^{
+    dispatch_queue_t topPlacesQueue = dispatch_queue_create("topplaces queue", NULL);
+    dispatch_async(topPlacesQueue, ^{
         NSArray *places = [FlickrFetcher topPlaces];
         dispatch_async(dispatch_get_main_queue(), ^{
             // did we get something back from Flickr?
@@ -110,12 +106,12 @@
                 [self.countries addObject:placesInCountry];                                 // create the places in the array
             }
             
+            // put the previous button back
             self.navigationItem.rightBarButtonItem = currentButton;
             self.places = places;
-
         });
     });
-    dispatch_release(downloadQueue);
+    dispatch_release(topPlacesQueue);
 
 }
 
@@ -123,6 +119,7 @@
 {
     [super viewDidAppear:YES];
     [self refresh];
+
     
 }
 
