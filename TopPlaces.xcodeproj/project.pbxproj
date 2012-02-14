@@ -24,6 +24,7 @@
 		51E44DC614D82DA700811C9F /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51E44DC414D82DA700811C9F /* MainStoryboard_iPhone.storyboard */; };
 		51E44DC914D82DA700811C9F /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51E44DC714D82DA700811C9F /* MainStoryboard_iPad.storyboard */; };
 		51E44DD514D82DD000811C9F /* FlickrFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 51E44DD414D82DD000811C9F /* FlickrFetcher.m */; };
+		51FF3D0014EA9DB200DDA98C /* TopPlacesPhotoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 51FF3CFF14EA9DB200DDA98C /* TopPlacesPhotoCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,8 @@
 		51E44DD214D82DD000811C9F /* FlickrAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrAPIKey.h; sourceTree = "<group>"; };
 		51E44DD314D82DD000811C9F /* FlickrFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrFetcher.h; sourceTree = "<group>"; };
 		51E44DD414D82DD000811C9F /* FlickrFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrFetcher.m; sourceTree = "<group>"; };
+		51FF3CFE14EA9DB200DDA98C /* TopPlacesPhotoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotoCache.h; sourceTree = "<group>"; };
+		51FF3CFF14EA9DB200DDA98C /* TopPlacesPhotoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotoCache.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +105,8 @@
 		51E44DB814D82DA700811C9F /* TopPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				51FF3CFE14EA9DB200DDA98C /* TopPlacesPhotoCache.h */,
+				51FF3CFF14EA9DB200DDA98C /* TopPlacesPhotoCache.m */,
 				512F5CBD14DC2BF900D8A5B4 /* SplitViewBarButtonItemPresenter.h */,
 				512F5CA314DBD26E00D8A5B4 /* TopPlacesPhotoViewController.h */,
 				512F5CA414DBD26E00D8A5B4 /* TopPlacesPhotoViewController.m */,
@@ -214,6 +219,7 @@
 				516EF08614DAC4E900C1B239 /* TopPlacesPhotosForPlaceTableViewController.m in Sources */,
 				512F5CA514DBD26F00D8A5B4 /* TopPlacesPhotoViewController.m in Sources */,
 				51C28D9114E00DD000BF7B53 /* TopPlacesPhotoGenericTabBarController.m in Sources */,
+				51FF3D0014EA9DB200DDA98C /* TopPlacesPhotoCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

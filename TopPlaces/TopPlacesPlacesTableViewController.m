@@ -109,6 +109,7 @@
             // put the previous button back
             self.navigationItem.rightBarButtonItem = currentButton;
             self.places = places;
+            NSLog(@"Number of countries found: %i", [self.places count]);
         });
     });
     dispatch_release(topPlacesQueue);
