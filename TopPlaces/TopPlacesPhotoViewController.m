@@ -95,15 +95,13 @@
                 dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
                 dispatch_async(downloadQueue, ^{
                     NSURL *photoURL = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
-                    
-                    // retrieve the photo only if it is not in the cache
-                    // check if there is a cache, if not create one
-                    // check if the photo is in the cache
-                    // get photo from chache or network
-                    // if the photo is not yet in the cache put it in in
-                    // if size chache large than 10 MB, remove last object
                     NSData *photoData = [[NSData alloc] initWithContentsOfURL:photoURL];
-                    [self.cache put:photoData for:self.photo];
+                    
+                    dispatch_queue_t writeQueue = dispatch_queue_create("cache photo", NULL);       // do the caching in a separate thread
+                    dispatch_async(writeQueue, ^{
+                        [self.cache put:photoData for:self.photo];   
+                    });
+                    dispatch_release(writeQueue);
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (photoData) {
@@ -114,11 +112,11 @@
                             self.photoImageView.contentMode = UIViewContentModeScaleAspectFit;
                             self.photoScrollView.contentMode = UIViewContentModeScaleAspectFit;
                             
-                            // Assignment 4 - task 7
                             self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
                         } 
-                        else self.photoTitle = @"no photo retrieved";
-                        [toolbarItems removeLastObject];
+                        else self.photoTitle = @"no photo retrieved";                // just a fail safe
+                        
+                        [toolbarItems removeLastObject];                        // reset the toolbar as the file has been retrieved
                         self.toolbar.items = toolbarItems;
                     });
                 });
@@ -127,8 +125,7 @@
         }
         
     } 
-    else self.photoTitle = @"no photo selected";
-
+    else self.photoTitle = @"no photo selected";                // just a fail safe
 }
 
 //  This one was added for the iPad splitview
