@@ -11,38 +11,44 @@
 
 @interface TopPlacesPhotoCache()
 
+@property (nonatomic, strong)NSString *cachePath;
+
 @end
 
 @implementation TopPlacesPhotoCache
 
+@synthesize cachePath = _cachePath;
+
 #define FILETYPE @".jpg"
+#define FILEPREFIX @"Fl1ckr_"
+#define MAXIMUM_CACHE_SIZE 8000000 // in Bytes
+
+- (NSString *)cachePath
+{
+    if (!_cachePath) {
+    NSArray *cachePaths = [[NSArray alloc] initWithArray:NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)];
+        _cachePath =[NSString stringWithFormat:@"%@",[cachePaths objectAtIndex:0]];
+    }
+    return _cachePath;
+}
 
 - (NSString *)pathForPhoto:(NSDictionary *)photo 
 {
+    // create a unique photo_identifier, so I can find it back
     NSString *photoIdentifier = [[photo valueForKey:FLICKR_PHOTO_ID] stringByAppendingString:FILETYPE];
-    NSLog(@"photo id: %@", photoIdentifier);
-    NSArray *cachePaths = [[NSArray alloc] initWithArray:NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)];
-    NSString *photoPath = [[cachePaths objectAtIndex:0] stringByAppendingString:@"/"];
-    photoPath = [photoPath stringByAppendingString:photoIdentifier];
-    return photoPath;
+    photoIdentifier = [FILEPREFIX stringByAppendingString:photoIdentifier];
+//    NSLog(@"photo id: %@", photoIdentifier);
+    return [self.cachePath stringByAppendingPathComponent:photoIdentifier];
 }
 
 - (BOOL)contains:(NSDictionary *)photo;
 {
 
-    NSFileManager *filemanager = [NSFileManager defaultManager];
     BOOL photoExists = NO;
     NSArray *cachePaths = [[NSArray alloc] initWithArray:NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)];
 
+    // check if there is a cache directory
     if ([cachePaths count] >= 1) {
-        NSDirectoryEnumerator *dirEnum =
-        [filemanager enumeratorAtPath:[cachePaths objectAtIndex:0]];
-        
-        NSString *file;
-        while (file = [dirEnum nextObject]) {
-            NSLog(@"file: %@", file);
-        }
-        NSLog(@"%@", [self pathForPhoto:photo]);
         photoExists = [[NSFileManager defaultManager] isReadableFileAtPath:[self pathForPhoto:photo]];
         
     } else
@@ -58,10 +64,78 @@
     return photoData;
 }
 
+- (NSDictionary *)fileAttributesForCacheFile:(NSString *)fileName
+{
+    return [[NSFileManager defaultManager] attributesOfItemAtPath:[self.cachePath stringByAppendingPathComponent:fileName] error:nil];
+}
+
+- (int)directorySizeForPath:(NSString *)directoryPath
+{
+    int directorySize = 0;                                                              // determine the size of the entire cache directory
+    NSString *fileName;
+    
+    NSArray *filesArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:self.cachePath error:nil]; // get the files in the directory
+    
+    NSEnumerator *filesEnumator = [filesArray objectEnumerator];
+    // loop over all files in the directory and summ the file sizes
+    while (fileName = [filesEnumator nextObject]) {
+        directorySize += [[self fileAttributesForCacheFile:fileName] fileSize];
+    }
+
+    return directorySize;
+}
+
+- (void)pruneCacheForPhoto:(NSData *)photoData
+{
+    int dataSize = [photoData length];                                                  // size of the file to write in Bytes
+    
+    
+    int currentDirectorySize = [self directorySizeForPath:self.cachePath];
+    
+    if ((currentDirectorySize + dataSize) > MAXIMUM_CACHE_SIZE)                                // do I need to make space?
+    {
+        NSString *fileName;
+        
+        NSArray *filesArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:self.cachePath error:nil]; // get the files in the directory
+        NSMutableArray *filesWithProperties = [[NSMutableArray alloc] initWithCapacity:[filesArray count]]; // prepare an array with a directory for each file
+        
+        NSEnumerator *filesEnumator = [filesArray objectEnumerator];
+        // loop over all files in the directory and summ the file sizes
+        while (fileName = [filesEnumator nextObject]) {
+                        
+            if ([fileName hasSuffix:FILETYPE])                                              // check if this is an image (should check the FILEPREFIX as well)
+            {
+                [filesWithProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:fileName, @"filePath",[[self fileAttributesForCacheFile:fileName] fileModificationDate], @"lastModDate", nil]];
+            }
+        }
+
+                                                                                        // create an array sorted by file modification dates
+        NSArray *invertedSortedFiles = [[NSArray alloc] initWithArray:[filesWithProperties sortedArrayUsingComparator:^(id path1, id path2)
+                                        {                               
+                                            return [[path1 objectForKey:@"lastModDate"] compare:[path2 objectForKey:@"lastModDate"]];                          
+                                        }]];
+        NSDictionary *fileObject;
+        for (fileObject in invertedSortedFiles)                                         // loop over all fileOjects
+        {
+//            NSLog(@"dir size %i %i", currentDirectorySize, dataSize);
+//            NSLog(@"found:: %@ %@", [fileObject valueForKey:@"filePath"], [[fileObject valueForKey:@"lastModDate"] description]);
+
+            if ((currentDirectorySize + dataSize) > MAXIMUM_CACHE_SIZE)                        // do I need to make place
+            {
+//                NSLog(@"delete:: %@ %@", [fileObject valueForKey:@"filePath"], [[fileObject valueForKey:@"lastModDate"] description]);
+
+                [[NSFileManager defaultManager] removeItemAtPath:[self.cachePath stringByAppendingPathComponent:[fileObject valueForKey:@"filePath"]] error:nil];   // remove file
+                currentDirectorySize = [self directorySizeForPath:self.cachePath];
+            }
+        }
+    }
+}
+
 - (void)put:(NSData *)photoData for:(NSDictionary *)photo
 {
-    // convert the photo_id to a filename for the cache
-    // put the data under that file name for the path of the cache
+    
+    [self pruneCacheForPhoto:photoData];                                             // is there enough space for this photo?
+    
     if (![self contains:photo])
     {
         // write photo (jave to check the sie of the directory)
