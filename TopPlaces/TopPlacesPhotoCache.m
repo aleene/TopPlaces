@@ -89,10 +89,9 @@
 {
     int dataSize = [photoData length];                                                  // size of the file to write in Bytes
     
+    int currentDirectorySize = [self directorySizeForPath:self.cachePath];              // size of the Cache Directory
     
-    int currentDirectorySize = [self directorySizeForPath:self.cachePath];
-    
-    if ((currentDirectorySize + dataSize) > MAXIMUM_CACHE_SIZE)                                // do I need to make space?
+    if ((currentDirectorySize + dataSize) > MAXIMUM_CACHE_SIZE)                         // do I need to make space?
     {
         NSString *fileName;
         
@@ -108,7 +107,7 @@
                 [filesWithProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:fileName, @"filePath",[[self fileAttributesForCacheFile:fileName] fileModificationDate], @"lastModDate", nil]];
             }
         }
-
+        // inspiration http://stackoverflow.com/questions/1523793/get-directory-contents-in-date-modified-order
                                                                                         // create an array sorted by file modification dates
         NSArray *invertedSortedFiles = [[NSArray alloc] initWithArray:[filesWithProperties sortedArrayUsingComparator:^(id path1, id path2)
                                         {                               
@@ -128,18 +127,17 @@
                 currentDirectorySize = [self directorySizeForPath:self.cachePath];
             }
         }
+        // what happens when the other files in the cache take to much space?
     }
 }
 
 - (void)put:(NSData *)photoData for:(NSDictionary *)photo
 {
-    
-    [self pruneCacheForPhoto:photoData];                                             // is there enough space for this photo?
-    
-    if (![self contains:photo])
+    if (![self contains:photo])                                                          // is the photo already in the Cache?
     {
-        // write photo (jave to check the sie of the directory)
-        [photoData writeToFile:[self pathForPhoto:photo] atomically:YES];
+        [self pruneCacheForPhoto:photoData];                                             // is there enough space for this photo?
+       
+        [photoData writeToFile:[self pathForPhoto:photo] atomically:YES];                // write photo
     }
 }
 

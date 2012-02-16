@@ -57,18 +57,14 @@
     // title for the iPad
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
     // assume we use the button before the last
-    NSLog(@"%i",[toolbarItems count]);
-//    UIBarButtonItem *titleButton = [toolbarItems objectAtIndex:[toolbarItems count]-2];
-//    titleButton.title = _photoTitle;
+    UIBarButtonItem *titleButton = [toolbarItems objectAtIndex:[toolbarItems count]-2];
+    titleButton.title = _photoTitle;
     // title for the iPhone
     self.title = _photoTitle;
 }
    
 - (void)retrievePhoto {
     if (self.photo) {
-        // get the current toolbar items
-        NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
-        UIBarButtonItem *lastButton = [toolbarItems lastObject];
         if ([self.cache contains:self.photo]) {
             NSData *photoData = [self.cache retrieve:self.photo];
             if (photoData) {
@@ -78,15 +74,14 @@
                 self.photoScrollView.zoomScale = 1.0;
                 self.photoImageView.contentMode = UIViewContentModeScaleAspectFit;
                 self.photoScrollView.contentMode = UIViewContentModeScaleAspectFit;
-                
-                // Assignment 4 - task 7
                 self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
             } 
             else self.photoTitle = @"no photo retrieved";
-            [toolbarItems removeLastObject];
-            self.toolbar.items = toolbarItems;
         }
         else {
+            // get the current toolbar items
+            NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+            UIBarButtonItem *lastButton = [toolbarItems lastObject];
             // only retrieve another photo when the first is done loading (or is not in the cache)
             // not sure whether this is the right choice
             if (!([lastButton.customView isKindOfClass:[UIActivityIndicatorView class]])) {
