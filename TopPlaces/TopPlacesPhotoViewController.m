@@ -54,7 +54,7 @@
     else
         _photoTitle = photoTitle;
     
-    // title for the iPad
+    // title for the iPad (WHY DOES THIS WORK FOR THE IPOD?)
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
     // assume we use the button before the last
     UIBarButtonItem *titleButton = [toolbarItems objectAtIndex:[toolbarItems count]-2];
@@ -79,9 +79,19 @@
             else self.photoTitle = @"no photo retrieved";
         }
         else {
+            UIBarButtonItem *lastButton;
+            NSMutableArray *toolbarItems;
+            // do we have a toolbar available?
+            if (self.toolbar) {                                                         // the iPad has a toolbar
+                toolbarItems = [self.toolbar.items mutableCopy];
+                lastButton = [toolbarItems lastObject];
+            } 
+            else if (self.navigationItem)                                                                  // the iPod has a navigationbar
+            {
+                lastButton = [self.navigationItem rightBarButtonItem];
+            }
+
             // get the current toolbar items
-            NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
-            UIBarButtonItem *lastButton = [toolbarItems lastObject];
             // only retrieve another photo when the first is done loading (or is not in the cache)
             // not sure whether this is the right choice
             if (!([lastButton.customView isKindOfClass:[UIActivityIndicatorView class]])) {
@@ -89,8 +99,16 @@
                 [spinner startAnimating];
                 UIBarButtonItem *spinnerButton = [[UIBarButtonItem alloc] initWithCustomView:spinner];
                 
-                [toolbarItems addObject:spinnerButton];
-                self.toolbar.items = toolbarItems;
+                // do we have a toolbar available?
+                if (self.toolbar) {                                                         // the iPad has a toolbar
+                    [toolbarItems addObject:spinnerButton];
+                    self.toolbar.items = toolbarItems;
+                } 
+                else if (self.navigationItem)                                                                  // the iPod has a navigationbar
+                {
+                    self.navigationItem.rightBarButtonItem = spinnerButton;
+                }
+
                 
                 dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
                 dispatch_async(downloadQueue, ^{
@@ -116,8 +134,16 @@
                         } 
                         else self.photoTitle = @"no photo retrieved";                // just a fail safe
                         
-                        [toolbarItems removeLastObject];                        // reset the toolbar as the file has been retrieved
-                        self.toolbar.items = toolbarItems;
+                        // do we have a toolbar available?
+                        if (self.toolbar) {                                                         // the iPad has a toolbar
+                            [toolbarItems removeLastObject];                        // reset the toolbar as the file has been retrieved
+                            self.toolbar.items = toolbarItems;
+                        } 
+                        else if (self.navigationItem)                                                                  // the iPod has a navigationbar
+                        {
+                            self.navigationItem.rightBarButtonItem = lastButton;
+                        }
+
                     });
                 });
                 dispatch_release(downloadQueue);
