@@ -44,6 +44,45 @@
     [(UIImageView *)view.leftCalloutAccessoryView setImage:image];
 }
 
+#define REGIONMARGIN 1.1
+- (MKCoordinateRegion)regionForAnnotations:(NSArray *)annotations
+{
+    id <MKAnnotation> annotation = [annotations objectAtIndex:0];
+    double minLongitude = annotation.coordinate.longitude;
+    double maxLongitude = minLongitude;
+    double minLatitude = annotation.coordinate.latitude;
+    double maxLatitude = minLatitude;
+
+    // loop over all annotations to find the mean
+    for (id <MKAnnotation> annotation in annotations) {
+        if (annotation.coordinate.longitude > maxLongitude) {
+            maxLongitude = annotation.coordinate.longitude;
+        }
+        if (annotation.coordinate.longitude < minLongitude) {
+            minLongitude = annotation.coordinate.longitude;
+        }
+        if (annotation.coordinate.latitude > maxLatitude) {
+            maxLatitude = annotation.coordinate.latitude;
+        }
+        if (annotation.coordinate.latitude < minLatitude) {
+            minLatitude = annotation.coordinate.latitude;
+        }
+
+    }
+        
+    // I should set the map region based on the annotations
+    CLLocationCoordinate2D mapCenter;
+    mapCenter.longitude = (maxLongitude - minLongitude)/2 + minLongitude;
+    mapCenter.latitude = (maxLatitude - minLatitude)/2 + minLatitude;
+    MKCoordinateRegion mapRegion;
+    MKCoordinateSpan mapSpan;
+    mapSpan.longitudeDelta = (maxLongitude - minLongitude) * REGIONMARGIN;
+    mapSpan.latitudeDelta = (maxLatitude - minLatitude) * REGIONMARGIN;
+    mapRegion.center = mapCenter;
+    mapRegion.span = mapSpan;
+    return mapRegion;
+}
+
 // keep model and view in sync
 - (void)updateMapView 
 {
@@ -52,6 +91,7 @@
     
     // if I have a list of photos, create annotations for them and add them to the map
     if (self.annotations) {
+        self.mapView.region = [self regionForAnnotations:self.annotations];
         [self.mapView addAnnotations:self.annotations];
     }
 }
