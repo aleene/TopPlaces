@@ -67,9 +67,31 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="cmi-kX-V16">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="re6-yS-g9H">
+                                    <rect key="frame" x="100" y="3" width="121" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" title="Show as Map">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showAsMapPressed" destination="we5-4W-VZl" eventType="touchUpInside" id="uAD-1O-oTm"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PhotosForPlaceCell" textLabel="gGt-A3-zuN" detailTextLabel="806-iq-7YH" style="IBUITableViewCellStyleSubtitle" id="LJO-m4-tOe">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
@@ -99,19 +121,46 @@
                             <outlet property="delegate" destination="we5-4W-VZl" id="mah-W8-YNX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Place Photos" id="Utt-Hj-ggN">
+                    <navigationItem key="navigationItem" title="Photo List" id="Utt-Hj-ggN">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="fpw-Nm-JUo">
                             <connections>
                                 <action selector="refresh:" destination="we5-4W-VZl" id="wiY-KJ-Kyd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo Segue" id="s2n-E7-E3s"/>
+                        <segue destination="j8X-Cn-SPu" kind="push" identifier="Show As Map" id="wHc-z3-DHb"/>
                     </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="434" y="-598"/>
+        </scene>
+        <scene sceneID="vKM-zZ-CUK">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Se-bO-pfs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="j8X-Cn-SPu" customClass="TopPlacesPhotoMapViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hB8-8u-hEr">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="oYp-7k-L2E">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Photo Map" id="vnS-Hv-j3D"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="mapView" destination="oYp-7k-L2E" id="S5Z-ul-cqm"/>
+                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo From Pin" id="hnh-eO-JGn"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1061" y="-861"/>
         </scene>
         <scene sceneID="f1X-oI-BYs">
             <objects>
@@ -145,7 +194,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1061" y="-296"/>
+            <point key="canvasLocation" x="1497" y="-193"/>
         </scene>
         <scene sceneID="QfP-D2-Kc6">
             <objects>
@@ -261,6 +310,12 @@
         <image name="apollo17_earth.tiff" width="3720" height="3796"/>
     </resources>
     <classes>
+        <class className="TopPlacesPhotoMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
         <class className="TopPlacesPhotoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoViewController.h"/>
             <relationships>

@@ -8,8 +8,14 @@
 
 #import "TopPlacesPhotosForPlaceTableViewController.h"
 #import "FlickrFetcher.h"
+#import "FlickrPhotoAnnotation.h"
 #import "TopPlacesPhotoViewController.h"
 #import "TopPlacesPhotosTableViewController.h"
+#import "TopPlacesPhotoMapViewController.h"
+
+@interface TopPlacesPhotosForPlaceTableViewController() <MapViewControllerDelegate>
+
+@end
 
 @implementation TopPlacesPhotosForPlaceTableViewController
 
@@ -52,6 +58,42 @@
         NSLog(@"via Refresh:");
     }
 }
+
+- (IBAction)showAsMapPressed
+{
+    [self performSegueWithIdentifier:@"Show As Map" sender:self];  // go to the corresponding scene
+
+}
+
+- (UIImage *)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender imageForAnnotation:(id <MKAnnotation>)annotation  
+{
+    FlickrPhotoAnnotation *fpa = (FlickrPhotoAnnotation *)annotation;
+    NSURL *url = [FlickrFetcher urlForPhoto:fpa.photo format:FlickrPhotoFormatSquare];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    return data ? [UIImage imageWithData:data] : nil;
+}
+
+- (NSArray *)mapAnnotations
+{
+    NSMutableArray *annotations = [[NSMutableArray alloc]initWithCapacity:[self.flickrPhotos count]]; 
+    for (NSDictionary *photo in self.flickrPhotos) {
+        [annotations addObject:[FlickrPhotoAnnotation annotationForPhoto:photo]];
+    }
+    return annotations;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show As Map"]) {
+        // I pass the list of photos I retrieved already, so I do not need to reload it.
+        [segue.destinationViewController setAnnotations:[self mapAnnotations]];
+        [segue.destinationViewController setDelegate:self];
+    } else if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
+        [super prepareForSegue:segue sender:sender];
+    }
+
+}
+
 
 - (void)setPlace:(NSDictionary *)place
 {

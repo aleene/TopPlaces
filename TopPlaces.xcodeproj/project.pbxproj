@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510AB95214EE629B00483932 /* TopPlacesPhotoMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 510AB95114EE629B00483932 /* TopPlacesPhotoMapViewController.m */; };
+		510AB95514EE7B6300483932 /* FlickrPhotoAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 510AB95414EE7B6300483932 /* FlickrPhotoAnnotation.m */; };
 		512F5CA514DBD26F00D8A5B4 /* TopPlacesPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 512F5CA414DBD26E00D8A5B4 /* TopPlacesPhotoViewController.m */; };
 		5142ED6C14E12E43003597B1 /* apollo17_earth.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5142ED6B14E12E43003597B1 /* apollo17_earth.tiff */; };
 		516EF07914DA843600C1B239 /* TopPlacesPlacesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EF07814DA843600C1B239 /* TopPlacesPlacesTableViewController.m */; };
@@ -30,6 +32,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		510AB95014EE629B00483932 /* TopPlacesPhotoMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotoMapViewController.h; sourceTree = "<group>"; };
+		510AB95114EE629B00483932 /* TopPlacesPhotoMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotoMapViewController.m; sourceTree = "<group>"; };
+		510AB95314EE7B6200483932 /* FlickrPhotoAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; path = FlickrPhotoAnnotation.h; sourceTree = "<group>"; };
+		510AB95414EE7B6300483932 /* FlickrPhotoAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPhotoAnnotation.m; sourceTree = "<group>"; };
 		512F5CA314DBD26E00D8A5B4 /* TopPlacesPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotoViewController.h; sourceTree = "<group>"; };
 		512F5CA414DBD26E00D8A5B4 /* TopPlacesPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotoViewController.m; sourceTree = "<group>"; };
 		512F5CBD14DC2BF900D8A5B4 /* SplitViewBarButtonItemPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewBarButtonItemPresenter.h; sourceTree = "<group>"; };
@@ -113,6 +119,10 @@
 		51E44DB814D82DA700811C9F /* TopPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				510AB95314EE7B6200483932 /* FlickrPhotoAnnotation.h */,
+				510AB95414EE7B6300483932 /* FlickrPhotoAnnotation.m */,
+				510AB95014EE629B00483932 /* TopPlacesPhotoMapViewController.h */,
+				510AB95114EE629B00483932 /* TopPlacesPhotoMapViewController.m */,
 				51FF3CFE14EA9DB200DDA98C /* TopPlacesPhotoCache.h */,
 				51FF3CFF14EA9DB200DDA98C /* TopPlacesPhotoCache.m */,
 				512F5CBD14DC2BF900D8A5B4 /* SplitViewBarButtonItemPresenter.h */,
@@ -228,6 +238,8 @@
 				512F5CA514DBD26F00D8A5B4 /* TopPlacesPhotoViewController.m in Sources */,
 				51C28D9114E00DD000BF7B53 /* TopPlacesPhotoGenericTabBarController.m in Sources */,
 				51FF3D0014EA9DB200DDA98C /* TopPlacesPhotoCache.m in Sources */,
+				510AB95214EE629B00483932 /* TopPlacesPhotoMapViewController.m in Sources */,
+				510AB95514EE7B6300483932 /* FlickrPhotoAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
