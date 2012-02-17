@@ -47,10 +47,8 @@
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control 
 {
-    // is the right gesture given?
-//    if (control.state == UIControlEventTouchUpInside) {
-        [self.delegate topPlacesPhotoMapViewController:self showImageForAnnotation:view.annotation];
-//    }
+    // tell the delegate that the disclosure button has been tapped.
+    [self.delegate topPlacesPhotoMapViewController:self showImageForAnnotation:view.annotation];
 }
 
 #define REGIONMARGIN 1.1

@@ -15,11 +15,13 @@
 
 @interface TopPlacesPhotosForPlaceTableViewController() <MapViewControllerDelegate>
 
+@property (nonatomic, strong) NSDictionary *photo;
 @end
 
 @implementation TopPlacesPhotosForPlaceTableViewController
 
 @synthesize place = _place;
+@synthesize photo = _photo;
 
 // why do I need to copy this from the parent class?
 
@@ -87,9 +89,9 @@
 - (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showImageForAnnotation:(id <MKAnnotation>)annotation
 {
     FlickrPhotoAnnotation *fpa = (FlickrPhotoAnnotation *)annotation;
-    NSDictionary *selectedPhoto = fpa.photo;
+    self.photo = fpa.photo;
     if ([self splitViewTopPlacesPhotoViewController]) {
-        [[self splitViewTopPlacesPhotoViewController] setPhoto:selectedPhoto];
+        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.photo];
     } else {
         [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
     }
@@ -111,7 +113,7 @@
         [segue.destinationViewController setAnnotations:[self mapAnnotations]];
         [segue.destinationViewController setDelegate:self];
     } else if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
-        [super prepareForSegue:segue sender:sender];
+        [segue.destinationViewController setPhoto:self.photo];
     }
 
 }
