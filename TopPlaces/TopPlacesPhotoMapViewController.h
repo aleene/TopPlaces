@@ -23,4 +23,3 @@
 @property (nonatomic, weak) id <MapViewControllerDelegate> delegate;
 
 @end
- 
