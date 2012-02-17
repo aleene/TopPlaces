@@ -24,11 +24,11 @@
     self.mapView.delegate = self;
 }
 
-/*- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation 
 {
     MKAnnotationView *aView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"MapVC"];
     if (!aView) {
-        aView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapVC"];
+        aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapVC"];
         aView.canShowCallout = YES;
         aView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
     }
@@ -37,14 +37,12 @@
     
     return aView;
 }
- */
 
-/*- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     UIImage *image = [self.delegate topPlacesPhotoMapViewController:self imageForAnnotation:view.annotation];
     [(UIImageView *)view.leftCalloutAccessoryView setImage:image];
 }
- */
 
 // keep model and view in sync
 - (void)updateMapView 
