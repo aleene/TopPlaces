@@ -125,7 +125,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" id="jN1-PU-UFi">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="apollo17_earth.tiff" id="jN1-PU-UFi">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
@@ -137,9 +137,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo" id="die-37-wG1"/>
+                    <navigationItem key="navigationItem" title="No Photo" id="die-37-wG1"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="photoImageView" destination="jN1-PU-UFi" id="qyd-ef-ruD"/>
                         <outlet property="photoScrollView" destination="8U5-5s-cJw" id="dav-Nv-7Xq"/>
                     </connections>
                 </viewController>
@@ -257,7 +258,27 @@
     <resources>
         <image name="07-map-marker.png" width="16" height="26"/>
         <image name="42-photos.png" width="22" height="24"/>
+        <image name="apollo17_earth.tiff" width="3720" height="3796"/>
     </resources>
+    <classes>
+        <class className="TopPlacesPhotoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="photoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="photoScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="TopPlacesPhotosForPlaceTableViewController" superclassName="TopPlacesPhotosTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosForPlaceTableViewController.h"/>
+        </class>
+        <class className="TopPlacesPhotosTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosTableViewController.h"/>
+        </class>
+        <class className="TopPlacesPlacesTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPlacesTableViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
