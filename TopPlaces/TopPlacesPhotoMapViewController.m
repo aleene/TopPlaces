@@ -31,6 +31,7 @@
         aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapVC"];
         aView.canShowCallout = YES;
         aView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
+        aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     }
     aView.annotation = annotation;
     [(UIImageView *)aView.leftCalloutAccessoryView setImage:nil];
@@ -44,6 +45,14 @@
     [(UIImageView *)view.leftCalloutAccessoryView setImage:image];
 }
 
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control 
+{
+    // is the right gesture given?
+//    if (control.state == UIControlEventTouchUpInside) {
+        [self.delegate topPlacesPhotoMapViewController:self showImageForAnnotation:view.annotation];
+//    }
+}
+
 #define REGIONMARGIN 1.1
 - (MKCoordinateRegion)regionForAnnotations:(NSArray *)annotations
 {
@@ -53,7 +62,7 @@
     double minLatitude = annotation.coordinate.latitude;
     double maxLatitude = minLatitude;
 
-    // loop over all annotations to find the mean
+    // loop over all annotations to find the min and max coordinates
     for (id <MKAnnotation> annotation in annotations) {
         if (annotation.coordinate.longitude > maxLongitude) {
             maxLongitude = annotation.coordinate.longitude;

@@ -21,6 +21,18 @@
 
 @synthesize place = _place;
 
+// why do I need to copy this from the parent class?
+
+//  is a detail view controller available?
+//  and is it a detail view controller that can present a photo?
+- (TopPlacesPhotoViewController *)splitViewTopPlacesPhotoViewController {
+    id gvc = [self.splitViewController.viewControllers lastObject];
+    if (![gvc isKindOfClass:[TopPlacesPhotoViewController class]]) {
+        gvc = nil;
+    }
+    return gvc; 
+}
+
 - (void)refresh 
 {    
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -55,7 +67,6 @@
 {
     if (self.place) {
         [self refresh];
-        NSLog(@"via Refresh:");
     }
 }
 
@@ -71,6 +82,17 @@
     NSURL *url = [FlickrFetcher urlForPhoto:fpa.photo format:FlickrPhotoFormatSquare];
     NSData *data = [NSData dataWithContentsOfURL:url];
     return data ? [UIImage imageWithData:data] : nil;
+}
+
+- (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showImageForAnnotation:(id <MKAnnotation>)annotation
+{
+    FlickrPhotoAnnotation *fpa = (FlickrPhotoAnnotation *)annotation;
+    NSDictionary *selectedPhoto = fpa.photo;
+    if ([self splitViewTopPlacesPhotoViewController]) {
+        [[self splitViewTopPlacesPhotoViewController] setPhoto:selectedPhoto];
+    } else {
+        [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
+    }
 }
 
 - (NSArray *)mapAnnotations
