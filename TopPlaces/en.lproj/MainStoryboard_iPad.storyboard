@@ -105,7 +105,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Top Places" id="9I9-wn-F1n">
-                        <barButtonItem key="rightBarButtonItem" title="refresh" id="a4v-Yq-Pht">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="a4v-Yq-Pht">
                             <connections>
                                 <action selector="refresh:" destination="kyB-96-o6J" id="aMk-Bk-gAh"/>
                             </connections>
@@ -285,28 +285,6 @@
         <image name="42-photos.png" width="22" height="24"/>
         <image name="apollo17_earth.tiff" width="3720" height="3796"/>
     </resources>
-    <classes>
-        <class className="TopPlacesPhotoGenericTabBarController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoGenericTabBarController.h"/>
-        </class>
-        <class className="TopPlacesPhotoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="photoImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="photoScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="TopPlacesPhotosForPlaceTableViewController" superclassName="TopPlacesPhotosTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosForPlaceTableViewController.h"/>
-        </class>
-        <class className="TopPlacesPhotosTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosTableViewController.h"/>
-        </class>
-        <class className="TopPlacesPlacesTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPlacesTableViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

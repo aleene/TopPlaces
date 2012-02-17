@@ -108,6 +108,7 @@
             }
         }
         // inspiration http://stackoverflow.com/questions/1523793/get-directory-contents-in-date-modified-order
+        
                                                                                         // create an array sorted by file modification dates
         NSArray *invertedSortedFiles = [[NSArray alloc] initWithArray:[filesWithProperties sortedArrayUsingComparator:^(id path1, id path2)
                                         {                               
