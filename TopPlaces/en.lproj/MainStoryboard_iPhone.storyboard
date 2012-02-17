@@ -140,7 +140,6 @@
                     <navigationItem key="navigationItem" title="Photo" id="die-37-wG1"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="photoImageView" destination="jN1-PU-UFi" id="dpQ-UG-JVn"/>
                         <outlet property="photoScrollView" destination="8U5-5s-cJw" id="dav-Nv-7Xq"/>
                     </connections>
                 </viewController>

@@ -14,6 +14,10 @@
 		516EF07E14DAA7EF00C1B239 /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 516EF07D14DAA7EF00C1B239 /* 07-map-marker.png */; };
 		516EF08014DAA80C00C1B239 /* 42-photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 516EF07F14DAA80C00C1B239 /* 42-photos.png */; };
 		516EF08614DAC4E900C1B239 /* TopPlacesPhotosForPlaceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EF08514DAC4E900C1B239 /* TopPlacesPhotosForPlaceTableViewController.m */; };
+		51C0A11114ED405C00C8FB79 /* TopPlacesPhotosMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 51C0A11014ED405C00C8FB79 /* TopPlacesPhotosMap.m */; };
+		51C0A11414ED421800C8FB79 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51C0A11314ED421800C8FB79 /* MapKit.framework */; };
+		51C0A11614ED422600C8FB79 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51C0A11514ED422600C8FB79 /* CoreLocation.framework */; };
+		51C0A11C14ED57BE00C8FB79 /* TopPlacesPhotosMapOrListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51C0A11B14ED57BD00C8FB79 /* TopPlacesPhotosMapOrListViewController.m */; };
 		51C28D9114E00DD000BF7B53 /* TopPlacesPhotoGenericTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51C28D9014E00DD000BF7B53 /* TopPlacesPhotoGenericTabBarController.m */; };
 		51E44DB314D82DA700811C9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51E44DB214D82DA700811C9F /* UIKit.framework */; };
 		51E44DB514D82DA700811C9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51E44DB414D82DA700811C9F /* Foundation.framework */; };
@@ -40,6 +44,12 @@
 		516EF07F14DAA80C00C1B239 /* 42-photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "42-photos.png"; sourceTree = "<group>"; };
 		516EF08414DAC4E900C1B239 /* TopPlacesPhotosForPlaceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotosForPlaceTableViewController.h; sourceTree = "<group>"; };
 		516EF08514DAC4E900C1B239 /* TopPlacesPhotosForPlaceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotosForPlaceTableViewController.m; sourceTree = "<group>"; };
+		51C0A10F14ED405C00C8FB79 /* TopPlacesPhotosMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotosMap.h; sourceTree = "<group>"; };
+		51C0A11014ED405C00C8FB79 /* TopPlacesPhotosMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotosMap.m; sourceTree = "<group>"; };
+		51C0A11314ED421800C8FB79 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		51C0A11514ED422600C8FB79 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		51C0A11A14ED57BD00C8FB79 /* TopPlacesPhotosMapOrListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotosMapOrListViewController.h; sourceTree = "<group>"; };
+		51C0A11B14ED57BD00C8FB79 /* TopPlacesPhotosMapOrListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotosMapOrListViewController.m; sourceTree = "<group>"; };
 		51C28D8F14E00DD000BF7B53 /* TopPlacesPhotoGenericTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotoGenericTabBarController.h; sourceTree = "<group>"; };
 		51C28D9014E00DD000BF7B53 /* TopPlacesPhotoGenericTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotoGenericTabBarController.m; sourceTree = "<group>"; };
 		51E44DAE14D82DA700811C9F /* TopPlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopPlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51C0A11614ED422600C8FB79 /* CoreLocation.framework in Frameworks */,
+				51C0A11414ED421800C8FB79 /* MapKit.framework in Frameworks */,
 				51E44DB314D82DA700811C9F /* UIKit.framework in Frameworks */,
 				51E44DB514D82DA700811C9F /* Foundation.framework in Frameworks */,
 				51E44DB714D82DA700811C9F /* CoreGraphics.framework in Frameworks */,
@@ -78,6 +90,8 @@
 		51E44DA314D82DA700811C9F = {
 			isa = PBXGroup;
 			children = (
+				51C0A11514ED422600C8FB79 /* CoreLocation.framework */,
+				51C0A11314ED421800C8FB79 /* MapKit.framework */,
 				51E44DB814D82DA700811C9F /* TopPlaces */,
 				51E44DB114D82DA700811C9F /* Frameworks */,
 				51E44DAF14D82DA700811C9F /* Products */,
@@ -105,6 +119,10 @@
 		51E44DB814D82DA700811C9F /* TopPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				51C0A11A14ED57BD00C8FB79 /* TopPlacesPhotosMapOrListViewController.h */,
+				51C0A11B14ED57BD00C8FB79 /* TopPlacesPhotosMapOrListViewController.m */,
+				51C0A10F14ED405C00C8FB79 /* TopPlacesPhotosMap.h */,
+				51C0A11014ED405C00C8FB79 /* TopPlacesPhotosMap.m */,
 				51FF3CFE14EA9DB200DDA98C /* TopPlacesPhotoCache.h */,
 				51FF3CFF14EA9DB200DDA98C /* TopPlacesPhotoCache.m */,
 				512F5CBD14DC2BF900D8A5B4 /* SplitViewBarButtonItemPresenter.h */,
@@ -220,6 +238,8 @@
 				512F5CA514DBD26F00D8A5B4 /* TopPlacesPhotoViewController.m in Sources */,
 				51C28D9114E00DD000BF7B53 /* TopPlacesPhotoGenericTabBarController.m in Sources */,
 				51FF3D0014EA9DB200DDA98C /* TopPlacesPhotoCache.m in Sources */,
+				51C0A11114ED405C00C8FB79 /* TopPlacesPhotosMap.m in Sources */,
+				51C0A11C14ED57BE00C8FB79 /* TopPlacesPhotosMapOrListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +327,7 @@
 				GCC_PREFIX_HEADER = "TopPlaces/TopPlaces-Prefix.pch";
 				INFOPLIST_FILE = "TopPlaces/TopPlaces-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -318,6 +339,7 @@
 				GCC_PREFIX_HEADER = "TopPlaces/TopPlaces-Prefix.pch";
 				INFOPLIST_FILE = "TopPlaces/TopPlaces-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
