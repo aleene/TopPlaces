@@ -151,7 +151,10 @@
         }
         
     } 
-    else self.photoTitle = @"no photo selected";                // just a fail safe
+    else 
+    {
+        self.photoTitle = @"no photo id passed";                // just a fail safe
+    }
 }
 
 //  This one was added for the iPad splitview

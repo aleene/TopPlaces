@@ -113,7 +113,8 @@
         [segue.destinationViewController setAnnotations:[self mapAnnotations]];
         [segue.destinationViewController setDelegate:self];
     } else if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
-        [segue.destinationViewController setPhoto:self.photo];
+// need to call the super method as that is where the corresponding table thing is.
+        [super prepareForSegue:segue sender:sender];
     }
 
 }

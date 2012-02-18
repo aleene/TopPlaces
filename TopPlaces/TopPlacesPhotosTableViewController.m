@@ -9,6 +9,8 @@
 #import "TopPlacesPhotosTableViewController.h"
 #import "FlickrFetcher.h"
 #import "TopPlacesPhotoViewController.h"
+#import "FlickrPhotoAnnotation.h"
+#import "TopPlacesPhotoMapViewController.h"
 
 @interface TopPlacesPhotosTableViewController()
 
@@ -80,10 +82,24 @@
     }
 }
 
+- (NSArray *)mapAnnotations
+{
+    NSMutableArray *annotations = [[NSMutableArray alloc]initWithCapacity:[self.flickrPhotos count]]; 
+    for (NSDictionary *photo in self.flickrPhotos) {
+        [annotations addObject:[FlickrPhotoAnnotation annotationForPhoto:photo]];
+    }
+    return annotations;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
         [segue.destinationViewController setPhoto:self.selectedFlickrPhoto];
+    }
+    else if ([segue.identifier isEqualToString:@"ToMapFromFavorites"])
+    {
+        [segue.destinationViewController setAnnotations:[self mapAnnotations]];
+        [segue.destinationViewController setDelegate:self];
     }
 }
 

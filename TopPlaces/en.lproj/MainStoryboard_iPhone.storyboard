@@ -114,6 +114,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo Segue" id="g4v-EP-sHb"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -130,7 +133,6 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo Segue" id="s2n-E7-E3s"/>
                         <segue destination="j8X-Cn-SPu" kind="push" identifier="Show As Map" id="wHc-z3-DHb"/>
                     </connections>
                 </tableViewController>
@@ -340,6 +342,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="s2n-E7-E3s"/>
+        <segue reference="g4v-EP-sHb"/>
     </inferredMetricsTieBreakers>
 </document>
