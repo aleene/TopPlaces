@@ -11,6 +11,8 @@
 
 #import "FlickrFetcher.h"
 #import "TopPlacesPhotosForPlaceTableViewController.h"
+#import "TopPlacesPhotoMapViewController.h"
+#import "FlickrPhotoAnnotation.h"
 
 @interface TopPlacesPlacesTableViewController()
 
@@ -138,10 +140,23 @@
     }
 }
 
+- (NSArray *)mapAnnotations
+{
+    NSMutableArray *annotations = [[NSMutableArray alloc]initWithCapacity:[self.places count]]; 
+    for (NSDictionary *place in self.places) {
+        [annotations addObject:[FlickrPhotoAnnotation annotationForPhoto:place]];
+    }
+    return annotations;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Show Photos For Place"]) {
         [segue.destinationViewController setPlace:self.selectedFlickrPlace];
+    }
+    else if ([segue.identifier isEqualToString:@"Map From Places"])
+    {
+        [segue.destinationViewController setAnnotations:[self mapAnnotations]];
     }
 }
 

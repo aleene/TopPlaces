@@ -96,7 +96,7 @@
     if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
         [segue.destinationViewController setPhoto:self.selectedFlickrPhoto];
     }
-    else if ([segue.identifier isEqualToString:@"ToMapFromFavorites"])
+    else if ([segue.identifier isEqualToString:@"Show As Map"])
     {
         [segue.destinationViewController setAnnotations:[self mapAnnotations]];
         [segue.destinationViewController setDelegate:self];

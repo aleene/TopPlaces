@@ -74,7 +74,7 @@
         if (annotation.coordinate.latitude < minLatitude) {
             minLatitude = annotation.coordinate.latitude;
         }
-
+//        NSLog(@"longitude: %f %f %f", annotation.coordinate.longitude, minLongitude, maxLongitude);
     }
         
     // I should set the map region based on the annotations
@@ -85,6 +85,7 @@
     MKCoordinateSpan mapSpan;
     mapSpan.longitudeDelta = (maxLongitude - minLongitude) * REGIONMARGIN;
     mapSpan.latitudeDelta = (maxLatitude - minLatitude) * REGIONMARGIN;
+//  does not quite work for the entire world.
     mapRegion.center = mapCenter;
     mapRegion.span = mapSpan;
     return mapRegion;
