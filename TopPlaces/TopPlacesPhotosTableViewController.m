@@ -12,15 +12,13 @@
 #import "FlickrPhotoAnnotation.h"
 #import "TopPlacesPhotoMapViewController.h"
 
-@interface TopPlacesPhotosTableViewController()
-
-@property (nonatomic, strong) NSDictionary *selectedFlickrPhoto;
+@interface TopPlacesPhotosTableViewController() <MapViewControllerDelegate>
 
 @end
 @implementation TopPlacesPhotosTableViewController
 
-@synthesize flickrPhotos = _flickrPhotos;
-@synthesize selectedFlickrPhoto = _selectedFlickrPhoto;
+@synthesize flickrList = _flickrList;
+@synthesize flickrLocation = _flickrLocation; // can be a photo or a location
 
 //  is a detail view controller available?
 //  and is it a detail view controller that can present a photo?
@@ -31,6 +29,14 @@
     }
     return gvc; 
 }
+
+- (void)setFlickrLocation:(NSDictionary *)flickrLocation
+{
+    if (flickrLocation != _flickrLocation) {
+        _flickrLocation = flickrLocation;
+    }
+}
+
 
 - (void)refresh
 {
@@ -47,14 +53,14 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if (!photosFound) {
-                UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
-                                                                            message:@"Trouble getting images from Flickr" 
+                UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Flickr" 
+                                                                            message:@"Trouble getting info from Flickr" 
                                                                            delegate:nil 
                                                                   cancelButtonTitle:@"To bad" 
                                                                   otherButtonTitles:nil];
                 [noImagesAlertView show];
             }
-            self.flickrPhotos = photosFound;
+            self.flickrList = photosFound;
             self.navigationItem.rightBarButtonItem = currentButton;
         });
     });
@@ -74,18 +80,42 @@
     [self refresh];
 }
 
-- (void)setFlickrPhotos:(NSArray *)flickrPhotos
+- (void)setFlickrList:(NSArray *)flickrList
 {
-    if (flickrPhotos != _flickrPhotos) {
-        _flickrPhotos = flickrPhotos;
+    if (flickrList != _flickrList) {
+        _flickrList = flickrList;
         [self.tableView reloadData];
+    }
+}
+- (IBAction)showAsMapPressed
+{
+    [self performSegueWithIdentifier:@"Show As Map" sender:self];  // go to the corresponding scene
+    
+}
+
+- (UIImage *)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender imageForAnnotation:(id <MKAnnotation>)annotation  
+{
+    FlickrPhotoAnnotation *fpa = (FlickrPhotoAnnotation *)annotation;
+    NSURL *url = [FlickrFetcher urlForPhoto:fpa.photo format:FlickrPhotoFormatSquare];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    return data ? [UIImage imageWithData:data] : nil;
+}
+
+- (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showImageForAnnotation:(id <MKAnnotation>)annotation
+{
+    FlickrPhotoAnnotation *fpa = (FlickrPhotoAnnotation *)annotation;
+    self.flickrLocation = fpa.photo;
+    if ([self splitViewTopPlacesPhotoViewController]) {
+        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.flickrLocation];
+    } else {
+        [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
     }
 }
 
 - (NSArray *)mapAnnotations
 {
-    NSMutableArray *annotations = [[NSMutableArray alloc]initWithCapacity:[self.flickrPhotos count]]; 
-    for (NSDictionary *photo in self.flickrPhotos) {
+    NSMutableArray *annotations = [[NSMutableArray alloc]initWithCapacity:[self.flickrList count]]; 
+    for (NSDictionary *photo in self.flickrList) {
         [annotations addObject:[FlickrPhotoAnnotation annotationForPhoto:photo]];
     }
     return annotations;
@@ -94,7 +124,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
-        [segue.destinationViewController setPhoto:self.selectedFlickrPhoto];
+        [segue.destinationViewController setPhoto:self.flickrLocation];
     }
     else if ([segue.identifier isEqualToString:@"Show As Map"])
     {
@@ -115,7 +145,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.flickrPhotos count];
+    return [self.flickrList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -127,7 +157,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     // I do not really want this data here
-    NSDictionary *photo = [self.flickrPhotos objectAtIndex:indexPath.row];
+    NSDictionary *photo = [self.flickrList objectAtIndex:indexPath.row];
     
     NSString *title = [photo valueForKey:FLICKR_PHOTO_TITLE];
     NSString *descriptionContent = [photo valueForKeyPath:@"description._content"];
@@ -150,11 +180,11 @@
             
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.SelectedFlickrPhoto = [self.flickrPhotos objectAtIndex:indexPath.row];
+    self.flickrLocation = [self.flickrList objectAtIndex:indexPath.row];
     //  check to see whether we are on the iPad or not
     //  and if we can go to the right controller right away (as it is on screen) 
     if ([self splitViewTopPlacesPhotoViewController]) {
-        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.selectedFlickrPhoto];
+        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.flickrLocation];
     } else {
         [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
     }

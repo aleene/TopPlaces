@@ -152,7 +152,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Show Photos For Place"]) {
-        [segue.destinationViewController setPlace:self.selectedFlickrPlace];
+        [segue.destinationViewController setFlickrLocation:self.selectedFlickrPlace];
     }
     else if ([segue.identifier isEqualToString:@"Map From Places"])
     {
