@@ -15,4 +15,5 @@
 
 + (FlickrPhotoAnnotation *)annotationForPhoto:(NSDictionary *)photo;
 
+
 @end

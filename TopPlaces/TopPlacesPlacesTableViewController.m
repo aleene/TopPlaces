@@ -12,19 +12,17 @@
 #import "FlickrFetcher.h"
 #import "TopPlacesPhotosForPlaceTableViewController.h"
 #import "TopPlacesPhotoMapViewController.h"
-#import "FlickrPhotoAnnotation.h"
+#import "FlickrPlaceAnnotation.h"
 
 @interface TopPlacesPlacesTableViewController()
 
 @property (nonatomic, strong) NSDictionary *selectedFlickrPlace;
 @property (nonatomic, strong) NSMutableArray *countries;
-@property (nonatomic, strong) NSArray *places;
 
 @end
 
 @implementation TopPlacesPlacesTableViewController
 
-@synthesize places = _places;
 @synthesize selectedFlickrPlace = _selectedFlickrPlace;
 @synthesize countries = _countries;
 
@@ -34,16 +32,6 @@
         _countries = [[NSMutableArray alloc] init];
     }
     return _countries;
-}
-
-- (NSArray *)placeNameParts:(NSString *)place
-{
-    // extract the place name parts
-    NSMutableArray *placeName = [[NSMutableArray alloc] initWithArray:[place componentsSeparatedByString:@","]];
-    if ([[placeName objectAtIndex:0] isEqualToString:@""]) {
-        [placeName addObject:@"Unknown country"];
-    }
-    return [placeName copy];
 }
 
 - (void)refresh
@@ -60,70 +48,60 @@
     // get the top places from flickr
     dispatch_queue_t topPlacesQueue = dispatch_queue_create("topplaces queue", NULL);
     dispatch_async(topPlacesQueue, ^{
-        NSArray *places = [FlickrFetcher topPlaces];
+        NSArray *places = [[NSArray alloc] initWithArray:[FlickrFetcher topPlaces]];
         dispatch_async(dispatch_get_main_queue(), ^{
             // did we get something back from Flickr?
-            if (!places) {
-                UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Images" 
-                                                                            message:@"Trouble getting images from Flickr" 
+            if ([places count ] == 0) {
+                UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Info" 
+                                                                            message:@"Trouble getting info from Flickr" 
                                                                            delegate:nil 
                                                                   cancelButtonTitle:@"To bad" 
                                                                   otherButtonTitles:nil];
                 [noImagesAlertView show];
             }
-            
-            // I have to calculate the number of sections in this places array
-            // And assign each place to a section
-            // each ection will be a country
-            // create a multable dictionary to store countries.
-            NSMutableDictionary *countriesDict = [[NSMutableDictionary alloc] init];
-            // each country will contain a dictionary with an array with places
-            // loop over all places in the array
-            for (NSDictionary *place in places) {
-                // cut the place name in its parts
-                NSArray *placeName = [self placeNameParts:[place objectForKey:FLICKR_PLACE_NAME]];
+            else {
+                // I have to calculate the number of sections in this places array
+                // And assign each place to a section
+                // each ection will be a country
+                // create a multable dictionary to store countries.
+                NSMutableDictionary *countriesDict = [[NSMutableDictionary alloc] init];
+                // each country will contain a dictionary with an array with places
+                // loop over all places in the array
+                for (NSDictionary *place in places) {
+                    
+                    // is this country already in the Array?
+                    if ([countriesDict objectForKey:[[FlickrPlaceAnnotation annotationForPlace:place] subtitle]]) {
+                        // get the array with places for this country
+                        NSMutableArray *placesInCountry = [countriesDict valueForKey:[[FlickrPlaceAnnotation annotationForPlace:place] subtitle]];
+                        // add the current place to the placesInCountry array
+                        [placesInCountry addObject:place];
+                    }
+                    // this country is not yet in the dictionary
+                    else {
+                        // create a new array for this country with this place as a start
+                        NSMutableArray *placesInCountry = [[NSMutableArray alloc] initWithObjects:place, nil];
+                        // add this array to the country dictionary
+                        [countriesDict setValue:placesInCountry forKey:[[FlickrPlaceAnnotation annotationForPlace:place] subtitle]];
+                    }
+                }    ;    
                 
-                // is this country already in the Array?
-                if ([countriesDict objectForKey:[placeName lastObject]]) {
-                    // get the array with places for this country
-                    NSMutableArray *placesInCountry = [countriesDict valueForKey:[placeName lastObject]];
-                    // add the current place to the placesInCountry array
-                    [placesInCountry addObject:place];
+                // now convert from the dictionary of countries to a sorted array of countries
+                NSArray *sortedKeys = [[NSArray alloc] initWithArray:[countriesDict allKeys]];  // get the countries
+                sortedKeys = [sortedKeys sortedArrayUsingSelector:@selector(compare:)];         // sort the countries
+                
+                for(NSString *key in sortedKeys) {                                              // loop over all countries
+                    NSArray *placesInCountry = [countriesDict valueForKey:key];
+                    [self.countries addObject:placesInCountry];                                 // create the places in the array
                 }
-                // this country is not yet in the dictionary
-                else {
-                    // create a new array for this country with this place as a start
-                    NSMutableArray *placesInCountry = [[NSMutableArray alloc] initWithObjects:place, nil];
-                    // add this array to the country dictionary
-                    [countriesDict setValue:placesInCountry forKey:[placeName lastObject]];
-                }
-            }    ;    
-            
-            // now convert from the dictionary of countries to a sorted array of countries
-            NSArray *sortedKeys = [[NSArray alloc] initWithArray:[countriesDict allKeys]];  // get the countries
-            sortedKeys = [sortedKeys sortedArrayUsingSelector:@selector(compare:)];         // sort the countries
-            
-            for(NSString *key in sortedKeys) {                                              // loop over all countries
-                NSArray *placesInCountry = [countriesDict valueForKey:key];
-                [self.countries addObject:placesInCountry];                                 // create the places in the array
             }
-            
             // put the previous button back
             self.navigationItem.rightBarButtonItem = currentButton;
-            self.places = places;
-            NSLog(@"Number of countries found: %i", [self.places count]);
+            self.flickrList = places;
+                
         });
     });
     dispatch_release(topPlacesQueue);
 
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
-    [self refresh];
-
-    
 }
 
 - (IBAction)refresh:(id)sender
@@ -131,20 +109,16 @@
     [self refresh];
 }
 
-
-- (void) setPlaces:(NSArray *)places
+- (UIImage *)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender imageForAnnotation:(id <MKAnnotation>)annotation  
 {
-    if (places != _places) {
-        _places = places;
-        if (self.tableView.window)[self.tableView reloadData]; 
-    }
+    return nil;
 }
 
 - (NSArray *)mapAnnotations
 {
-    NSMutableArray *annotations = [[NSMutableArray alloc]initWithCapacity:[self.places count]]; 
-    for (NSDictionary *place in self.places) {
-        [annotations addObject:[FlickrPhotoAnnotation annotationForPhoto:place]];
+    NSMutableArray *annotations = [[NSMutableArray alloc]initWithCapacity:[self.flickrList count]]; 
+    for (NSDictionary *place in self.flickrList) {
+        [annotations addObject:[FlickrPlaceAnnotation annotationForPlace:place]];
     }
     return annotations;
 }
@@ -159,13 +133,20 @@
         [segue.destinationViewController setAnnotations:[self mapAnnotations]];
     }
 }
+- (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showDetailForAnnotation:(id <MKAnnotation>)annotation
+{
+    FlickrPlaceAnnotation *fpa = (FlickrPlaceAnnotation *)annotation;
+    self.flickrLocation = fpa.place;
+        [self performSegueWithIdentifier:@"Map From Places" sender:self];
+}
 
-
+/* already defined in parent?
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return (YES);
 }
+ */
 
 #pragma mark - Table view data source
 
@@ -184,8 +165,7 @@
 {
     NSArray *country = [self.countries objectAtIndex:section];
     NSDictionary *firstPlace = [country objectAtIndex:0];
-    NSArray *placeNameParts = [self placeNameParts:[firstPlace objectForKey:FLICKR_PLACE_NAME]];
-    return [placeNameParts lastObject];
+    return [[FlickrPlaceAnnotation annotationForPlace:firstPlace] subtitle];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -199,12 +179,8 @@
     
     NSArray *country = [self.countries objectAtIndex:indexPath.section];
     NSDictionary *place = [country objectAtIndex:indexPath.row];
-    NSArray *placeNameParts = [self placeNameParts:[place objectForKey:FLICKR_PLACE_NAME]];
-    
-    cell.textLabel.text = [placeNameParts objectAtIndex:0];
-//    NSString *numberOfPhotosAtPlace = [place objectForKey:FLICKR_PLACE_COUNT];
-    
-    cell.detailTextLabel.text = [placeNameParts objectAtIndex:1];
+    cell.textLabel.text = [[FlickrPlaceAnnotation annotationForPlace:place] title];
+    cell.detailTextLabel.text = [[FlickrPlaceAnnotation annotationForPlace:place] subtitle];
     return cell;
 }
 
@@ -212,8 +188,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *country = [self.countries objectAtIndex:indexPath.section];
-    self.selectedFlickrPlace = [country objectAtIndex:indexPath.row];
+    if (self.countries) {
+        // seems the countries array can be nil for some reason
+        NSArray *country = [self.countries objectAtIndex:indexPath.section];
+        self.selectedFlickrPlace = [country objectAtIndex:indexPath.row];
+    }
     [self performSegueWithIdentifier:@"Show Photos For Place" sender:self];
 }
 

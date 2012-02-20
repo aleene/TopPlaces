@@ -8,7 +8,9 @@
 //  This class shows a list of Top Flickr PLACES in a Table View
 
 #import <UIKit/UIKit.h>
+#import "TopPlacesPhotosTableViewController.h"
 
-@interface TopPlacesPlacesTableViewController : UITableViewController
+
+@interface TopPlacesPlacesTableViewController : TopPlacesPhotosTableViewController
 
 @end

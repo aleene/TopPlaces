@@ -13,7 +13,7 @@
 @protocol MapViewControllerDelegate <NSObject>
 
 - (UIImage *)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender imageForAnnotation:(id <MKAnnotation>)annotation;
-- (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showImageForAnnotation:(id <MKAnnotation>)annotation;
+- (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showDetailForAnnotation:(id <MKAnnotation>)annotation;
 
 @end
 

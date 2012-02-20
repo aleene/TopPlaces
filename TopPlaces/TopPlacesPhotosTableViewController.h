@@ -15,5 +15,4 @@
 @property (nonatomic, strong) NSArray *flickrList;
 @property (nonatomic, strong) NSDictionary *flickrLocation;
 
-
 @end

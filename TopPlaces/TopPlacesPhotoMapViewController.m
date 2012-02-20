@@ -22,6 +22,9 @@
 {
     [super viewDidLoad];
     self.mapView.delegate = self;
+    // the title of the Map ViewController should be 
+    // the title of the navigation controller back button + "Map"
+    // self.navigationItem.title = [@"?" stringByAppendingString:@" Map"];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation 
@@ -48,54 +51,69 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control 
 {
     // tell the delegate that the disclosure button has been tapped.
-    [self.delegate topPlacesPhotoMapViewController:self showImageForAnnotation:view.annotation];
+    [self.delegate topPlacesPhotoMapViewController:self showDetailForAnnotation:view.annotation];
 }
 
 #define REGIONMARGIN 1.1
 - (MKCoordinateRegion)regionForAnnotations:(NSArray *)annotations
 {
-    id <MKAnnotation> annotation = [annotations objectAtIndex:0];
-    double minLongitude = annotation.coordinate.longitude;
-    double maxLongitude = minLongitude;
-    double minLatitude = annotation.coordinate.latitude;
-    double maxLatitude = minLatitude;
-
-    // loop over all annotations to find the min and max coordinates
-    for (id <MKAnnotation> annotation in annotations) {
-        if (annotation.coordinate.longitude > maxLongitude) {
-            maxLongitude = annotation.coordinate.longitude;
-        }
-        if (annotation.coordinate.longitude < minLongitude) {
-            minLongitude = annotation.coordinate.longitude;
-        }
-        if (annotation.coordinate.latitude > maxLatitude) {
-            maxLatitude = annotation.coordinate.latitude;
-        }
-        if (annotation.coordinate.latitude < minLatitude) {
-            minLatitude = annotation.coordinate.latitude;
-        }
-    }
-        
-    // I should set the map region based on the annotations
     CLLocationCoordinate2D mapCenter;
-    mapCenter.longitude = (maxLongitude - minLongitude)/2 + minLongitude;
-    mapCenter.latitude = (maxLatitude - minLatitude)/2 + minLatitude;
     MKCoordinateRegion mapRegion;
     MKCoordinateSpan mapSpan;
-    mapSpan.longitudeDelta = (maxLongitude - minLongitude) * REGIONMARGIN;
-    mapSpan.latitudeDelta = (maxLatitude - minLatitude) * REGIONMARGIN;
     
-    // check if the REGIONMARGIN did not create unrealistic values
-    if (mapSpan.longitudeDelta > 360.0) {
+    // are there annotations for which one can calculate a region
+    if ([annotations count] > 0)
+    {
+        id <MKAnnotation> annotation = [annotations objectAtIndex:0];
+        double minLongitude = annotation.coordinate.longitude;
+        double maxLongitude = minLongitude;
+        double minLatitude = annotation.coordinate.latitude;
+        double maxLatitude = minLatitude;
+        
+        // loop over all annotations to find the min and max coordinates
+        for (id <MKAnnotation> annotation in annotations) {
+            if (annotation.coordinate.longitude > maxLongitude) {
+                maxLongitude = annotation.coordinate.longitude;
+            }
+            if (annotation.coordinate.longitude < minLongitude) {
+                minLongitude = annotation.coordinate.longitude;
+            }
+            if (annotation.coordinate.latitude > maxLatitude) {
+                maxLatitude = annotation.coordinate.latitude;
+            }
+            if (annotation.coordinate.latitude < minLatitude) {
+                minLatitude = annotation.coordinate.latitude;
+            }
+        }
+        
+        // I should set the map region based on the annotations
+        mapCenter.longitude = (maxLongitude - minLongitude)/2 + minLongitude;
+        mapCenter.latitude = (maxLatitude - minLatitude)/2 + minLatitude;
+        mapSpan.longitudeDelta = (maxLongitude - minLongitude) * REGIONMARGIN;
+        mapSpan.latitudeDelta = (maxLatitude - minLatitude) * REGIONMARGIN;
+        
+        // check if the REGIONMARGIN did not create unrealistic values
+        if (mapSpan.longitudeDelta > 360.0) {
+            mapSpan.longitudeDelta = 360.0;
+        }
+        if (mapSpan.latitudeDelta > 180.0) {
+            mapSpan.latitudeDelta = 180.0;
+        }
+        //  does not quite work for the entire world.
+        mapRegion.center = mapCenter;
+        mapRegion.span = mapSpan;
+    }
+    else
+    {
+        mapCenter.longitude = 0.0;
+        mapCenter.latitude = 0.0;
+        mapRegion.center = mapCenter;
         mapSpan.longitudeDelta = 360.0;
-    }
-    if (mapSpan.latitudeDelta > 180.0) {
         mapSpan.latitudeDelta = 180.0;
+        mapRegion.span = mapSpan;
     }
-    //  does not quite work for the entire world.
-    mapRegion.center = mapCenter;
-    mapRegion.span = mapSpan;
     return mapRegion;
+
 }
 
 // keep model and view in sync

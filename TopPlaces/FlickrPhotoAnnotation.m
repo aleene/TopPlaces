@@ -20,14 +20,24 @@
     return annotation;
 }
 
+
 - (NSString *)title
 {
-    return [self.photo valueForKey:FLICKR_PHOTO_TITLE];
+    NSString *text = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
+    if ([text isEqualToString:@""]) {
+        text = @"no title available";
+    }
+
+    return text;
 }
 
 - (NSString *)subtitle
 {
-    return [self.photo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
+    NSString *text = [self.photo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
+    if ([text isEqualToString:@""]) {
+        text = @"no description available";
+    }
+    return text;
 }
 
 - (CLLocationCoordinate2D)coordinate

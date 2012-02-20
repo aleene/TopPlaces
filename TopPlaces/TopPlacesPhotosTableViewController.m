@@ -14,11 +14,15 @@
 
 @interface TopPlacesPhotosTableViewController() <MapViewControllerDelegate>
 
+@property (nonatomic, strong) id <MKAnnotation> annotation;
+
 @end
+
 @implementation TopPlacesPhotosTableViewController
 
 @synthesize flickrList = _flickrList;
 @synthesize flickrLocation = _flickrLocation; // can be a photo or a location
+@synthesize annotation = _annotation;
 
 //  is a detail view controller available?
 //  and is it a detail view controller that can present a photo?
@@ -37,6 +41,16 @@
     }
 }
 
+- (NSString *)viewControllerTitle
+{
+    return @"Favorite Photo's";
+}
+
+- (NSArray *)getFlickrArray
+{
+    return [FlickrFetcher recentGeoreferencedPhotos];
+}
+
 
 - (void)refresh
 {
@@ -49,7 +63,8 @@
     dispatch_queue_t topPhotosQueue = dispatch_queue_create("top photos queue", NULL);
     dispatch_async(topPhotosQueue, ^{
         
-        NSArray *photosFound = [FlickrFetcher recentGeoreferencedPhotos];
+        NSArray *photosFound = [self getFlickrArray];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if (!photosFound) {
@@ -60,12 +75,13 @@
                                                                   otherButtonTitles:nil];
                 [noImagesAlertView show];
             }
+            
             self.flickrList = photosFound;
             self.navigationItem.rightBarButtonItem = currentButton;
         });
     });
     dispatch_release(topPhotosQueue);
-    
+    self.navigationItem.title = [self viewControllerTitle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -101,7 +117,7 @@
     return data ? [UIImage imageWithData:data] : nil;
 }
 
-- (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showImageForAnnotation:(id <MKAnnotation>)annotation
+- (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showDetailForAnnotation:(id <MKAnnotation>)annotation
 {
     FlickrPhotoAnnotation *fpa = (FlickrPhotoAnnotation *)annotation;
     self.flickrLocation = fpa.photo;
@@ -158,20 +174,10 @@
     }
     // I do not really want this data here
     NSDictionary *photo = [self.flickrList objectAtIndex:indexPath.row];
+    id <MKAnnotation> annotation = [FlickrPhotoAnnotation annotationForPhoto:photo];
     
-    NSString *title = [photo valueForKey:FLICKR_PHOTO_TITLE];
-    NSString *descriptionContent = [photo valueForKeyPath:@"description._content"];
-
-    if ([title isEqualToString:@""]) {
-        cell.textLabel.text = @"no title available";
-    } else {
-        cell.textLabel.text = title;
-    }
-    if ([descriptionContent isEqualToString:@""]) {
-        cell.detailTextLabel.text = @"no description available";
-    } else {
-        cell.detailTextLabel.text = descriptionContent;
-    }
+    cell.textLabel.text = annotation.title;
+    cell.detailTextLabel.text = annotation.subtitle;
     
     return cell;
 }

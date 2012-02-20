@@ -64,6 +64,7 @@
 }
    
 - (void)retrievePhoto {
+    // is the cache working for Favorite Photos?
     if (self.photo) {
         if ([self.cache contains:self.photo]) {
             NSData *photoData = [self.cache retrieve:self.photo];

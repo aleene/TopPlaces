@@ -19,6 +19,28 @@
 
 @implementation TopPlacesPhotosForPlaceTableViewController
 
+- (NSString *)viewControllerTitle
+{
+    NSString *title;
+    // Set the title of this viewcontroller
+    if (self.flickrLocation) {
+    NSString *placeName = [self.flickrLocation valueForKey:FLICKR_PLACE_NAME];
+    title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
+    }
+    else
+        title = @"No placename";
+    
+    return title;
+}
+
+- (NSArray *)getFlickrArray
+{
+    return [FlickrFetcher photosInPlace:self.flickrLocation maxResults:20];
+}
+
+
+// this one is exact the same as its parent!!!!
+
 - (void)refresh 
 {    
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -30,24 +52,27 @@
 
     dispatch_queue_t placePhotosQueue = dispatch_queue_create("place photos queue", NULL);
     dispatch_async(placePhotosQueue, ^{
-        NSMutableArray *photosFound = [NSMutableArray alloc];
-        if (self.flickrLocation) {
-            photosFound = [photosFound initWithArray:[FlickrFetcher photosInPlace:self.flickrLocation maxResults:20]];
-        } else
-        {
-            photosFound = nil;
-        }
+        
+        NSArray *photosFound = [self getFlickrArray];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
+            if (!photosFound) {
+                UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Flickr" 
+                                                                            message:@"Trouble getting info from Flickr" 
+                                                                           delegate:nil 
+                                                                  cancelButtonTitle:@"To bad" 
+                                                                  otherButtonTitles:nil];
+                [noImagesAlertView show];
+            }
+
             self.navigationItem.rightBarButtonItem = currentButton;
             self.flickrList = photosFound;
         });
     });
     dispatch_release(placePhotosQueue);
-    
-    // Set the title of this viewcontroller
-    NSString *placeName = [self.flickrLocation valueForKey:FLICKR_PLACE_NAME];
-    self.title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
+    self.navigationItem.title = [self viewControllerTitle];
 }
+ 
 
 - (IBAction)refresh:(id)sender 
 {
