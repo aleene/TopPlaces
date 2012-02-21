@@ -57,14 +57,14 @@
     // title for the iPad (WHY DOES THIS WORK FOR THE IPOD?)
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
     // assume we use the button before the last
-    UIBarButtonItem *titleButton = [toolbarItems objectAtIndex:[toolbarItems count]-2];
+    UIBarButtonItem *titleButton = [toolbarItems objectAtIndex:1];
     titleButton.title = _photoTitle;
+    self.toolbarItems = toolbarItems;
     // title for the iPhone
     self.title = _photoTitle;
 }
    
 - (void)retrievePhoto {
-    // is the cache working for Favorite Photos?
     if (self.photo) {
         if ([self.cache contains:self.photo]) {
             NSData *photoData = [self.cache retrieve:self.photo];
@@ -154,7 +154,7 @@
     } 
     else 
     {
-        self.photoTitle = @"no photo id passed";                // just a fail safe
+        self.photoTitle = @"no photo id yet";                // just a fail safe
     }
 }
 
@@ -172,9 +172,10 @@
     [super viewDidLoad];
     // instruction from lecture 8
     self.photoScrollView.delegate = self;
-    // get the actual photo now that the view is loading
-    [self retrievePhoto];
-    
+    // if I have a photo defined, retrieve it.
+    if (self.photo) {
+        [self retrievePhoto];
+    }    
 }
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem {

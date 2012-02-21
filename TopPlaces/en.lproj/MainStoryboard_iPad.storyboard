@@ -28,7 +28,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="nQi-y1-72c"/>
-                                    <barButtonItem title="photo title" style="plain" id="SyW-c5-7zf"/>
+                                    <barButtonItem title="zoom in by selecting a photo or place" style="plain" id="SyW-c5-7zf"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="bkh-NB-8fM"/>
                                 </items>
                             </toolbar>
@@ -319,6 +319,34 @@
         <image name="42-photos.png" width="22" height="24"/>
         <image name="apollo17_earth.tiff" width="3720" height="3796"/>
     </resources>
+    <classes>
+        <class className="TopPlacesPhotoGenericTabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoGenericTabBarController.h"/>
+        </class>
+        <class className="TopPlacesPhotoMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="TopPlacesPhotoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="photoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="photoScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="TopPlacesPhotosForPlaceTableViewController" superclassName="TopPlacesPhotosTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosForPlaceTableViewController.h"/>
+        </class>
+        <class className="TopPlacesPhotosTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosTableViewController.h"/>
+        </class>
+        <class className="TopPlacesPlacesTableViewController" superclassName="TopPlacesPhotosTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPlacesTableViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
