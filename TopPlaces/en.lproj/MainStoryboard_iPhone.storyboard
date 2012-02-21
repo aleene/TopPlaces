@@ -45,7 +45,7 @@
                             <outlet property="delegate" destination="qwO-dQ-tOF" id="9Mc-M6-Pii"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Top Places" id="h4N-dX-6ti">
+                    <navigationItem key="navigationItem" title="Places" id="h4N-dX-6ti">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="6Gr-Vv-UTr">
                             <connections>
                                 <action selector="refresh:" destination="qwO-dQ-tOF" id="EnS-TR-9qB"/>
@@ -107,7 +107,7 @@
                             <outlet property="delegate" destination="we5-4W-VZl" id="mah-W8-YNX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Photo List" id="Utt-Hj-ggN">
+                    <navigationItem key="navigationItem" title="Place Photos" id="Utt-Hj-ggN">
                         <barButtonItem key="rightBarButtonItem" title="Map" id="FET-mw-Pwc">
                             <connections>
                                 <segue destination="j8X-Cn-SPu" kind="push" identifier="Show As Map" id="wfc-Mz-jFS"/>
@@ -122,7 +122,7 @@
         <scene sceneID="vKM-zZ-CUK">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Se-bO-pfs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="j8X-Cn-SPu" customClass="TopPlacesPhotoMapViewController" sceneMemberID="viewController">
+                <viewController title="Map" id="j8X-Cn-SPu" customClass="TopPlacesPhotoMapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hB8-8u-hEr">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -146,7 +146,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo Map" id="vnS-Hv-j3D"/>
+                    <navigationItem key="navigationItem" title="Map" id="vnS-Hv-j3D"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="oYp-7k-L2E" id="S5Z-ul-cqm"/>
@@ -180,7 +180,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="No Photo" id="die-37-wG1"/>
+                    <navigationItem key="navigationItem" title="Earth" id="die-37-wG1"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="photoImageView" destination="jN1-PU-UFi" id="qyd-ef-ruD"/>
@@ -230,7 +230,7 @@
                             <outlet property="delegate" destination="Mah-c2-voc" id="cJe-4J-5SH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Recent Photos" id="CZT-Mx-W2A">
+                    <navigationItem key="navigationItem" title="Photos" id="CZT-Mx-W2A">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="nn0-e3-udO">
                             <connections>
                                 <action selector="refresh:" destination="Mah-c2-voc" id="HZH-Aa-xsk"/>
@@ -253,7 +253,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IvF-RL-bro" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="ouf-t8-OS8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Top Places" image="07-map-marker.png" id="ECU-Ts-7v6"/>
+                    <tabBarItem key="tabBarItem" title="Places" image="07-map-marker.png" id="ECU-Ts-7v6"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Bjd-Um-zNj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -271,7 +271,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ezM-Ct-2lm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="li8-qR-Txd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Recent Photos" image="42-photos.png" id="RW2-Bh-uFy"/>
+                    <tabBarItem key="tabBarItem" title="Photos" image="42-photos.png" id="RW2-Bh-uFy"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="hya-Km-NCT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -340,6 +340,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="wfc-Mz-jFS"/>
-        <segue reference="Rxl-YB-SO8"/>
+        <segue reference="hnh-eO-JGn"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -43,7 +43,7 @@
 
 - (NSString *)viewControllerTitle
 {
-    return @"Favorite Photo's";
+    return self.navigationItem.title;
 }
 
 - (NSArray *)getFlickrArray

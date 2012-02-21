@@ -21,8 +21,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSString *text = [self.parentViewController.tabBarItem.title stringByAppendingString:@" Map"];
-    self.navigationItem.title = text;
+
+    // do some work to get the right title for the current viewcontroller
+    NSArray* viewCtrlers = self.navigationController.viewControllers;
+    if ([viewCtrlers count] >= 2) {
+        UIViewController* prevCtrler = [viewCtrlers objectAtIndex:[viewCtrlers count]-2];
+        NSString *title = prevCtrler.navigationItem.title;
+        title = [title stringByAppendingString:@" Map"];
+        self.navigationItem.title = title;
+    } else {
+        self.navigationItem.title = @"to few viewcontrollers";
+    }
     self.mapView.delegate = self;
 }
 
