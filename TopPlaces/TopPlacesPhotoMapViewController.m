@@ -143,6 +143,20 @@
     _annotations = annotations;
     [self updateMapView];
 }
+- (IBAction)segmentedControlledPressed:(UISegmentedControl *)sender {
+    
+    switch (sender.selectedSegmentIndex) {
+        case 0: // set map to normal
+            self.mapView.mapType = MKMapTypeStandard;
+            break;
+        case 1: // set map to satellite
+            self.mapView.mapType = MKMapTypeSatellite;
+            break;
+        case 2: // set map to hybrid
+            self.mapView.mapType = MKMapTypeHybrid;
+            break;
+    }
+}
 
 - (void)viewDidUnload
 {

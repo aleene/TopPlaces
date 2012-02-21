@@ -19,8 +19,9 @@
 
 @interface TopPlacesPhotoMapViewController : UIViewController
 
-@property (nonatomic, strong) NSArray *annotations; // of <id> MKAnnotation
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, weak) id <MapViewControllerDelegate> delegate;
+@property (nonatomic, strong) NSArray *annotations; // of <id> MKAnnotation
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

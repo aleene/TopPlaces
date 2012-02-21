@@ -173,6 +173,18 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" id="gL6-CV-6Vv">
+                                <rect key="frame" x="36" y="304" width="249" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Normal"/>
+                                    <segment title="Satellite"/>
+                                    <segment title="Hybrid"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlledPressed:" destination="j8X-Cn-SPu" eventType="valueChanged" id="bE9-6k-GjU"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -376,7 +388,7 @@
         <class className="TopPlacesPhotosTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosTableViewController.h"/>
         </class>
-        <class className="TopPlacesPlacesTableViewController" superclassName="UITableViewController">
+        <class className="TopPlacesPlacesTableViewController" superclassName="TopPlacesPhotosTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPlacesTableViewController.h"/>
         </class>
     </classes>
@@ -387,6 +399,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="wHc-z3-DHb"/>
-        <segue reference="g4v-EP-sHb"/>
+        <segue reference="hnh-eO-JGn"/>
     </inferredMetricsTieBreakers>
 </document>

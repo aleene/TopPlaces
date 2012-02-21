@@ -50,7 +50,7 @@
     // check if there is a cache directory
     if ([cachePaths count] >= 1) {
         photoExists = [[NSFileManager defaultManager] isReadableFileAtPath:[self pathForPhoto:photo]];
-        NSLog(@"%@",[self pathForPhoto:photo]);
+//        NSLog(@"%@",[self pathForPhoto:photo]);
     } else
     {
         // guess I have to create the caches directory here
