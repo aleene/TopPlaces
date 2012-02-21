@@ -139,6 +139,15 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:nil
+                                                                  action:nil];
+    NSString *text = self.navigationItem.title;
+    
+    backButton.title = text;
+    self.navigationItem.backBarButtonItem = backButton;
+
     if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
         [segue.destinationViewController setPhoto:self.flickrLocation];
     }

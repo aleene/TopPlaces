@@ -37,7 +37,7 @@
     // create a unique photo_identifier, so I can find it back
     NSString *photoIdentifier = [[photo valueForKey:FLICKR_PHOTO_ID] stringByAppendingString:FILETYPE];
     photoIdentifier = [FILEPREFIX stringByAppendingString:photoIdentifier];
-//    NSLog(@"photo id: %@", photoIdentifier);
+    // NSLog(@"photo id: %@", photoIdentifier);
     return [self.cachePath stringByAppendingPathComponent:photoIdentifier];
 }
 
@@ -50,7 +50,7 @@
     // check if there is a cache directory
     if ([cachePaths count] >= 1) {
         photoExists = [[NSFileManager defaultManager] isReadableFileAtPath:[self pathForPhoto:photo]];
-        
+        NSLog(@"%@",[self pathForPhoto:photo]);
     } else
     {
         // guess I have to create the caches directory here
@@ -117,8 +117,8 @@
         NSDictionary *fileObject;
         for (fileObject in invertedSortedFiles)                                         // loop over all fileOjects
         {
-//            NSLog(@"dir size %i %i", currentDirectorySize, dataSize);
-//            NSLog(@"found:: %@ %@", [fileObject valueForKey:@"filePath"], [[fileObject valueForKey:@"lastModDate"] description]);
+            // NSLog(@"dir size %i %i", currentDirectorySize, dataSize);
+            ///NSLog(@"found:: %@ %@", [fileObject valueForKey:@"filePath"], [[fileObject valueForKey:@"lastModDate"] description]);
 
             if ((currentDirectorySize + dataSize) > MAXIMUM_CACHE_SIZE)                        // do I need to make place
             {

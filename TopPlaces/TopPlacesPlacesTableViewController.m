@@ -125,19 +125,29 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:nil
+                                                                  action:nil];
+    NSString *text = [self.navigationItem.title stringByAppendingString:@" List"];
+    
+    backButton.title = text;
+    self.navigationItem.backBarButtonItem = backButton;
+
     if ([segue.identifier isEqualToString:@"Show Photos For Place"]) {
         [segue.destinationViewController setFlickrLocation:self.selectedFlickrPlace];
     }
     else if ([segue.identifier isEqualToString:@"Map From Places"])
     {
         [segue.destinationViewController setAnnotations:[self mapAnnotations]];
+        [segue.destinationViewController setDelegate:self];
     }
 }
 - (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showDetailForAnnotation:(id <MKAnnotation>)annotation
 {
     FlickrPlaceAnnotation *fpa = (FlickrPlaceAnnotation *)annotation;
-    self.flickrLocation = [fpa photo];
-        [self performSegueWithIdentifier:@"Map From Places" sender:self];
+    self.selectedFlickrPlace = [fpa photo];
+        [self performSegueWithIdentifier:@"Show Photos For Place" sender:self];
 }
 
 /* already defined in parent?

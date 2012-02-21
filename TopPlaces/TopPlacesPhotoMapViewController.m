@@ -21,10 +21,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSString *text = [self.parentViewController.tabBarItem.title stringByAppendingString:@" Map"];
+    self.navigationItem.title = text;
     self.mapView.delegate = self;
-    // the title of the Map ViewController should be 
-    // the title of the navigation controller back button + "Map"
-    // self.navigationItem.title = [@"?" stringByAppendingString:@" Map"];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation 
@@ -65,10 +64,10 @@
     if ([annotations count] > 0)
     {
         id <MKAnnotation> annotation = [annotations objectAtIndex:0];
-        NSLog(@"%@",annotation.title);
-        NSLog(@"%@",annotation.subtitle);
-        NSLog(@"%f",annotation.coordinate.longitude);
-        NSLog(@"%f",annotation.coordinate.latitude);
+//        NSLog(@"%@",annotation.title);
+ //       NSLog(@"%@",annotation.subtitle);
+//        NSLog(@"%f",annotation.coordinate.longitude);
+//        NSLog(@"%f",annotation.coordinate.latitude);
         double minLongitude = annotation.coordinate.longitude;
         double maxLongitude = minLongitude;
         double minLatitude = annotation.coordinate.latitude;

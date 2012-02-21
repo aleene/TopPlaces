@@ -41,6 +41,11 @@
     return text;
 }
 
+- (NSString *)subsubtitle
+{
+    return @"";
+}
+
 - (CLLocationCoordinate2D)coordinate
 {
     CLLocationCoordinate2D coordinate;
