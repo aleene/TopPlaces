@@ -44,6 +44,7 @@
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     UIImage *image = [self.delegate topPlacesPhotoMapViewController:self imageForAnnotation:view.annotation];
+    // this is only necessary when the view is still on screen
     [(UIImageView *)view.leftCalloutAccessoryView setImage:image];
 }
 
