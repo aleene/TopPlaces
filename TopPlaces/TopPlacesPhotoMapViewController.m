@@ -65,6 +65,10 @@
     if ([annotations count] > 0)
     {
         id <MKAnnotation> annotation = [annotations objectAtIndex:0];
+        NSLog(@"%@",annotation.title);
+        NSLog(@"%@",annotation.subtitle);
+        NSLog(@"%f",annotation.coordinate.longitude);
+        NSLog(@"%f",annotation.coordinate.latitude);
         double minLongitude = annotation.coordinate.longitude;
         double maxLongitude = minLongitude;
         double minLatitude = annotation.coordinate.latitude;

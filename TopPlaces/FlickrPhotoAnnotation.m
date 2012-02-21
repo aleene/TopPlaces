@@ -12,6 +12,7 @@
 @implementation FlickrPhotoAnnotation
 
 @synthesize photo = _photo;
+@synthesize subsubtitle = _subsubtitle;
 
 + (FlickrPhotoAnnotation *)annotationForPhoto:(NSDictionary *)photo
 {

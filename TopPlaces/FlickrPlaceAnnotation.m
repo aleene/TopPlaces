@@ -11,18 +11,15 @@
 
 @implementation FlickrPlaceAnnotation
 
-@synthesize place = _place;
-
 + (FlickrPlaceAnnotation *)annotationForPlace:(NSDictionary *)place
 {
     FlickrPlaceAnnotation *annotation = [[FlickrPlaceAnnotation alloc] init];
-    annotation.place = place;
+    annotation.photo = place;
     return annotation;
 }
 
 - (NSArray *)placenamePartsForPlace:(NSString *)placeText
 {
-    
     // extract the place name parts
     NSMutableArray *placeName = [[NSMutableArray alloc] initWithArray:[placeText componentsSeparatedByString:@","]];
     if ([[placeName objectAtIndex:0] isEqualToString:@""]) {
@@ -33,7 +30,7 @@
 
 - (NSString *)title
 {
-    NSString *text = [[self placenamePartsForPlace:[self.place valueForKey:FLICKR_PLACE_NAME]] objectAtIndex:0];
+    NSString *text = [[self placenamePartsForPlace:[self.photo valueForKey:FLICKR_PLACE_NAME]] objectAtIndex:0];
     if ([text isEqualToString:@""]) {
         text = @"no city available";
     }
@@ -42,9 +39,18 @@
 
 - (NSString *)subtitle
 {
-    NSString *text = [[self placenamePartsForPlace:[self.place valueForKey:FLICKR_PLACE_NAME]] lastObject];
+    NSString *text = [[self placenamePartsForPlace:[self.photo valueForKey:FLICKR_PLACE_NAME]] lastObject];
     if ([text isEqualToString:@""]) {
         text = @"no country available";
+    }
+    return text;
+}
+
+- (NSString *)subsubtitle
+{
+    NSString *text = [[self placenamePartsForPlace:[self.photo valueForKey:FLICKR_PLACE_NAME]] objectAtIndex:1];
+    if ([text isEqualToString:@""]) {
+        text = @"no region available";
     }
     return text;
 }
@@ -52,8 +58,8 @@
 - (CLLocationCoordinate2D)coordinate
 {
     CLLocationCoordinate2D coordinate;
-    coordinate.latitude = [[self.place valueForKey:FLICKR_LATITUDE] doubleValue];
-    coordinate.longitude = [[self.place valueForKey:FLICKR_LONGITUDE] doubleValue];
+    coordinate.latitude = [[self.photo valueForKey:FLICKR_LATITUDE] doubleValue];
+    coordinate.longitude = [[self.photo valueForKey:FLICKR_LONGITUDE] doubleValue];
     return coordinate;
 }
 

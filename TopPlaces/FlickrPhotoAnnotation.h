@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) NSDictionary *photo;
 
+@property (nonatomic, strong) NSString * subsubtitle;
+
 + (FlickrPhotoAnnotation *)annotationForPhoto:(NSDictionary *)photo;
 
 

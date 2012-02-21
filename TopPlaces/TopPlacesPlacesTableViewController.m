@@ -136,7 +136,7 @@
 - (void)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender showDetailForAnnotation:(id <MKAnnotation>)annotation
 {
     FlickrPlaceAnnotation *fpa = (FlickrPlaceAnnotation *)annotation;
-    self.flickrLocation = fpa.place;
+    self.flickrLocation = [fpa photo];
         [self performSegueWithIdentifier:@"Map From Places" sender:self];
 }
 
@@ -180,7 +180,7 @@
     NSArray *country = [self.countries objectAtIndex:indexPath.section];
     NSDictionary *place = [country objectAtIndex:indexPath.row];
     cell.textLabel.text = [[FlickrPlaceAnnotation annotationForPlace:place] title];
-    cell.detailTextLabel.text = [[FlickrPlaceAnnotation annotationForPlace:place] subtitle];
+    cell.detailTextLabel.text = [[FlickrPlaceAnnotation annotationForPlace:place] subsubtitle];
     return cell;
 }
 
