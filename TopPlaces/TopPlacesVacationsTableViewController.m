@@ -29,30 +29,42 @@
     if (!self.vacations)        // get a list of vacations
     {
         // this should result in a single directory URL!!
-        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+        NSURL *documentDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
                                                              inDomains:NSUserDomainMask] lastObject];
-        
-        // I should look at the contents of this directory
-        // and see if there are files that contain vacations
-        // and add all these urls to an url array
-        NSMutableArray *vacationUrls = [[NSMutableArray alloc] initWithCapacity:0];
+        // get the contents of the directory
+        NSArray *keys = [[NSArray alloc] initWithObjects:NSURLNameKey, nil];
+        // get all documents in Documents directory
+        NSArray *urls = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:documentDirectory 
+                                                              includingPropertiesForKeys:keys 
+                                                                                 options:NSDirectoryEnumerationSkipsHiddenFiles 
+                                                                                   error:nil];
+        // create a list with vacation urls
+        NSMutableArray *vacationUrls = [[NSMutableArray alloc] initWithCapacity:[urls count]];
+        // are there any vacations in the directory?
+        for (NSURL *url in urls) {
+            NSString *name =[url valueForKey:NSURLNameKey];
+            // and see if there are files that contain vacations
+            if ([name rangeOfString:@"Vacation"].location != NSNotFound) {
+                // and add all these urls to an url array
+                [vacationUrls addObject:url];
+            }
+        }
         
         // if no vacations are found, add a default one
         if ([vacationUrls count] == 0) {
             // FAKING
             // we start just with the default vacation "My Vacation" for now
             // and add that to the url vacations
-            url = [url URLByAppendingPathComponent:@"My Vacation"];
-            [vacationUrls addObject:url];
+            [vacationUrls addObject:[documentDirectory URLByAppendingPathComponent:@"My Vacation"]];
         }
 
-        NSMutableArray *vacations = [[NSMutableArray alloc] initWithCapacity:[vacationUrls count]];
+        NSMutableArray *vacationDocuments = [[NSMutableArray alloc] initWithCapacity:[vacationUrls count]];
         
         // loop over all documents and add each document to the vacations array
         for (NSURL *vacation in vacationUrls) {
-            [vacations addObject:[[UIManagedDocument alloc] initWithFileURL:url]];
+            [vacationDocuments addObject:[[UIManagedDocument alloc] initWithFileURL:vacation]];
         }
-        self.vacations = vacations;
+        self.vacations = vacationDocuments;
     }
 }
 

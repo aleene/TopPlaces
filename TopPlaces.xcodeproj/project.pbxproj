@@ -21,6 +21,7 @@
 		515F22E714F67222009D08A7 /* TopPlaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 515F22E514F67222009D08A7 /* TopPlaces.xcdatamodeld */; };
 		515F22F014F67491009D08A7 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 515F22EF14F67491009D08A7 /* Place.m */; };
 		515F22F314F67492009D08A7 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 515F22F214F67492009D08A7 /* Photo.m */; };
+		515F22F514F67E65009D08A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 515F22F414F67E65009D08A7 /* CoreData.framework */; };
 		516EF07914DA843600C1B239 /* TopPlacesPlacesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EF07814DA843600C1B239 /* TopPlacesPlacesTableViewController.m */; };
 		516EF07C14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EF07B14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.m */; };
 		516EF07E14DAA7EF00C1B239 /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 516EF07D14DAA7EF00C1B239 /* 07-map-marker.png */; };
@@ -68,6 +69,7 @@
 		515F22EF14F67491009D08A7 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
 		515F22F114F67492009D08A7 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		515F22F214F67492009D08A7 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		515F22F414F67E65009D08A7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		516EF07714DA843600C1B239 /* TopPlacesPlacesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPlacesTableViewController.h; sourceTree = "<group>"; };
 		516EF07814DA843600C1B239 /* TopPlacesPlacesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPlacesTableViewController.m; sourceTree = "<group>"; };
 		516EF07A14DAA3D800C1B239 /* TopPlacesPhotosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotosTableViewController.h; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				515F22F514F67E65009D08A7 /* CoreData.framework in Frameworks */,
 				51C0A11614ED422600C8FB79 /* CoreLocation.framework in Frameworks */,
 				51C0A11414ED421800C8FB79 /* MapKit.framework in Frameworks */,
 				51E44DB314D82DA700811C9F /* UIKit.framework in Frameworks */,
@@ -118,6 +121,7 @@
 		51E44DA314D82DA700811C9F = {
 			isa = PBXGroup;
 			children = (
+				515F22F414F67E65009D08A7 /* CoreData.framework */,
 				51C0A11514ED422600C8FB79 /* CoreLocation.framework */,
 				51C0A11314ED421800C8FB79 /* MapKit.framework */,
 				51E44DB814D82DA700811C9F /* TopPlaces */,
