@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CoreDataTableViewController.h"
 
-@interface TopPlacesVacationSingleTableViewController : CoreDataTableViewController
+@interface TopPlacesVacationSingleTableViewController : UITableViewController
 
 @property (nonatomic, strong) UIManagedDocument *vacation;
 

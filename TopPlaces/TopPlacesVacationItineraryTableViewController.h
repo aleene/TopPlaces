@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CoreDataTableViewController.h"
 
-@interface TopPlacesVacationItineraryTableViewController : UITableViewController
+@interface TopPlacesVacationItineraryTableViewController : CoreDataTableViewController
+
+@property (nonatomic, strong) UIManagedDocument *vacation;
 
 @end

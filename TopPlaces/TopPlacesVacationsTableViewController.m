@@ -12,7 +12,7 @@
 @interface TopPlacesVacationsTableViewController()
 
 @property (nonatomic, strong) NSArray *vacations; // of UIManagedDocument(s)
-@property (nonatomic, strong) NSDictionary *selectedVacation;
+@property (nonatomic, strong) UIManagedDocument *selectedVacation;
 @end
 
 @implementation TopPlacesVacationsTableViewController
@@ -42,20 +42,22 @@
         NSMutableArray *vacationUrls = [[NSMutableArray alloc] initWithCapacity:[urls count]];
         // are there any vacations in the directory?
         for (NSURL *url in urls) {
-            NSString *name =[url valueForKey:NSURLNameKey];
+            NSString *name =[url absoluteString];
             // and see if there are files that contain vacations
-            if ([name rangeOfString:@"Vacation"].location != NSNotFound) {
+            if ([name rangeOfString:@".vacation"].location != NSNotFound) {
                 // and add all these urls to an url array
                 [vacationUrls addObject:url];
             }
         }
-        
+//        NSLog(@"vacationURLS %@", [vacationUrls description]);
+
         // if no vacations are found, add a default one
         if ([vacationUrls count] == 0) {
             // FAKING
             // we start just with the default vacation "My Vacation" for now
             // and add that to the url vacations
-            [vacationUrls addObject:[documentDirectory URLByAppendingPathComponent:@"My Vacation"]];
+            [vacationUrls addObject:[documentDirectory URLByAppendingPathComponent:@"My Vacation.vacation"]];
+//            NSLog(@"vacationURLS extra %@", [vacationUrls description]);
         }
 
         NSMutableArray *vacationDocuments = [[NSMutableArray alloc] initWithCapacity:[vacationUrls count]];
@@ -84,7 +86,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = [[[self.vacations objectAtIndex:indexPath.row] fileURL] lastPathComponent];
+    // extract the name before the .vacation
+    NSString *fileName = [[[self.vacations objectAtIndex:indexPath.row] fileURL] lastPathComponent];
+    NSRange  range = [fileName rangeOfString:@"vacation"];
+
+    cell.textLabel.text = [fileName substringToIndex:range.location-1];
     
     return cell;
 }
@@ -98,6 +104,7 @@
 
     [self performSegueWithIdentifier:@"Show Vacation" sender:self];
 }
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

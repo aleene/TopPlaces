@@ -1,15 +1,15 @@
 //
-//  TopPlacesVacationTagsTableViewController.m
+//  TopPlacesVacationItineraryPhotosTableViewController.m
 //  TopPlaces
 //
-//  Created by Arnaud Leene on 23/02/2012.
+//  Created by Arnaud Leene on 24/02/2012.
 //  Copyright (c) 2012 MicroContent Musings - Hovering Above. All rights reserved.
 //
 
-#import "TopPlacesVacationTagsTableViewController.h"
+#import "TopPlacesVacationItineraryPhotosTableViewController.h"
 
 
-@implementation TopPlacesVacationTagsTableViewController
+@implementation TopPlacesVacationItineraryPhotosTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -76,6 +76,12 @@
 
 #pragma mark - Table view data source
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+#warning Potentially incomplete method implementation.
+    // Return the number of sections.
+    return 0;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

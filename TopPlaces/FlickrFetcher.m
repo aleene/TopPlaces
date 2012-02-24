@@ -47,6 +47,7 @@
         photos = [[self executeFlickrFetch:request] valueForKeyPath:@"photos.photo"];
         for (NSMutableDictionary *photo in photos) {
             [photo setObject:placeName forKey:FLICKR_PHOTO_PLACE_NAME];
+            NSLog(@"Photo in FlickrFetcher %@",[photo description]);
         }
     }
     return photos;
