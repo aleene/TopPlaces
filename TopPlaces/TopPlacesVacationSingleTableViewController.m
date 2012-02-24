@@ -20,9 +20,26 @@
     self.title = [fileName substringToIndex:range.location-1];
 }
 
-// this class just passes the selected vaction onwards
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 0:
+            [self performSegueWithIdentifier:@"Itineraries" sender:self];
+            break;
+        case 1:
+            [self performSegueWithIdentifier:@"Tags" sender:self];
+            break;
+        default:
+            break;
+    }
+}
+
+// this class just passes the selected vacation onwards
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [segue.destinationViewController setVacation:self.vacation];
+    if ([segue.identifier isEqualToString:@"Itineraries"])
+        [segue.destinationViewController setVacation:self.vacation];
+    else if ([segue.identifier isEqualToString:@"Tags"])
+        [segue.destinationViewController setVacation:self.vacation];
 }
 @end

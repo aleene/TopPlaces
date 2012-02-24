@@ -44,8 +44,13 @@
         photo.place = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContext:context];
         NSArray *tagsArray = [[flickrInfo valueForKey:FLICKR_TAGS] componentsSeparatedByString:@" "];
         for (NSString *tagString in tagsArray) {
-            Tag *tag = [Tag tagWithName:tagString forPhoto:photo inManagedObjectContext:context];
-            [photo addHasTagsObject:tag];
+            if (![tagString isEqualToString:@""]) {
+                Tag *tag = [Tag tagWithName:tagString forPhoto:photo inManagedObjectContext:context];
+                NSLog(@"tag: %@", [tag description]);
+                if (tag) {
+                    [photo addHasTagsObject:tag];
+                }
+            }
         }
     }
     else
