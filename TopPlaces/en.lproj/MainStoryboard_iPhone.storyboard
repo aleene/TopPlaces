@@ -386,9 +386,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <connections>
-                                    <segue destination="gjO-Gd-01e" kind="push" identifier="Photos" id="O84-z8-Q10"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -397,6 +394,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Itinerary" id="LFU-7V-zg9"/>
+                    <connections>
+                        <segue destination="gjO-Gd-01e" kind="push" identifier="Photos" id="F3S-Te-Okv"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="1172" y="526"/>
@@ -450,9 +450,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <connections>
-                                    <segue destination="3V3-Cr-NCQ" kind="push" identifier="Photo" id="eeh-AV-vuH"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -461,6 +458,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Photos" id="5ui-eJ-jII"/>
+                    <connections>
+                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo" id="XbP-DI-cYc"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="1797" y="721"/>
@@ -533,7 +533,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="wfc-Mz-jFS"/>
-        <segue reference="wiK-sS-V6b"/>
-        <segue reference="eeh-AV-vuH"/>
+        <segue reference="F3S-Te-Okv"/>
+        <segue reference="XbP-DI-cYc"/>
     </inferredMetricsTieBreakers>
 </document>

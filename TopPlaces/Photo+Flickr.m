@@ -9,6 +9,7 @@
 #import "Photo+Flickr.h"
 #import "FlickrFetcher.h"
 #import "Place+Create.h"
+#import "Place.h"
 
 @implementation Photo (Flickr)
 
@@ -31,8 +32,12 @@
         // the photo is not yet available
         // it should be added
         photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
+        // NSLog(@"FlickrInfo %@",[flickrInfo description]);
         photo.unique = [flickrInfo objectForKey:FLICKR_PHOTO_ID];
         photo.title = [flickrInfo objectForKey:FLICKR_PHOTO_TITLE];
+        if ([photo.title isEqualToString:@""]) {
+            photo.title = @"no title";
+        }
         photo.subtitle = [flickrInfo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         photo.url = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString];
         photo.place = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContext:context];
@@ -44,4 +49,17 @@
     return photo;
 }
 
+- (NSDictionary *)asFlickrDictionary
+{    
+    // NSLog(@"photo %@",[self description]);
+    // this creates a rudimentary Flickr dictionary
+    // many things are missing
+    NSDictionary *flickrPhoto = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    self.unique, FLICKR_PHOTO_ID, 
+                                    self.title, FLICKR_PHOTO_TITLE, 
+                                    self.subtitle, FLICKR_PHOTO_DESCRIPTION,
+                                    nil];
+
+    return flickrPhoto;
+}
 @end

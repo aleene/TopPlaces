@@ -32,6 +32,7 @@
 
 @synthesize photo = _photo;
 @synthesize cache = _cache;
+@synthesize selectedPhotoUrl = _selectedPhotoUrl;
 
 - (TopPlacesPhotoCache *)cache {
     if (!_cache) {
@@ -77,7 +78,7 @@
                 self.photoScrollView.contentMode = UIViewContentModeScaleAspectFit;
                 self.photoTitle = [self.photo valueForKey:FLICKR_PHOTO_TITLE];
             } 
-            else self.photoTitle = @"no photo retrieved";
+            else self.photoTitle = @"no photo in cache";
         }
         else {
             UIBarButtonItem *lastButton;
@@ -113,8 +114,9 @@
                 
                 dispatch_queue_t downloadQueue = dispatch_queue_create("download queue", NULL);
                 dispatch_async(downloadQueue, ^{
-                    NSURL *photoURL = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
-                    NSData *photoData = [[NSData alloc] initWithContentsOfURL:photoURL];
+
+                    NSLog(@"Photo url found %@", self.selectedPhotoUrl);
+                    NSData *photoData = [[NSData alloc] initWithContentsOfURL:self.selectedPhotoUrl];
                     
                     dispatch_queue_t writeQueue = dispatch_queue_create("cache photo", NULL);       // do the caching in a separate thread
                     dispatch_async(writeQueue, ^{
@@ -158,6 +160,15 @@
     }
 }
 
+- (NSURL *)selectedPhotoUrl
+{
+    if (!_selectedPhotoUrl) {
+        // try to retrieve it from Flickr
+            _selectedPhotoUrl = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
+    }
+    return _selectedPhotoUrl;
+}
+
 //  This one was added for the iPad splitview
 //  It needs displaying the image again if the photo is changed
 - (void)setPhoto:(NSDictionary *)photo {
@@ -166,6 +177,7 @@
         [self retrievePhoto];
     }
 }
+
 
 - (void)viewDidLoad
 {

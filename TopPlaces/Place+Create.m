@@ -28,13 +28,16 @@
     } else if ([matches count] == 0)
     {
         place = [NSEntityDescription insertNewObjectForEntityForName:@"Place" inManagedObjectContext:context];
-        place.name = name;
-        NSLog(@"Place %@",[place description]);
+        if ([name isEqualToString:@""])
+            place.name = @"no place name";
+        else 
+            place.name = name;
+        
+        // NSLog(@"Place %@",[place description]);
     }
     else
-    {
         place = [matches lastObject];
-    }
+    
     return place;
 }
 

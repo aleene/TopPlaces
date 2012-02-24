@@ -56,7 +56,7 @@
             // FAKING
             // we start just with the default vacation "My Vacation" for now
             // and add that to the url vacations
-            [vacationUrls addObject:[documentDirectory URLByAppendingPathComponent:@"My Vacation.vacation"]];
+            [vacationUrls addObject:[documentDirectory URLByAppendingPathComponent:@"Test Vacation.vacation"]];
 //            NSLog(@"vacationURLS extra %@", [vacationUrls description]);
         }
 

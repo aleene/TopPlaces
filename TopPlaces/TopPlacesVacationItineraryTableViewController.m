@@ -7,21 +7,27 @@
 //
 
 #import "TopPlacesVacationItineraryTableViewController.h"
+#import "TopPlacesVacationItineraryPhotosTableViewController.h"
 #import "FlickrFetcher.h"
 #import "Photo+Flickr.h"
 #import "Place.h"
 
+@interface TopPlacesVacationItineraryTableViewController()
+
+@property (nonatomic, strong) Place *selectedPlace;
+@end
 
 @implementation TopPlacesVacationItineraryTableViewController
 
 @synthesize vacation = _vacation;
+@synthesize selectedPlace = _selectedPlace;
 
 - (void) setupFetchedResultsController
 {
     // fetch all the PLACES in this vacation !!!!
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Place"];
     // no predicate required: all required
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     fetch.sortDescriptors = [NSArray arrayWithObject:descriptor];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetch managedObjectContext:self.vacation.managedObjectContext sectionNameKeyPath:nil cacheName:nil]; 
 }
@@ -41,7 +47,7 @@
             // create objects in documents context
             for (NSDictionary *photo in photos) {
                 
-                NSLog(@"Photo %@",[photo description]);
+               // NSLog(@"Photo %@",[photo description]);
                 
                 [Photo photoWithFlickrDictionary:photo inManagedObjectContext:document.managedObjectContext];                
             }
@@ -96,4 +102,19 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // the user selected a place he wants to visits
+    self.selectedPlace = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"Photos" sender:self];
+
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Photos"]) {
+        [segue.destinationViewController setVacation:self.vacation];
+        [segue.destinationViewController setSelectedPlace:self.selectedPlace];
+    }
+}
 @end

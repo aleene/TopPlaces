@@ -15,7 +15,6 @@
 @interface TopPlacesPhotoViewController : UIViewController <SplitViewBarButtonItemPresenter>
 
 @property (nonatomic, strong) NSDictionary *photo;
-
-
+@property (nonatomic, strong) NSURL *selectedPhotoUrl;
 
 @end

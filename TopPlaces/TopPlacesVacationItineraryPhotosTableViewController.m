@@ -7,153 +7,115 @@
 //
 
 #import "TopPlacesVacationItineraryPhotosTableViewController.h"
+#import "TopPlacesPhotoViewController.h"
+#import "Photo.h"
+#import "Photo+Flickr.h"
+#import "Place.h"
+
+@interface TopPlacesVacationItineraryPhotosTableViewController()
+
+@property (nonatomic, strong) Photo *selectedPhoto;
+@end
 
 
 @implementation TopPlacesVacationItineraryPhotosTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+@synthesize vacation = _vacation;
+@synthesize selectedPlace = _selectedPlace;
+@synthesize selectedPhoto = _selectedPhoto;
+
+- (void) setupFetchedResultsController
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    // fetch all the photos in this place !!!!
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
+    fetch.predicate = [NSPredicate predicateWithFormat:@"place.name = %@", self.selectedPlace.name];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    fetch.sortDescriptors = [NSArray arrayWithObject:descriptor];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetch managedObjectContext:self.vacation.managedObjectContext sectionNameKeyPath:nil cacheName:nil]; 
+}
+
+- (void)useDocument
+{
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.vacation.fileURL path]]) {
+        [self.vacation saveToURL:self.vacation.fileURL
+                forSaveOperation:UIDocumentSaveForCreating 
+               completionHandler:^(BOOL success) { 
+                   // if the file does not exits fill it
+                   // should not pass here!!!!
+                   // the file should have been set up in the previous TVC
+                   NSLog(@"File does not exist in TopPlacesVacationItineraryPhotosTableViewController");
+                   //[self fetchFlickrDataIntoDocument:self.vacation];
+                   [self setupFetchedResultsController];
+               }];
     }
-    return self;
+    else if (self.vacation.documentState == UIDocumentStateClosed)
+    {
+        [self.vacation openWithCompletionHandler:^(BOOL success) {
+            [self setupFetchedResultsController];
+            
+        }];
+    }
+    else if (self.vacation.documentState == UIDocumentStateNormal)
+    {
+        [self setupFetchedResultsController];
+    }
 }
 
-- (void)didReceiveMemoryWarning
+- (void)setVacation:(UIManagedDocument *)vacation
 {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
+    if (vacation != _vacation) {
+        _vacation = vacation;
+        [self useDocument];
+    } 
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (YES);
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Itinerary Photo Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    // Configure the cell...
+    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = photo.title;
+    // cell.detailTextLabel.text = [NSString stringWithFormat:@"%d photos", [place.hasPhotos count]];
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    // set which photo is selected
+    self.selectedPhoto = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    // should segue to the selected photo
+    [self performSegueWithIdentifier:@"Show Photo" sender:self];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show Photo"]) {
+        NSDictionary *photoDict;
+        // we need a Flickr dictionary to call the next TVC
+        photoDict = [self.selectedPhoto asFlickrDictionary];
+        // NSLog(@"Photo as FlickrDictionary %@",[photo description]);
+        // we define a rudimentary photo
+        [segue.destinationViewController setPhoto:photoDict];
+        // and add the url we have retrieved earlier
+        [segue.destinationViewController setSelectedPhotoUrl:[NSURL URLWithString:self.selectedPhoto.url]];
+    }
+}
 @end
