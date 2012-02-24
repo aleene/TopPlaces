@@ -1,23 +1,18 @@
 //
-//  Photo.m
+//  Tag.m
 //  TopPlaces
 //
 //  Created by Arnaud Leene on 24/02/2012.
 //  Copyright (c) 2012 MicroContent Musings - Hovering Above. All rights reserved.
 //
 
-#import "Photo.h"
-#import "Place.h"
 #import "Tag.h"
+#import "Photo.h"
 
 
-@implementation Photo
+@implementation Tag
 
-@dynamic subtitle;
-@dynamic title;
-@dynamic unique;
-@dynamic url;
-@dynamic place;
-@dynamic hasTags;
+@dynamic name;
+@dynamic hasPhotos;
 
 @end

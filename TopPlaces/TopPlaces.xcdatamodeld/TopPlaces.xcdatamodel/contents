@@ -5,6 +5,7 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unique" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="hasTags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="hasPhotos" inverseEntity="Tag" syncable="YES"/>
         <relationship name="place" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Place" inverseName="hasPhotos" inverseEntity="Place" syncable="YES"/>
     </entity>
     <entity name="Place" representedClassName="Place" syncable="YES">
@@ -14,8 +15,13 @@
         <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="hasPhotos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="place" inverseEntity="Photo" syncable="YES"/>
     </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="hasPhotos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="hasTags" inverseEntity="Photo" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Photo" positionX="9" positionY="99" width="128" height="120"/>
         <element name="Place" positionX="387" positionY="90" width="128" height="120"/>
+        <element name="Tag" positionX="9" positionY="408" width="128" height="75"/>
     </elements>
 </model>

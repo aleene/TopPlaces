@@ -10,6 +10,7 @@
 #import "FlickrFetcher.h"
 #import "Place+Create.h"
 #import "Place.h"
+#import "Tag+Create.h"
 
 @implementation Photo (Flickr)
 
@@ -41,6 +42,11 @@
         photo.subtitle = [flickrInfo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         photo.url = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString];
         photo.place = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContext:context];
+        NSArray *tagsArray = [[flickrInfo valueForKey:FLICKR_TAGS] componentsSeparatedByString:@" "];
+        for (NSString *tagString in tagsArray) {
+            Tag *tag = [Tag tagWithName:tagString forPhoto:photo inManagedObjectContext:context];
+            [photo addHasTagsObject:tag];
+        }
     }
     else
     {
