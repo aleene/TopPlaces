@@ -7,11 +7,9 @@
 //
 
 #import "Tag.h"
-#import "Photo.h"
-
 
 @interface Tag (Create)
 
-+ (Tag *)tagWithName:(NSString *)name forPhoto:(Photo *)photo inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Tag *)tagWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

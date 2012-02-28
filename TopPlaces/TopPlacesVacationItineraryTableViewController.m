@@ -10,7 +10,6 @@
 #import "TopPlacesVacationItineraryPhotosTableViewController.h"
 #import "FlickrFetcher.h"
 #import "Photo+Flickr.h"
-#import "Place.h"
 
 @interface TopPlacesVacationItineraryTableViewController()
 
@@ -42,6 +41,7 @@
         [document.managedObjectContext performBlock:^{
             // to bootstrap take the most popular places
             NSArray *places = [FlickrFetcher topPlaces];
+            // and the photos in 2 places
             NSArray *photos = [FlickrFetcher photosInPlace:[places objectAtIndex:6] maxResults:20];
             
             // create objects in documents context
@@ -51,6 +51,17 @@
                 
                 [Photo photoWithFlickrDictionary:photo inManagedObjectContext:document.managedObjectContext];                
             }
+            // to bootstrap take the most popular places
+            NSArray *photos2 = [FlickrFetcher photosInPlace:[places objectAtIndex:2] maxResults:20];
+            
+            // create objects in documents context
+            for (NSDictionary *photo in photos2) {
+                
+                // NSLog(@"Photo %@",[photo description]);
+                
+                [Photo photoWithFlickrDictionary:photo inManagedObjectContext:document.managedObjectContext];                
+            }
+
         }];
     });
     dispatch_release(fetchQ);
@@ -96,6 +107,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // NSSet *photos = place.hasPhotos;
+    // NSLog(@"%@", [photos description]);
     cell.textLabel.text = place.name;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d photos", [place.hasPhotos count]];
     
@@ -106,12 +119,14 @@
 {
     // the user selected a place he wants to visits
     self.selectedPlace = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // NSLog(@"didSelect %@",[self.selectedPlace description]);
     [self performSegueWithIdentifier:@"Photos" sender:self];
 
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    // NSLog(@"prepareForSegue %@",[self.selectedPlace description]);
     if ([segue.identifier isEqualToString:@"Photos"]) {
         [segue.destinationViewController setVacation:self.vacation];
         [segue.destinationViewController setSelectedPlace:self.selectedPlace];

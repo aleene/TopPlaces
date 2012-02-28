@@ -174,10 +174,12 @@
 - (void)setPhoto:(NSDictionary *)photo {
     if (photo != _photo) {
         _photo = photo;
-        [self retrievePhoto];
+        if (!self.selectedPhotoUrl) {
+            // get the corresponding url if we do not have it already
+            [self selectedPhotoUrl];
+        }
     }
 }
-
 
 - (void)viewDidLoad
 {

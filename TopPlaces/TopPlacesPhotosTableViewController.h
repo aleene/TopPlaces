@@ -11,6 +11,7 @@
 
 @interface TopPlacesPhotosTableViewController : UITableViewController
 
+
 // generic flickr-based properties. 
 @property (nonatomic, strong) NSArray *flickrList;
 @property (nonatomic, strong) NSDictionary *flickrLocation;

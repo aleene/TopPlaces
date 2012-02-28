@@ -14,6 +14,11 @@
 
 @interface TopPlacesPhotoViewController : UIViewController <SplitViewBarButtonItemPresenter>
 
+// this interface is not very nice, as it is now not clear what we really need:
+// photo.title to show in the navigationBar
+// photo.url to retrieve the photo itself
+// it should be possible to clean things up
+
 @property (nonatomic, strong) NSDictionary *photo;
 @property (nonatomic, strong) NSURL *selectedPhotoUrl;
 

@@ -1,36 +1,36 @@
 //
-//  TopPlacesVacationItineraryPhotosTableViewController.m
+//  TopPlacesVacationTagPhotosTableViewController.m
 //  TopPlaces
 //
-//  Created by Arnaud Leene on 24/02/2012.
+//  Created by Arnaud Leene on 26/02/2012.
 //  Copyright (c) 2012 MicroContent Musings - Hovering Above. All rights reserved.
 //
 
-#import "TopPlacesVacationItineraryPhotosTableViewController.h"
-#import "TopPlacesPhotoViewController.h"
+#import "TopPlacesVacationTagPhotosTableViewController.h"
 #import "Photo.h"
 #import "Photo+Flickr.h"
-#import "Place.h"
+#import "TopPlacesPhotoViewController.h"
 
-@interface TopPlacesVacationItineraryPhotosTableViewController()
+@interface TopPlacesVacationTagPhotosTableViewController()
 
 @property (nonatomic, strong) Photo *selectedPhoto;
+
 @end
 
-
-@implementation TopPlacesVacationItineraryPhotosTableViewController
+@implementation TopPlacesVacationTagPhotosTableViewController
 
 @synthesize vacation = _vacation;
-@synthesize selectedPlace = _selectedPlace;
+@synthesize selectedTag = _selectedTag;
 @synthesize selectedPhoto = _selectedPhoto;
 
 - (void) setupFetchedResultsController
 {
-    // fetch all the photos in this place !!!!
     // self.debug = YES;
-    // NSLog(@"place %@", [self.selectedPlace description]);
+    // fetch all the photos for this tag !!!!
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
-    fetch.predicate = [NSPredicate predicateWithFormat:@"place.name == %@", self.selectedPlace.name];
+    // ik weet de lijst van photo's die opgehaald moeten worden (selectedTag.hasPhotos)
+    // selectedTag is een set
+    fetch.predicate = [NSPredicate predicateWithFormat:@"self IN %@", self.selectedTag.hasPhotos];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     fetch.sortDescriptors = [NSArray arrayWithObject:descriptor];
     self.fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetch managedObjectContext:self.vacation.managedObjectContext sectionNameKeyPath:nil cacheName:nil]; 
@@ -63,20 +63,22 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (self.vacation && self.selectedPlace) {
-        //NSLog(@"viewWillAppear");
-        [self useDocument];
-
-    }
-}
 - (void)setVacation:(UIManagedDocument *)vacation
 {
     if (vacation != _vacation) {
         _vacation = vacation;
     } 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    // only perform the fetch when vacation and selectedTag are defined
+    if (self.vacation && self.selectedTag) {
+        // NSLog(@"viewWillAppear in Tags");
+        [self useDocument];
+        
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -89,7 +91,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Itinerary Photo Cell";
+    static NSString *CellIdentifier = @"Tag Photo Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -122,10 +124,11 @@
         // we need a Flickr dictionary to call the next TVC
         photoDict = [self.selectedPhoto asFlickrDictionary];
         // NSLog(@"Photo as FlickrDictionary %@",[photo description]);
-        // we define a rudimentary photo
+        // we define a rudimentary photo without the info to retrieve the data
         [segue.destinationViewController setPhoto:photoDict];
-        // and add the url we have retrieved earlier
+        // and add the url we have retrieved earlier to help retrieving the data
         [segue.destinationViewController setSelectedPhotoUrl:[NSURL URLWithString:self.selectedPhoto.url]];
     }
 }
+
 @end

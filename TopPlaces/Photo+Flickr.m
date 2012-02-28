@@ -26,7 +26,7 @@
     NSError *error = nil;
     NSArray *matches = [context executeFetchRequest:request error:&error];
     
-    if (!matches || [matches count]) {
+    if (!matches || [matches count] > 1) {
         // should handle the error here
     } else if ([matches count] == 0)
     {
@@ -42,16 +42,17 @@
         photo.subtitle = [flickrInfo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         photo.url = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString];
         photo.place = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContext:context];
+        [photo.place addHasPhotosObject:photo];
         NSArray *tagsArray = [[flickrInfo valueForKey:FLICKR_TAGS] componentsSeparatedByString:@" "];
         for (NSString *tagString in tagsArray) {
+            // NSLog(@"tag: %@", tagString);
             if (![tagString isEqualToString:@""]) {
-                Tag *tag = [Tag tagWithName:tagString forPhoto:photo inManagedObjectContext:context];
-                NSLog(@"tag: %@", [tag description]);
-                if (tag) {
-                    [photo addHasTagsObject:tag];
-                }
+                Tag *tag = [Tag tagWithName:tagString inManagedObjectContext:context];
+                // NSLog(@"tag added: %@", [tag description]);
+                [photo addHasTagsObject:tag];
             }
         }
+        // NSLog(@"photo: %@", [photo description]);
     }
     else
     {

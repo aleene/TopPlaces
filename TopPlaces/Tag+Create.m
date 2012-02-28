@@ -10,7 +10,7 @@
 
 @implementation Tag (Create)
 
-+ (Tag *)tagWithName:(NSString *)name forPhoto:(Photo *)photo inManagedObjectContext:(NSManagedObjectContext *)context
++ (Tag *)tagWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context
 
 {
     Tag *tag = nil;
@@ -23,8 +23,10 @@
     NSError *error = nil;
     NSArray *matches = [context executeFetchRequest:request error:&error];
     
-    if (!matches || [matches count]) {
+    //NSLog(@"Tag matches %d", [matches count]);
+    if (!matches || [matches count] > 1) {
         // should handle the error here
+        NSLog(@"Tag addition error");
     } else if ([matches count] == 0)
     {
         tag = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:context];
@@ -33,14 +35,12 @@
         else 
             tag.name = name;
         
-        // NSLog(@"Tag %@",[tag description]);
+        //NSLog(@"New tag %@",tag.name);
     }
     else
         tag = [matches lastObject];
-    
-    // if the tag has been created, the photo can be added
-    [tag addHasPhotosObject:photo];
-    
+    //NSLog(@"Return tag %@",tag.name);
+
     return tag;
 }
 

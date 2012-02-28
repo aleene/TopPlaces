@@ -23,7 +23,7 @@
     NSError *error = nil;
     NSArray *matches = [context executeFetchRequest:request error:&error];
     
-    if (!matches || [matches count]) {
+    if (!matches || [matches count] > 1) {
         // should handle the error here
     } else if ([matches count] == 0)
     {
@@ -33,11 +33,12 @@
         else 
             place.name = name;
         
-        // NSLog(@"Place %@",[place description]);
+        // NSLog(@"New Place %@",[place description]);
     }
     else
         place = [matches lastObject];
-    
+    // NSLog(@"Place Returned %@",[place description]);
+
     return place;
 }
 

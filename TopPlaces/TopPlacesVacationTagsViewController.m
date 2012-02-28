@@ -25,7 +25,7 @@
 - (void) setupFetchedResultsController
 {
     self.debug = YES;
-    // fetch all the PLACES in this vacation !!!!
+    // fetch all the Tags in this vacation !!!!
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
     // no predicate required: all required
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
@@ -98,7 +98,8 @@
     }
     Tag *tag = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = tag.name;
-    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d photos", [tag.hasPhotos count]];
+
     return cell;
 }
 
@@ -106,13 +107,13 @@
 {
     // the user selected a place he wants to visits
     self.selectedTag = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"Photos" sender:self];
+    [self performSegueWithIdentifier:@"Tag Photos" sender:self];
     
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"Photos"]) {
+    if ([segue.identifier isEqualToString:@"Tag Photos"]) {
         [segue.destinationViewController setVacation:self.vacation];
         [segue.destinationViewController setSelectedTag:self.selectedTag];
     }
