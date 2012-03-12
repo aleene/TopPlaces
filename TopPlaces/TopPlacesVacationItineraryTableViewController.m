@@ -49,17 +49,16 @@
                 
                // NSLog(@"Photo %@",[photo description]);
                 
-                [Photo photoWithFlickrDictionary:photo inManagedObjectContext:document.managedObjectContext];                
+                [Photo photoWithFlickrPhoto:[FlickrPhoto initWithFlickr:photo] inManagedObjectContext:document.managedObjectContext];                
             }
             // to bootstrap take the most popular places
             NSArray *photos2 = [FlickrFetcher photosInPlace:[places objectAtIndex:2] maxResults:20];
             
             // create objects in documents context
             for (NSDictionary *photo in photos2) {
-                
                 // NSLog(@"Photo %@",[photo description]);
                 
-                [Photo photoWithFlickrDictionary:photo inManagedObjectContext:document.managedObjectContext];                
+                [Photo photoWithFlickrPhoto:[FlickrPhoto initWithFlickr:photo] inManagedObjectContext:document.managedObjectContext];                
             }
 
         }];

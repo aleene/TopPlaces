@@ -120,14 +120,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Show Photo"]) {
-        NSDictionary *photoDict;
-        // we need a Flickr dictionary to call the next TVC
-        photoDict = [self.selectedPhoto asFlickrDictionary];
-        // NSLog(@"Photo as FlickrDictionary %@",[photo description]);
-        // we define a rudimentary photo without the info to retrieve the data
-        [segue.destinationViewController setPhoto:photoDict];
-        // and add the url we have retrieved earlier to help retrieving the data
-        [segue.destinationViewController setSelectedPhotoUrl:[NSURL URLWithString:self.selectedPhoto.url]];
+        // convert the Photo to a FlickrPhoto
+        // and pass the FlickrPhoto onwards
+        [segue.destinationViewController setFlickrPhoto:[FlickrPhoto initWithPhoto:self.selectedPhoto]];
+        [segue.destinationViewController setVacation:[Vacation initWithDocument:self.vacation]];
     }
 }
 

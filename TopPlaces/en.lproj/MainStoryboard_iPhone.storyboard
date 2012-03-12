@@ -181,16 +181,67 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Earth" id="die-37-wG1">
-                        <barButtonItem key="rightBarButtonItem" title="Visit" id="iJH-Cj-dZF"/>
+                        <barButtonItem key="rightBarButtonItem" title="Visit" id="iJH-Cj-dZF">
+                            <connections>
+                                <action selector="vacationButtonPressed:" destination="3V3-Cr-NCQ" id="9h9-es-R4Y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="photoImageView" destination="jN1-PU-UFi" id="qyd-ef-ruD"/>
                         <outlet property="photoScrollView" destination="8U5-5s-cJw" id="dav-Nv-7Xq"/>
+                        <segue destination="pvQ-d9-1Wd" kind="modal" identifier="Vacations List" modalTransitionStyle="partialCurl" id="Fed-QT-kr6"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="2617" y="105"/>
+        </scene>
+        <scene sceneID="s8T-Hf-sHw">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AkK-Dk-9l1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController title="Choose Vacation" id="pvQ-d9-1Wd" customClass="TopPlacesVacationsModalTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Mi9-u2-j8s">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="kaw-Jd-9uZ">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Vacation Cell" textLabel="gAa-JI-wJm" style="IBUITableViewCellStyleDefault" id="6Gr-dY-iew">
+                                <rect key="frame" x="0.0" y="110" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gAa-JI-wJm">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="pvQ-d9-1Wd" id="RCZ-aL-avL"/>
+                            <outlet property="delegate" destination="pvQ-d9-1Wd" id="YQv-hL-nPz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Choose Vacation" id="3OT-sz-C8n">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="5Mr-f4-w1Q"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="3136" y="105"/>
         </scene>
         <scene sceneID="QfP-D2-Kc6">
             <objects>
@@ -505,7 +556,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Photos" id="5ui-eJ-jII"/>
                     <connections>
-                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo" id="XbP-DI-cYc"/>
+                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo" id="A7X-8b-zei"/>
                     </connections>
                 </tableViewController>
             </objects>
@@ -553,7 +604,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="UIx-wg-i2V"/>
                     <connections>
-                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo" id="fD8-H8-ZPj"/>
+                        <segue destination="3V3-Cr-NCQ" kind="push" identifier="Show Photo" id="PXq-TI-DJP"/>
                     </connections>
                 </tableViewController>
             </objects>
@@ -620,13 +671,62 @@
         <image name="42-photos.png" width="22" height="24"/>
         <image name="apollo17_earth.tiff" width="3720" height="3796"/>
     </resources>
+    <classes>
+        <class className="CoreDataTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CoreDataTableViewController.h"/>
+        </class>
+        <class className="TopPlacesPhotoMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="TopPlacesPhotoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="photoImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="photoScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="TopPlacesPhotosForPlaceTableViewController" superclassName="TopPlacesPhotosTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosForPlaceTableViewController.h"/>
+        </class>
+        <class className="TopPlacesPhotosTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosTableViewController.h"/>
+        </class>
+        <class className="TopPlacesPlacesTableViewController" superclassName="TopPlacesPhotosTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPlacesTableViewController.h"/>
+        </class>
+        <class className="TopPlacesVacationItineraryPhotosTableViewController" superclassName="CoreDataTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationItineraryPhotosTableViewController.h"/>
+        </class>
+        <class className="TopPlacesVacationItineraryTableViewController" superclassName="CoreDataTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationItineraryTableViewController.h"/>
+        </class>
+        <class className="TopPlacesVacationSingleTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationSingleTableViewController.h"/>
+        </class>
+        <class className="TopPlacesVacationTagPhotosTableViewController" superclassName="CoreDataTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationTagPhotosTableViewController.h"/>
+        </class>
+        <class className="TopPlacesVacationTagsViewController" superclassName="CoreDataTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationTagsViewController.h"/>
+        </class>
+        <class className="TopPlacesVacationsModalTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationsModalTableViewController.h"/>
+        </class>
+        <class className="TopPlacesVacationsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationsTableViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fD8-H8-ZPj"/>
-        <segue reference="wfc-Mz-jFS"/>
+        <segue reference="IF9-Nn-nZO"/>
+        <segue reference="A7X-8b-zei"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 
 @class TopPlacesPhotoMapViewController;
+
 @protocol MapViewControllerDelegate <NSObject>
 
 - (UIImage *)topPlacesPhotoMapViewController:(TopPlacesPhotoMapViewController *)sender imageForAnnotation:(id <MKAnnotation>)annotation;

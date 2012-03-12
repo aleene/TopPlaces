@@ -61,6 +61,50 @@
     return photo;
 }
 
++ (Photo *)photoWithFlickrPhoto:(FlickrPhoto *)flickrPhoto inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    Photo *photo = nil;
+    
+    // need to check whether the photo is already there
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
+    request.predicate = [NSPredicate predicateWithFormat:@"unique =%@", flickrPhoto.unique];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    request.sortDescriptors = [NSArray arrayWithObject:descriptor];
+    NSError *error = nil;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || [matches count] > 1) {
+        // should handle the error here
+    } else if ([matches count] == 0)
+    {
+        // the photo is not yet available
+        // it should be added
+        photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
+
+        photo.unique = flickrPhoto.unique;
+        photo.title = flickrPhoto.title;
+        photo.subtitle = flickrPhoto.description;
+        photo.url = [flickrPhoto.urlLarge absoluteString]; // transform NSURL to NSString
+        photo.place = [Place placeWithName:flickrPhoto.place inManagedObjectContext:context];
+        [photo.place addHasPhotosObject:photo];
+        NSArray *tagsArray = flickrPhoto.tags;
+        for (NSString *tagString in tagsArray) {
+            // NSLog(@"tag: %@", tagString);
+            if (![tagString isEqualToString:@""]) {
+                Tag *tag = [Tag tagWithName:tagString inManagedObjectContext:context];
+                // NSLog(@"tag added: %@", [tag description]);
+                [photo addHasTagsObject:tag];
+            }
+        }
+        // NSLog(@"photo: %@", [photo description]);
+    }
+    else
+    {
+        photo = [matches lastObject];
+    }
+    return photo;
+}
+
 - (NSDictionary *)asFlickrDictionary
 {    
     // NSLog(@"photo %@",[self description]);

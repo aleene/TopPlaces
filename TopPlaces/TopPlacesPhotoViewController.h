@@ -9,17 +9,18 @@
 
 #import <UIKit/UIKit.h>
 #import "SplitViewBarButtonItemPresenter.h"
+#import "TopPlacesVacationsModalTableViewController.h"
+#import "Vacation.h"
+#import "FlickrPhoto.h"
 
-//  this class implements the required SpltViewBarButtonItemPresenter methods
+//  this class implements the required SplitViewBarButtonItemPresenter methods
+//  and the ChosenVacationDelegate methods
 
-@interface TopPlacesPhotoViewController : UIViewController <SplitViewBarButtonItemPresenter>
+@interface TopPlacesPhotoViewController : UIViewController <SplitViewBarButtonItemPresenter, ChosenVacationDelegate>
 
-// this interface is not very nice, as it is now not clear what we really need:
-// photo.title to show in the navigationBar
-// photo.url to retrieve the photo itself
-// it should be possible to clean things up
-
+@property (nonatomic, strong) Vacation *vacation;
+@property (nonatomic, strong) FlickrPhoto *flickrPhoto;;
+// I would like supress the next method 
 @property (nonatomic, strong) NSDictionary *photo;
-@property (nonatomic, strong) NSURL *selectedPhotoUrl;
 
 @end

@@ -11,6 +11,7 @@
 #import "Photo.h"
 #import "Photo+Flickr.h"
 #import "Place.h"
+#import "Vacation.h"
 
 @interface TopPlacesVacationItineraryPhotosTableViewController()
 
@@ -118,14 +119,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Show Photo"]) {
-        NSDictionary *photoDict;
-        // we need a Flickr dictionary to call the next TVC
-        photoDict = [self.selectedPhoto asFlickrDictionary];
-        // NSLog(@"Photo as FlickrDictionary %@",[photo description]);
-        // we define a rudimentary photo
-        [segue.destinationViewController setPhoto:photoDict];
-        // and add the url we have retrieved earlier
-        [segue.destinationViewController setSelectedPhotoUrl:[NSURL URLWithString:self.selectedPhoto.url]];
+	// convert the Photo to a FlickrPhoto
+	// and pass the FlickrPhoto onwards
+        [segue.destinationViewController setFlickrPhoto:[FlickrPhoto initWithPhoto:self.selectedPhoto]];
+        Vacation *selectedVacation = [Vacation initWithDocument:self.vacation];
+        [segue.destinationViewController setVacation:selectedVacation];
+
     }
 }
 @end

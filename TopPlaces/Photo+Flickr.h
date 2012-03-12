@@ -7,10 +7,12 @@
 //
 
 #import "Photo.h"
+#import "FlickrPhoto.h"
 
 @interface Photo (Flickr)
 
 + (Photo *)photoWithFlickrDictionary:(NSDictionary *)flickrInfo inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Photo *)photoWithFlickrPhoto:(FlickrPhoto *)flickrPhoto inManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (NSDictionary *)asFlickrDictionary;
 

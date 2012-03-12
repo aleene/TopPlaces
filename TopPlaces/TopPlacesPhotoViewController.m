@@ -16,23 +16,26 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *photoScrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) UIToolbar *toolbar;
 @property (strong, nonatomic) NSString *photoTitle;
 @property (strong, nonatomic) TopPlacesPhotoCache *cache;
+@property (strong, nonatomic) NSURL *selectedPhotoUrl;
 
 @end
 
 @implementation TopPlacesPhotoViewController
- 
+ // private variables
 @synthesize photoScrollView = _photoScrollView;
 @synthesize photoImageView = _photoImageView;
 @synthesize toolbar = _toolbar;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 @synthesize photoTitle = _photoTitle;
-
-@synthesize photo = _photo;
 @synthesize cache = _cache;
 @synthesize selectedPhotoUrl = _selectedPhotoUrl;
+// public variables
+@synthesize vacation = _vacation;
+@synthesize flickrPhoto = _flickrPhoto;
+@synthesize photo = _photo;
 
 - (TopPlacesPhotoCache *)cache {
     if (!_cache) {
@@ -65,6 +68,24 @@
     self.title = _photoTitle;
 }
    
+- (void)updateVisitButtonTitle {
+    //	NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+    //	UIBarButtonItem *vacationButton = [toolbarItems objectAtIndex:2];
+    UIBarButtonItem *vacationButton = [self.navigationItem rightBarButtonItem];
+    
+	// if the first fails, does the second one?
+	if (self.vacation)
+        if ([self.vacation has:self.photo])
+        {
+            vacationButton.title = @"Unvisit";
+        }
+        else
+        {
+            vacationButton.title = @"Visit";
+        }
+    //	self.toolbarItems = toolbarItems; 
+}
+
 - (void)retrievePhoto {
     if (self.photo) {
         if ([self.cache contains:self.photo]) {
@@ -146,6 +167,7 @@
                         {
                             self.navigationItem.rightBarButtonItem = lastButton;
                         }
+                        [self updateVisitButtonTitle];
 
                     });
                 });
@@ -160,36 +182,64 @@
     }
 }
 
-- (NSURL *)selectedPhotoUrl
-{
-    if (!_selectedPhotoUrl) {
-        // try to retrieve it from Flickr
-            _selectedPhotoUrl = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
-    }
-    return _selectedPhotoUrl;
-}
 
-//  This one was added for the iPad splitview
-//  It needs displaying the image again if the photo is changed
+// I must keep photo and flickrPhoto synchronised.
 - (void)setPhoto:(NSDictionary *)photo {
     if (photo != _photo) {
         _photo = photo;
-        if (!self.selectedPhotoUrl) {
-            // get the corresponding url if we do not have it already
-            [self selectedPhotoUrl];
-        }
     }
+}
+- (NSDictionary *)photo
+{
+	if (!_photo)
+		_photo = [self.flickrPhoto flickrDictionary];
+	return _photo;
+}
+- (void)setFLickrPhoto:(FlickrPhoto *)flickrPhoto {
+    if (flickrPhoto != _flickrPhoto) {
+        _flickrPhoto = flickrPhoto;
+    }
+}
+- (FlickrPhoto *)flickrPhoto
+{
+	if (!_flickrPhoto)
+		_flickrPhoto = [FlickrPhoto initWithFlickr:self.photo];
+	return _flickrPhoto;
+}
+- (NSURL *)selectedPhotoUrl
+{
+	// do we have the url already?
+	if (self.flickrPhoto.urlLarge)
+		_selectedPhotoUrl = self.flickrPhoto.urlLarge;
+	else
+		_selectedPhotoUrl = [FlickrFetcher urlForPhoto:self.photo format:FlickrPhotoFormatLarge];
+	return _selectedPhotoUrl;
+}
+
+- (void)setVacation:(Vacation *)vacation
+{
+	if (vacation != _vacation)
+	{
+		_vacation = vacation;
+	}
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+	// before appearing on screen
+	// set the right title of the button
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // instruction from lecture 8
+
     self.photoScrollView.delegate = self;
     // if I have a photo defined, retrieve it.
     if (self.photo) {
         [self retrievePhoto];
     }    
+    [self updateVisitButtonTitle];
 }
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem {
@@ -198,9 +248,8 @@
         if (_splitViewBarButtonItem) {
             [toolbarItems removeObject:_splitViewBarButtonItem];
         }
-        if (splitViewBarButtonItem) {
+        if (splitViewBarButtonItem)
             [toolbarItems insertObject:splitViewBarButtonItem atIndex:0];
-        }
         self.toolbar.items = toolbarItems;
         _splitViewBarButtonItem = splitViewBarButtonItem;
     }
@@ -212,6 +261,49 @@
     // Return YES for supported orientations
     return (YES);
 }
+- (IBAction)vacationButtonPressed:(id)sender {
+	// is there already a vacation available?
+	if(!self.vacation)
+	{
+	    [self performSegueWithIdentifier:@"Vacations List" sender:self];
+		// segue to the vacation list, so the user can chose or create
+	}    
+    // check if the photo exists in that vacation
+	if (![self.vacation has:self.photo])
+	{
+		// add the photo to the vacation
+		[self.vacation add:self.photo];
+		// if the photo is available, set the button title to "Unvisit"
+	}
+    else    {
+        // remove the photo from the vacation
+        [self.vacation remove:self.photo];
+    }
+	// set the button title
+	[self updateVisitButtonTitle];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Vacations List"]) {
+        // set the delegate
+        [segue.destinationViewController setDelegate:self];
+    }
+}
+
+// this is a delegate method for the VacationListModalTableViewController
+// and is used to pass a selected vacation on to this one
+// 
+- (Vacation *)TopPlacesVacationsModalTableViewController:(TopPlacesVacationsModalTableViewController *)sender setChosenVacation:(Vacation *)vacation
+{
+	// set the vacation (in vacation the title of the button can be set)
+	self.vacation = vacation;
+	// dismiss the controller
+    [[self presentedViewController] dismissModalViewControllerAnimated:YES];
+	// is there still somebody to give this to?
+	// can make it void as well!!!
+    return self.vacation;
+}
 
 - (void)viewDidUnload {
     [self setPhotoImageView:nil];
@@ -219,4 +311,5 @@
     [self setToolbar:nil];
     [super viewDidUnload];
 }
+
 @end
