@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Vacation.h"
 
 @interface TopPlacesVacationSingleTableViewController : UITableViewController
 
-@property (nonatomic, strong) UIManagedDocument *vacation;
+@property (nonatomic, strong) Vacation *vacation;
 
 @end

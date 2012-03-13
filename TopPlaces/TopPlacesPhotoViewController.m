@@ -223,6 +223,13 @@
 		_vacation = vacation;
 	}
 }
+
+- (Vacation *)vacation {
+    if (!_vacation) {
+        [self performSegueWithIdentifier:@"Vacations List" sender:self];
+    }
+    return _vacation;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -261,26 +268,24 @@
     // Return YES for supported orientations
     return (YES);
 }
+
 - (IBAction)vacationButtonPressed:(id)sender {
-	// is there already a vacation available?
-	if(!self.vacation)
-	{
-	    [self performSegueWithIdentifier:@"Vacations List" sender:self];
-		// segue to the vacation list, so the user can chose or create
-	}    
     // check if the photo exists in that vacation
-	if (![self.vacation has:self.photo])
-	{
-		// add the photo to the vacation
-		[self.vacation add:self.photo];
-		// if the photo is available, set the button title to "Unvisit"
-	}
-    else    {
-        // remove the photo from the vacation
-        [self.vacation remove:self.photo];
+    if (self.vacation) {
+        if (![self.vacation has:self.photo])
+        {
+            // add the photo to the vacation
+            [self.vacation add:self.photo];
+            // if the photo is available, set the button title to "Unvisit"
+        }
+        else    {
+            // remove the photo from the vacation
+            [self.vacation remove:self.photo];
+        }
+        // set the button title
+        [self updateVisitButtonTitle];
+
     }
-	// set the button title
-	[self updateVisitButtonTitle];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CoreDataTableViewController.h"
+#import "Vacation.h"
 
 @interface TopPlacesVacationItineraryTableViewController : CoreDataTableViewController
 
-@property (nonatomic, strong) UIManagedDocument *vacation;
+@property (nonatomic, strong) Vacation *vacation;
 
 @end

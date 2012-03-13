@@ -117,7 +117,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1172" y="-290"/>
+            <point key="canvasLocation" x="1152" y="-463"/>
         </scene>
         <scene sceneID="vKM-zZ-CUK">
             <objects>
@@ -195,7 +195,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="2617" y="105"/>
+            <point key="canvasLocation" x="2629" y="66"/>
         </scene>
         <scene sceneID="s8T-Hf-sHw">
             <objects>
@@ -241,7 +241,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="3136" y="105"/>
+            <point key="canvasLocation" x="3276" y="66"/>
         </scene>
         <scene sceneID="QfP-D2-Kc6">
             <objects>
@@ -671,62 +671,13 @@
         <image name="42-photos.png" width="22" height="24"/>
         <image name="apollo17_earth.tiff" width="3720" height="3796"/>
     </resources>
-    <classes>
-        <class className="CoreDataTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CoreDataTableViewController.h"/>
-        </class>
-        <class className="TopPlacesPhotoMapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoMapViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="TopPlacesPhotoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="photoImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="photoScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="TopPlacesPhotosForPlaceTableViewController" superclassName="TopPlacesPhotosTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosForPlaceTableViewController.h"/>
-        </class>
-        <class className="TopPlacesPhotosTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosTableViewController.h"/>
-        </class>
-        <class className="TopPlacesPlacesTableViewController" superclassName="TopPlacesPhotosTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPlacesTableViewController.h"/>
-        </class>
-        <class className="TopPlacesVacationItineraryPhotosTableViewController" superclassName="CoreDataTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationItineraryPhotosTableViewController.h"/>
-        </class>
-        <class className="TopPlacesVacationItineraryTableViewController" superclassName="CoreDataTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationItineraryTableViewController.h"/>
-        </class>
-        <class className="TopPlacesVacationSingleTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationSingleTableViewController.h"/>
-        </class>
-        <class className="TopPlacesVacationTagPhotosTableViewController" superclassName="CoreDataTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationTagPhotosTableViewController.h"/>
-        </class>
-        <class className="TopPlacesVacationTagsViewController" superclassName="CoreDataTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationTagsViewController.h"/>
-        </class>
-        <class className="TopPlacesVacationsModalTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationsModalTableViewController.h"/>
-        </class>
-        <class className="TopPlacesVacationsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesVacationsTableViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="IF9-Nn-nZO"/>
-        <segue reference="A7X-8b-zei"/>
+        <segue reference="g4v-EP-sHb"/>
+        <segue reference="wfc-Mz-jFS"/>
     </inferredMetricsTieBreakers>
 </document>

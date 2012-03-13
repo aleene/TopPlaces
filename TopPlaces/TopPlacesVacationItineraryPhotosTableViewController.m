@@ -34,13 +34,13 @@
     fetch.predicate = [NSPredicate predicateWithFormat:@"place.name == %@", self.selectedPlace.name];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     fetch.sortDescriptors = [NSArray arrayWithObject:descriptor];
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetch managedObjectContext:self.vacation.managedObjectContext sectionNameKeyPath:nil cacheName:nil]; 
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetch managedObjectContext:self.vacation.vacationDocument.managedObjectContext sectionNameKeyPath:nil cacheName:nil]; 
 }
 
 - (void)useDocument
 {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.vacation.fileURL path]]) {
-        [self.vacation saveToURL:self.vacation.fileURL
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.vacation.vacationDocument.fileURL path]]) {
+        [self.vacation.vacationDocument saveToURL:self.vacation.vacationDocument.fileURL
                 forSaveOperation:UIDocumentSaveForCreating 
                completionHandler:^(BOOL success) { 
                    // if the file does not exits fill it
@@ -51,14 +51,14 @@
                    [self setupFetchedResultsController];
                }];
     }
-    else if (self.vacation.documentState == UIDocumentStateClosed)
+    else if (self.vacation.vacationDocument.documentState == UIDocumentStateClosed)
     {
-        [self.vacation openWithCompletionHandler:^(BOOL success) {
+        [self.vacation.vacationDocument openWithCompletionHandler:^(BOOL success) {
             [self setupFetchedResultsController];
             
         }];
     }
-    else if (self.vacation.documentState == UIDocumentStateNormal)
+    else if (self.vacation.vacationDocument.documentState == UIDocumentStateNormal)
     {
         [self setupFetchedResultsController];
     }
@@ -73,7 +73,7 @@
 
     }
 }
-- (void)setVacation:(UIManagedDocument *)vacation
+- (void)setVacation:(Vacation *)vacation
 {
     if (vacation != _vacation) {
         _vacation = vacation;
@@ -122,8 +122,8 @@
 	// convert the Photo to a FlickrPhoto
 	// and pass the FlickrPhoto onwards
         [segue.destinationViewController setFlickrPhoto:[FlickrPhoto initWithPhoto:self.selectedPhoto]];
-        Vacation *selectedVacation = [Vacation initWithDocument:self.vacation];
-        [segue.destinationViewController setVacation:selectedVacation];
+//        Vacation *selectedVacation = [Vacation initWithDocument:self.vacation];
+        [segue.destinationViewController setVacation:self.vacation];
 
     }
 }

@@ -15,9 +15,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSString *fileName = [self.vacation.fileURL lastPathComponent];
-    NSRange  range = [fileName rangeOfString:@"vacation"];
-    self.title = [fileName substringToIndex:range.location-1];
+    self.title = [self.vacation title];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

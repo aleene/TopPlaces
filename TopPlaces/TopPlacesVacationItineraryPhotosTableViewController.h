@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CoreDataTableViewController.h"
 #import "Place.h"
+#import "Vacation.h"
 
 @interface TopPlacesVacationItineraryPhotosTableViewController : CoreDataTableViewController
 
 // needs these to continue working with the same document
 
-@property (nonatomic, strong) UIManagedDocument *vacation;
+@property (nonatomic, strong) Vacation *vacation;
 @property (nonatomic, strong) Place *selectedPlace;
 
 

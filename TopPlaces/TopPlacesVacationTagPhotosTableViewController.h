@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CoreDataTableViewController.h"
 #import "Tag.h"
+#import "Vacation.h"
 
 @interface TopPlacesVacationTagPhotosTableViewController : CoreDataTableViewController
 
-@property (nonatomic, strong) UIManagedDocument *vacation;
+@property (nonatomic, strong) Vacation *vacation;
 @property (nonatomic, strong) Tag *selectedTag;
 
 @end
