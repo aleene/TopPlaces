@@ -19,9 +19,11 @@
 @end
 
 @implementation TopPlacesPhotosTableViewController
-
+// public properties
 @synthesize flickrList = _flickrList;
 @synthesize flickrLocation = _flickrLocation; // can be a photo or a location
+@synthesize flickrPhoto = _flickrPhoto;
+// private properties
 @synthesize annotation = _annotation;
 
 //  is a detail view controller available?
@@ -122,7 +124,7 @@
     FlickrPhotoAnnotation *fpa = (FlickrPhotoAnnotation *)annotation;
     self.flickrLocation = fpa.photo;
     if ([self splitViewTopPlacesPhotoViewController]) {
-        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.flickrLocation];
+        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.flickrPhoto];
     } else {
         [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
     }
@@ -149,7 +151,7 @@
     self.navigationItem.backBarButtonItem = backButton;
 
     if ([segue.identifier isEqualToString:@"Show Photo Segue"]) {
-        [segue.destinationViewController setPhoto:self.flickrLocation];
+        [segue.destinationViewController setPhoto:self.flickrPhoto];
     }
     else if ([segue.identifier isEqualToString:@"Show As Map"])
     {
@@ -195,11 +197,11 @@
             
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.flickrLocation = [self.flickrList objectAtIndex:indexPath.row];
+    self.flickrPhoto = [self.flickrList objectAtIndex:indexPath.row];
     //  check to see whether we are on the iPad or not
     //  and if we can go to the right controller right away (as it is on screen) 
     if ([self splitViewTopPlacesPhotoViewController]) {
-        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.flickrLocation];
+        [[self splitViewTopPlacesPhotoViewController] setPhoto:self.flickrPhoto];
     } else {
         [self performSegueWithIdentifier:@"Show Photo Segue" sender:self];
     }

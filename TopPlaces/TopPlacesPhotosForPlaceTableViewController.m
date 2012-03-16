@@ -13,19 +13,20 @@
 #import "TopPlacesPhotosTableViewController.h"
 #import "TopPlacesPhotoMapViewController.h"
 
-@interface TopPlacesPhotosForPlaceTableViewController() 
+@interface TopPlacesPhotosForPlaceTableViewController()
 
 @end
 
 @implementation TopPlacesPhotosForPlaceTableViewController
+
 
 - (NSString *)viewControllerTitle
 {
     NSString *title;
     // Set the title of this viewcontroller
     if (self.flickrLocation) {
-    NSString *placeName = [self.flickrLocation valueForKey:FLICKR_PLACE_NAME];
-    title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
+        NSString *placeName = [self.flickrLocation valueForKey:FLICKR_PLACE_NAME];
+        title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
     }
     else
         title = @"No placename";
@@ -35,7 +36,7 @@
 
 - (NSArray *)getFlickrArray
 {
-    NSLog(@"flickerLocation %@", [self.flickrLocation description]);
+    NSLog(@"flickrLocation %@", [self.flickrLocation description]);
     return [FlickrFetcher photosInPlace:self.flickrLocation maxResults:20];
 }
 

@@ -15,5 +15,6 @@
 // generic flickr-based properties. 
 @property (nonatomic, strong) NSArray *flickrList;
 @property (nonatomic, strong) NSDictionary *flickrLocation;
+@property (nonatomic, strong) NSDictionary *flickrPhoto;
 
 @end
