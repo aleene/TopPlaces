@@ -13,6 +13,4 @@
 // The class is a subclass as it has to implement only a few things extra
 @interface TopPlacesPhotosForPlaceTableViewController : TopPlacesPhotosTableViewController
 
-@property (nonatomic, strong) NSDictionary *place;
-
 @end

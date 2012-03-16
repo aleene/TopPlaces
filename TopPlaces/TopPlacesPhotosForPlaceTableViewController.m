@@ -8,43 +8,79 @@
 
 #import "TopPlacesPhotosForPlaceTableViewController.h"
 #import "FlickrFetcher.h"
+#import "FlickrPhotoAnnotation.h"
 #import "TopPlacesPhotoViewController.h"
 #import "TopPlacesPhotosTableViewController.h"
+#import "TopPlacesPhotoMapViewController.h"
+
+@interface TopPlacesPhotosForPlaceTableViewController() 
+
+@end
 
 @implementation TopPlacesPhotosForPlaceTableViewController
 
-@synthesize place = _place;
-
-- (NSArray *)getPhotoList
+- (NSString *)viewControllerTitle
 {
-    NSArray *photosFound = [FlickrFetcher photosInPlace:self.place maxResults:10];
-    return [photosFound copy];
+    NSString *title;
+    // Set the title of this viewcontroller
+    if (self.flickrLocation) {
+    NSString *placeName = [self.flickrLocation valueForKey:FLICKR_PLACE_NAME];
+    title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
+    }
+    else
+        title = @"No placename";
+    
+    return title;
 }
+
+- (NSArray *)getFlickrArray
+{
+    NSLog(@"flickerLocation %@", [self.flickrLocation description]);
+    return [FlickrFetcher photosInPlace:self.flickrLocation maxResults:20];
+}
+
+
+// this one is exact the same as its parent!!!!
 
 - (void)refresh 
-{
-    NSArray *photosFound = [self getPhotoList];
-    self.flickrPhotos = photosFound;
+{    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    UIBarButtonItem *spinnerButton = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 
-    // Set the title of this viewcontroller
-    NSString *placeName = [self.place valueForKey:FLICKR_PLACE_NAME];
-    self.title = [placeName substringToIndex:[placeName rangeOfString:@","].location];
+    UIBarButtonItem *currentButton = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = spinnerButton;
+
+    dispatch_queue_t placePhotosQueue = dispatch_queue_create("place photos queue", NULL);
+    dispatch_async(placePhotosQueue, ^{
+        
+        NSArray *photosFound = [self getFlickrArray];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!photosFound) {
+                UIAlertView *noImagesAlertView = [[UIAlertView alloc] initWithTitle:@"No Flickr" 
+                                                                            message:@"Trouble getting info from Flickr" 
+                                                                           delegate:nil 
+                                                                  cancelButtonTitle:@"To bad" 
+                                                                  otherButtonTitles:nil];
+                [noImagesAlertView show];
+            }
+
+            self.navigationItem.rightBarButtonItem = currentButton;
+            self.flickrList = photosFound;
+        });
+    });
+    dispatch_release(placePhotosQueue);
+    self.navigationItem.title = [self viewControllerTitle];
 }
+ 
 
 - (IBAction)refresh:(id)sender 
 {
-    if (self.place) {
+    if (self.flickrLocation) {
         [self refresh];
     }
 }
 
-
-- (void)setPlace:(NSDictionary *)place
-{
-    if (place != _place) {
-        _place = place;
-        [self refresh];
-    }
-}
 
 @end

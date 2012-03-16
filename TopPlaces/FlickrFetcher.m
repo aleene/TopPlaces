@@ -16,19 +16,13 @@
 {
     query = [NSString stringWithFormat:@"%@&format=json&nojsoncallback=1&api_key=%@", query, FlickrAPIKey];
     query = [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//    NSLog(@"[%@ %@] sent %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), query);
+    // NSLog(@"[%@ %@] sent %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), query);
     NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:query] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error = nil;
-    NSDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error] : nil;
+    NSDictionary *results = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers|NSJSONReadingMutableLeaves error:&error] : nil;
     if (error) NSLog(@"[%@ %@] JSON error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error.localizedDescription);
-//    NSLog(@"[%@ %@] received %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), results);
+    // NSLog(@"[%@ %@] received %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), results);
     return results;
-}
-
-+ (NSArray *)recentGeoreferencedPhotos
-{
-    NSString *request = [NSString stringWithFormat:@"http://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=500&license=1,2,4,7&has_geo=1&extras=original_format,tags,description,geo,date_upload,owner_name,place_url"];
-    return [[self executeFlickrFetch:request] valueForKeyPath:@"photos.photo"];
 }
 
 + (NSArray *)topPlaces
@@ -37,14 +31,39 @@
     return [[self executeFlickrFetch:request] valueForKeyPath:@"places.place"];
 }
 
++ (NSArray *)stanfordPhotos
+{
+    NSString *request = @"http://api.flickr.com/services/rest/?user_id=48247111@N07&format=json&nojsoncallback=1&extras=original_format,tags,description,geo,date_upload,owner_name&page=1&method=flickr.photos.search";
+    return [[self executeFlickrFetch:request] valueForKeyPath:@"photos.photo"];
+}
+
 + (NSArray *)photosInPlace:(NSDictionary *)place maxResults:(int)maxResults
 {
+    NSArray *photos = nil;
+    NSLog(@"photosInPlace:place  %@", [place description]);
+
     NSString *placeId = [place objectForKey:FLICKR_PLACE_ID];
     if (placeId) {
-        NSString *request = [NSString stringWithFormat:@"http://api.flickr.com/services/rest/?method=flickr.photos.search&has_geo=1&place_id=%@&per_page=%d&extras=original_format,tags,description,geo,date_upload,owner_name,place_url", placeId, maxResults];
-        return [[self executeFlickrFetch:request] valueForKeyPath:@"photos.photo"];
+        NSString *request = [NSString stringWithFormat:@"http://api.flickr.com/services/rest/?method=flickr.photos.search&place_id=%@&per_page=%d&extras=original_format,tags,description,geo,date_upload,owner_name,place_url", placeId, maxResults];
+
+        NSString *placeName = [place objectForKey:FLICKR_PLACE_NAME];
+        NSLog(@"place name %@", placeName);
+        if (!placeName) {
+            placeName =@"No place";
+        }
+        photos = [[self executeFlickrFetch:request] valueForKeyPath:@"photos.photo"];
+        for (NSMutableDictionary *photo in photos) {
+            // NSLog(@"Photo in FlickrFetcher %@",[photo description]);
+            [photo setObject:placeName forKey:FLICKR_PHOTO_PLACE_NAME];
+        }
     }
-    return nil;
+    return photos;
+}
+
++ (NSArray *)recentGeoreferencedPhotos
+{
+    NSString *request = [NSString stringWithFormat:@"http://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=500&license=1,2,4,7&has_geo=1&extras=original_format,tags,description,geo,date_upload,owner_name,place_url"];
+    return [[self executeFlickrFetch:request] valueForKeyPath:@"photos.photo"];
 }
 
 + (NSString *)urlStringForPhoto:(NSDictionary *)photo format:(FlickrPhotoFormat)format

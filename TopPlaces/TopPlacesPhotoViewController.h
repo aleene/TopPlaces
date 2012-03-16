@@ -9,13 +9,16 @@
 
 #import <UIKit/UIKit.h>
 #import "SplitViewBarButtonItemPresenter.h"
+#import "TopPlacesVacationsModalTableViewController.h"
+#import "FlickrPhoto.h"
 
-//  this class implements the required SpltViewBarButtonItemPresenter methods
+//  this class implements the required SplitViewBarButtonItemPresenter methods
+//  and the ChosenVacationDelegate methods
 
-@interface TopPlacesPhotoViewController : UIViewController <SplitViewBarButtonItemPresenter>
+@interface TopPlacesPhotoViewController : UIViewController <SplitViewBarButtonItemPresenter, ChosenVacationDelegate>
 
+@property (nonatomic, strong) FlickrPhoto *flickrPhoto;;
+// I would like supress the next method 
 @property (nonatomic, strong) NSDictionary *photo;
-
-
 
 @end

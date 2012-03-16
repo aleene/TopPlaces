@@ -28,7 +28,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="nQi-y1-72c"/>
-                                    <barButtonItem title="photo title" style="plain" id="SyW-c5-7zf"/>
+                                    <barButtonItem title="zoom in by selecting a photo or place" style="plain" id="SyW-c5-7zf"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="bkh-NB-8fM"/>
                                 </items>
                             </toolbar>
@@ -104,10 +104,15 @@
                             <outlet property="delegate" destination="kyB-96-o6J" id="zQ2-3c-BlG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Top Places" id="9I9-wn-F1n">
-                        <barButtonItem key="rightBarButtonItem" title="refresh" id="a4v-Yq-Pht">
+                    <navigationItem key="navigationItem" title="Places" id="9I9-wn-F1n">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="a4v-Yq-Pht">
                             <connections>
                                 <action selector="refresh:" destination="kyB-96-o6J" id="aMk-Bk-gAh"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="25N-2r-kvY">
+                            <connections>
+                                <segue destination="jSW-I6-XOA" kind="push" identifier="Map From Places" id="Fse-wn-ZwS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -123,7 +128,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wsq-OO-kHg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="l6h-Jy-YJZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Top Places" image="07-map-marker.png" id="qT8-5d-YpL"/>
+                    <tabBarItem key="tabBarItem" title="Places" image="07-map-marker.png" id="qT8-5d-YpL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="XCT-ZY-EsW">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -178,17 +183,41 @@
                             <outlet property="delegate" destination="Lsm-RY-Ckk" id="kIO-9M-til"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Top Photos for Place" id="fSE-Lv-yjO">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="hwM-Kg-zMz">
+                    <navigationItem key="navigationItem" title="Place Photos" id="fSE-Lv-yjO">
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="iWW-gA-J2P">
                             <connections>
-                                <action selector="refresh:" destination="Lsm-RY-Ckk" id="E1Z-sx-X7Z"/>
+                                <segue destination="jSW-I6-XOA" kind="push" identifier="Show As Map" id="1Ud-Et-92i"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="4592" y="-968"/>
+            <point key="canvasLocation" x="4773" y="-968"/>
+        </scene>
+        <scene sceneID="SlV-uJ-A3Y">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WMX-ke-04i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="jSW-I6-XOA" customClass="TopPlacesPhotoMapViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Ir-Vb-MRb">
+                        <rect key="frame" x="0.0" y="64" width="320" height="655"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="VL0-0f-jcW">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="655"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map" id="Fjm-Rp-WRn"/>
+                    <connections>
+                        <outlet property="mapView" destination="VL0-0f-jcW" id="H7b-dm-EJf"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="5100" y="346"/>
         </scene>
         <scene sceneID="ItE-CK-db2">
             <objects>
@@ -249,10 +278,15 @@
                             <outlet property="delegate" destination="m6h-nJ-jsP" id="odI-pl-IQC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="All Top Photos" id="uok-Ml-PLo">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="WZW-Bj-hOO">
+                    <navigationItem key="navigationItem" title="Photos" id="uok-Ml-PLo">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="WZW-Bj-hOO">
                             <connections>
                                 <action selector="refresh:" destination="m6h-nJ-jsP" id="1Kq-KK-8T8"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="FHc-wT-HRc">
+                            <connections>
+                                <segue destination="jSW-I6-XOA" kind="push" identifier="Show As Map" id="hML-xh-8CH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -265,7 +299,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HKI-BO-Hjn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="F3c-SD-sfr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All Top Photos" image="42-photos.png" id="ICl-pI-e4l"/>
+                    <tabBarItem key="tabBarItem" title="Photos" image="42-photos.png" id="ICl-pI-e4l"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="fqI-2p-P7s">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -289,6 +323,12 @@
         <class className="TopPlacesPhotoGenericTabBarController" superclassName="UITabBarController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoGenericTabBarController.h"/>
         </class>
+        <class className="TopPlacesPhotoMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
         <class className="TopPlacesPhotoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotoViewController.h"/>
             <relationships>
@@ -303,7 +343,7 @@
         <class className="TopPlacesPhotosTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPhotosTableViewController.h"/>
         </class>
-        <class className="TopPlacesPlacesTableViewController" superclassName="UITableViewController">
+        <class className="TopPlacesPlacesTableViewController" superclassName="TopPlacesPhotosTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesPlacesTableViewController.h"/>
         </class>
     </classes>
@@ -312,4 +352,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="hML-xh-8CH"/>
+    </inferredMetricsTieBreakers>
 </document>
